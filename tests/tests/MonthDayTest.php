@@ -1,0 +1,98 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Temporal\Tests;
+
+use PHPUnit\Framework\Attributes\DataProvider;
+use Temporal\Clock\FixedClock;
+use Temporal\Instant;
+use Temporal\MonthDay;
+use Temporal\TemporalException;
+use Temporal\TimeZoneOffset;
+
+final class MonthDayTest extends TemporalTestCase
+{
+	public function testNow(): void
+	{
+		$clock = new FixedClock(Instant::epoch());
+
+		$monthDay = MonthDay::now(TimeZoneOffset::utc(), $clock);
+		self::assertMonthDay($monthDay, 1, 1);
+
+		$monthDay = MonthDay::now(TimeZoneOffset::of(-1), $clock);
+		self::assertMonthDay($monthDay, 12, 31);
+	}
+
+	public static function provideParseData(): iterable
+	{
+		yield ['--01-01', 1, 1];
+		yield ['--12-31', 12, 31];
+	}
+
+	#[DataProvider('provideParseData')]
+	public function testParse(string $text, int $expectedMonth, int $expectedDay): void
+	{
+		$monthDay = MonthDay::parse($text);
+		self::assertMonthDay($monthDay, $expectedMonth, $expectedDay);
+	}
+
+	public static function provideInvalidParseData(): iterable
+	{
+		yield [''];
+		yield ['--'];
+		yield ['01-01'];
+		yield ['12-1'];
+		yield ['1-31'];
+	}
+
+	#[DataProvider('provideInvalidParseData')]
+	public function testInvalidParse(string $text): void
+	{
+		$this->expectException(TemporalException::class);
+		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
+
+		MonthDay::parse($text);
+	}
+
+	public function testExistsInYear(): void
+	{
+		self::assertTrue(MonthDay::of(2, 29)->existsInYear(2024));
+		self::assertFalse(MonthDay::of(2, 29)->existsInYear(2025));
+	}
+
+	public static function provideComparisonData(): iterable
+	{
+		yield [MonthDay::of(1, 1), MonthDay::of(1, 1), 0];
+		yield [MonthDay::of(1, 1), MonthDay::of(1, 2), -1];
+		yield [MonthDay::of(1, 2), MonthDay::of(1, 1), 1];
+		yield [MonthDay::of(1, 2), MonthDay::of(2, 1), -1];
+		yield [MonthDay::of(2, 1), MonthDay::of(1, 2), 1];
+	}
+
+	#[DataProvider('provideComparisonData')]
+	public function testComparison(MonthDay $a, MonthDay $b, int $expectedResult): void
+	{
+		self::assertSame($expectedResult, $a->compareTo($b));;
+		self::assertSame(-$expectedResult, $b->compareTo($a));;
+
+		self::assertSame($expectedResult === 0, $a->isEqualTo($b));
+		self::assertSame($expectedResult < 0, $a->isBefore($b));
+		self::assertSame($expectedResult <= 0, $a->isBeforeOrEqualTo($b));
+		self::assertSame($expectedResult > 0, $a->isAfter($b));
+		self::assertSame($expectedResult >= 0, $a->isAfterOrEqualTo($b));
+	}
+
+	public static function provideToISOStringData(): iterable
+	{
+		yield [MonthDay::of(1, 1), '--01-01'];
+		yield [MonthDay::of(2, 29), '--02-29'];
+		yield [MonthDay::of(12, 31), '--12-31'];
+	}
+
+	#[DataProvider('provideToISOStringData')]
+	public function testToISOString(MonthDay $monthDay, string $expectedResult): void
+	{
+		self::assertSame($expectedResult, $monthDay->toISOString());
+	}
+}
