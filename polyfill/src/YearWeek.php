@@ -6,60 +6,204 @@ namespace Temporal;
 
 use JsonSerializable;
 use Stringable;
+use function abs;
+use function min;
 
 final class YearWeek implements JsonSerializable, Stringable
 {
-	private function __construct() {}
+	private function __construct(
+		private readonly int $year,
+		private readonly int $week,
+	) {}
 
-	public static function of(int $year, int $week): self {}
+	public static function of(int $year, int $week): self
+	{
+		if ($year < -999_999 || $year > 999_999) {
+			throw TemporalException::valueOutOfRange('year', $year, -999_999, 999_999);
+		}
 
-	public static function now(TimeZone $timeZone, Clock|null $clock = null): self {}
+		$weeksInYear = Helpers::getWeeksInYear($year);
+		if ($week < 1 || $week > $weeksInYear) {
+			throw TemporalException::valueOutOfRange('week', $week, 1, $weeksInYear);
+		}
 
-	public static function parse(string $text): self {}
+		return new self($year, $week);
+	}
 
-	public function getYear(): int {}
+	public static function now(TimeZone $timeZone, Clock|null $clock = null): self
+	{
+		return ZonedDateTime::now($timeZone, $clock)->getYearWeek();
+	}
 
-	public function withYear(int $year): self {}
+	public static function parse(string $text): self
+	{
+		$pattern = '/^(-?\d{4})-W(\d{2})()$/';
 
-	public function plusYears(int $years): self {}
+		if (preg_match($pattern, $text, $matches) !== 1) {
+			throw TemporalException::failedToParseInput();
+		}
 
-	public function minusYears(int $years): self {}
+		[, $year, $week] = $matches;
 
-	public function getWeek(): int {}
+		$year = (int) $year;
+		$week = (int) $week;
 
-	public function withWeek(int $week): self {}
+		try {
+			return self::of($year, $week);
+		} catch (TemporalException $e) {
+			throw TemporalException::failedToParseInput($e);
+		}
+	}
 
-	public function plusWeeks(int $weeks): self {}
+	public function getYear(): int
+	{
+		return $this->year;
+	}
 
-	public function minusWeeks(int $weeks): self {}
+	public function withYear(int $year): self
+	{
+		if ($year < -999_999 || $year > 999_999) {
+			throw TemporalException::valueOutOfRange('year', $year, -999_999, 999_999);
+		}
 
-	public function getDaysInYear(): int {}
+		$week = min($this->week, Helpers::getWeeksInYear($year));
 
-	public function getWeeksInYear(): int {}
+		return new self($year, $week);
+	}
 
-	public function isLeapYear(): bool {}
+	public function plusYears(int $years): self
+	{
+		return $this->withYear($this->year + $years);
+	}
 
-	public function atDay(int $dayOfWeek): LocalDate {}
+	public function minusYears(int $years): self
+	{
+		return $this->withYear($this->year - $years);
+	}
 
-	public function getFirstDay(): LocalDate {}
+	public function getWeek(): int
+	{
+		return $this->week;
+	}
 
-	public function getLastDay(): LocalDate {}
+	public function withWeek(int $week): self
+	{
+		$weeksInYear = Helpers::getWeeksInYear($this->year);
+		if ($week < 1 || $week > $weeksInYear) {
+			throw TemporalException::valueOutOfRange('week', $week, 1, $weeksInYear);
+		}
 
-	public function compareTo(self $other): int {}
+		return new self($this->year, $week);
+	}
 
-	public function isEqualTo(self $other): bool {}
+	public function plusWeeks(int $weeks): self
+	{
+		return $this
+			->getFirstDay()
+			->plusWeeks($weeks)
+			->getYearWeek();
+	}
 
-	public function isBefore(self $other): bool {}
+	public function minusWeeks(int $weeks): self
+	{
+		return $this->plusWeeks(-$weeks);
+	}
 
-	public function isBeforeOrEqualTo(self $other): bool {}
+	public function getDaysInYear(): int
+	{
+		return Helpers::getDaysInYear($this->year);
+	}
 
-	public function isAfter(self $other): bool {}
+	public function getWeeksInYear(): int
+	{
+		return Helpers::getWeeksInYear($this->year);
+	}
 
-	public function isAfterOrEqualTo(self $other): bool {}
+	public function isLeapYear(): bool
+	{
+		return Helpers::isLeapYear($this->year);
+	}
 
-	public function toISOString(): string {}
+	public function atDay(int $dayOfWeek): LocalDate
+	{
+		$correction = LocalDate::of($this->year, 1, 4)->getDayOfWeek() + 3;
+		$dayOfYear = $this->week * 7 + $dayOfWeek - $correction;
+		$maxDaysOfYear = Helpers::getDaysInYear($this->year);
 
-	public function jsonSerialize(): string {}
+		if ($dayOfYear > $maxDaysOfYear) {
+			return LocalDate::ofDayOfYear($this->year + 1, $dayOfYear - $maxDaysOfYear);
+		}
 
-	public function __toString(): string {}
+		if ($dayOfYear > 0) {
+			return LocalDate::ofDayOfYear($this->year, $dayOfYear);
+		}
+
+		$daysOfPreviousYear = Helpers::getDaysInYear($this->year - 1);
+		return LocalDate::ofDayOfYear($this->year - 1, $daysOfPreviousYear + $dayOfYear);
+	}
+
+	public function getFirstDay(): LocalDate
+	{
+		return $this->atDay(1);
+	}
+
+	public function getLastDay(): LocalDate
+	{
+		return $this->atDay(7);
+	}
+
+	public function compareTo(self $other): int
+	{
+		$cmp = $this->year <=> $other->year;
+		if ($cmp !== 0) {
+			return $cmp;
+		}
+
+		return $this->week <=> $other->week;
+	}
+
+	public function isEqualTo(self $other): bool
+	{
+		return $this->compareTo($other) === 0;
+	}
+
+	public function isBefore(self $other): bool
+	{
+		return $this->compareTo($other) < 0;
+	}
+
+	public function isBeforeOrEqualTo(self $other): bool
+	{
+		return $this->compareTo($other) <= 0;
+	}
+
+	public function isAfter(self $other): bool
+	{
+		return $this->compareTo($other) > 0;
+	}
+
+	public function isAfterOrEqualTo(self $other): bool
+	{
+		return $this->compareTo($other) >= 0;
+	}
+
+	public function toISOString(): string
+	{
+		$result = sprintf('%04d-W%02d', abs($this->year), $this->week);
+		if ($this->year >= 0) {
+			return $result;
+		}
+
+		return '-' . $result;
+	}
+
+	public function jsonSerialize(): string
+	{
+		return $this->toISOString();
+	}
+
+	public function __toString(): string
+	{
+		return $this->toISOString();
+	}
 }

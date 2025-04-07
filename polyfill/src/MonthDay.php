@@ -6,46 +6,149 @@ namespace Temporal;
 
 use JsonSerializable;
 use Stringable;
+use function min;
+use function preg_match;
 
 final class MonthDay implements JsonSerializable, Stringable
 {
-	private function __construct() {}
+	private function __construct(
+		private readonly int $month,
+		private readonly int $day,
+	) {}
 
-	public static function of(int $month, int $day): self {}
+	public static function of(int $month, int $day): self
+	{
+		if ($month < 1 || $month > 12) {
+			throw TemporalException::valueOutOfRange('month', $month, 1, 12);
+		}
 
-	public static function now(TimeZone $timeZone, Clock|null $clock = null): self {}
+		$daysInMonth = Helpers::getMaxDaysInMonth($month);
+		if ($day < 1 || $day > $daysInMonth) {
+			throw TemporalException::valueOutOfRange('day', $day, 1, $daysInMonth);
+		}
 
-	public static function parse(string $text): self {}
+		return new self($month, $day);
+	}
 
-	public function getMonth(): int {}
+	public static function now(TimeZone $timeZone, Clock|null $clock = null): self
+	{
+		return ZonedDateTime::now($timeZone, $clock)->getMonthDay();
+	}
 
-	public function withMonth(int $month): self {}
+	public static function parse(string $text): self
+	{
+		$pattern = '/^--(\d{2})-(\d{2})()$/';
 
-	public function getDayOfMonth(): int {}
+		if (preg_match($pattern, $text, $matches) !== 1) {
+			throw TemporalException::failedToParseInput();
+		}
 
-	public function withDayOfMonth(int $day): self {}
+		[, $month, $day] = $matches;
 
-	public function getDaysInMonth(): int {}
+		$month = (int) $month;
+		$day = (int) $day;
 
-	public function existsInYear(int $year): bool {}
+		try {
+			return self::of($month, $day);
+		} catch (TemporalException $e) {
+			throw TemporalException::failedToParseInput($e);
+		}
+	}
 
-	public function atYear(int $year): LocalDate {}
+	public function getMonth(): int
+	{
+		return $this->month;
+	}
 
-	public function compareTo(self $other): int {}
+	public function withMonth(int $month): self
+	{
+		if ($month < 1 || $month > 12) {
+			throw TemporalException::valueOutOfRange('month', $month, 1, 12);
+		}
 
-	public function isEqualTo(self $other): bool {}
+		$day = min(
+			$this->day,
+			Helpers::getMaxDaysInMonth($month),
+		);
 
-	public function isBefore(self $other): bool {}
+		return new self($month, $day);
+	}
 
-	public function isBeforeOrEqualTo(self $other): bool {}
+	public function getDayOfMonth(): int
+	{
+		return $this->day;
+	}
 
-	public function isAfter(self $other): bool {}
+	public function withDayOfMonth(int $day): self
+	{
+		$daysInMonth = Helpers::getMaxDaysInMonth($this->month);
 
-	public function isAfterOrEqualTo(self $other): bool {}
+		if ($day < 1 || $day > $daysInMonth) {
+			throw TemporalException::valueOutOfRange('day', $day, 1, $daysInMonth);
+		}
 
-	public function toISOString(): string {}
+		return new self($this->month, $day);
+	}
 
-	public function jsonSerialize(): string {}
+	public function existsInYear(int $year): bool
+	{
+		return $this->month !== 2
+			|| $this->day !== 29
+			|| Helpers::isLeapYear($year);
+	}
 
-	public function __toString(): string {}
+	public function atYear(int $year): LocalDate
+	{
+		return LocalDate::of($year, $this->month, $this->existsInYear($year) ? $this->day : 28);
+	}
+
+	public function compareTo(self $other): int
+	{
+		$cmp = $this->month <=> $other->month;
+		if ($cmp !== 0) {
+			return $cmp;
+		}
+
+		return $this->day <=> $other->day;
+	}
+
+	public function isEqualTo(self $other): bool
+	{
+		return $this->compareTo($other) === 0;
+	}
+
+	public function isBefore(self $other): bool
+	{
+		return $this->compareTo($other) < 0;
+	}
+
+	public function isBeforeOrEqualTo(self $other): bool
+	{
+		return $this->compareTo($other) <= 0;
+	}
+
+	public function isAfter(self $other): bool
+	{
+		return $this->compareTo($other) > 0;
+	}
+
+	public function isAfterOrEqualTo(self $other): bool
+	{
+		return $this->compareTo($other) >= 0;
+	}
+
+	public function toISOString(): string
+	{
+		return sprintf('--%02d-%02d', $this->month, $this->day);
+	}
+
+	public function jsonSerialize(): string
+	{
+		return $this->toISOString();
+	}
+
+	public function __toString(): string
+	{
+		return $this->toISOString();
+	}
 }

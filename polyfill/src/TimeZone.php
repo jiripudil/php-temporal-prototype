@@ -4,22 +4,57 @@ declare(strict_types=1);
 
 namespace Temporal;
 
+use DateTimeZone;
 use JsonSerializable;
 use Stringable;
 
 abstract class TimeZone implements JsonSerializable, Stringable
 {
-	public static function parse(string $text): self {}
+	public static function parse(string $text): self
+	{
+		if ($text === 'Z' || $text === 'z') {
+			return TimeZoneOffset::utc();
+		}
 
-	public static function utc(): self {}
+		if ($text === '') {
+			throw TemporalException::failedToParseInput();
+		}
+
+		if ($text[0] === '+' || $text[0] === '-') {
+			return TimeZoneOffset::parse($text);
+		}
+
+		return TimeZoneRegion::parse($text);
+	}
+
+	public static function utc(): self
+	{
+		return TimeZoneOffset::utc();
+	}
 
 	abstract public function getId(): string;
 
 	abstract public function getOffset(Instant $instant): int;
 
-	public function isEqualTo(self $other): bool {}
+	public function isEqualTo(self $other): bool
+	{
+		return $this->getId() === $other->getId();
+	}
 
-	public function jsonSerialize(): string {}
+	abstract public function toDateTimeZone(): DateTimeZone;
 
-	public function __toString(): string {}
+	public static function fromDateTimeZone(DateTimeZone $zone): self
+	{
+		return self::parse($zone->getName());
+	}
+
+	public function jsonSerialize(): string
+	{
+		return $this->getId();
+	}
+
+	public function __toString(): string
+	{
+		return $this->getId();
+	}
 }

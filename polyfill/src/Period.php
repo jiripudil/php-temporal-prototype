@@ -6,60 +6,195 @@ namespace Temporal;
 
 use JsonSerializable;
 use Stringable;
+use function preg_match;
 
 final class Period implements JsonSerializable, Stringable
 {
-	private function __construct() {}
+	private function __construct(
+		private readonly int $years,
+		private readonly int $months,
+		private readonly int $days,
+	) {}
 
-	public static function of(int $years, int $months, int $days): self {}
+	public static function of(int $years, int $months, int $days): self
+	{
+		return new self($years, $months, $days);
+	}
 
-	public static function ofYears(int $years): self {}
+	public static function ofYears(int $years): self
+	{
+		return new self($years, 0, 0);
+	}
 
-	public static function ofMonths(int $months): self {}
+	public static function ofMonths(int $months): self
+	{
+		return new self(0, $months, 0);
+	}
 
-	public static function ofWeeks(int $weeks): self {}
+	public static function ofWeeks(int $weeks): self
+	{
+		return new self(0, 0, $weeks * 7);
+	}
 
-	public static function ofDays(int $days): self {}
+	public static function ofDays(int $days): self
+	{
+		return new self(0, 0, $days);
+	}
 
-	public static function zero(): self {}
+	public static function zero(): self
+	{
+		/** @var self $zero */
+		static $zero = new self(0, 0, 0);
+		return $zero;
+	}
 
-	public static function between(LocalDate $start, LocalDate $endExclusive): self {}
+	public static function between(LocalDate $start, LocalDate $endExclusive): self
+	{
+		return $start->until($endExclusive);
+	}
 
-	public static function parse(string $text): self {}
+	public static function parse(string $text): self
+	{
+		$pattern = '/^([+\-]?)P(?:([+\-]?[0-9]+)Y)?(?:([+\-]?[0-9]+)M)?(?:([+\-]?[0-9]+)W)?(?:([+\-]?[0-9]+)D)?()$/i';
 
-	public function getYears(): int {}
+		if (preg_match($pattern, $text, $matches) !== 1) {
+			throw TemporalException::failedToParseInput();
+		}
 
-	public function withYears(int $years): self {}
+		[, $sign, $years, $months, $weeks, $days] = $matches;
 
-	public function plusYears(int $years): self {}
+		if ($years === '' && $months === '' && $weeks === '' && $days === '') {
+			throw TemporalException::failedToParseInput();
+		}
 
-	public function minusYears(int $years): self {}
+		$years = (int) $years;
+		$months = (int) $months;
+		$weeks = (int) $weeks;
+		$days = (int) $days;
 
-	public function getMonths(): int {}
+		if ($sign === '-') {
+			$years = -$years;
+			$months = -$months;
+			$weeks = -$weeks;
+			$days = -$days;
+		}
 
-	public function withMonths(int $months): self {}
+		return new self($years, $months, $weeks * 7 + $days);
+	}
 
-	public function plusMonths(int $months): self {}
+	public function getYears(): int
+	{
+		return $this->years;
+	}
 
-	public function minusMonths(int $months): self {}
+	public function withYears(int $years): self
+	{
+		return new self($years, $this->months, $this->days);
+	}
 
-	public function getDays(): int {}
+	public function plusYears(int $years): self
+	{
+		return $this->withYears($this->years + $years);
+	}
 
-	public function withDays(int $days): self {}
+	public function minusYears(int $years): self
+	{
+		return $this->withYears($this->years - $years);
+	}
 
-	public function plusDays(int $days): self {}
+	public function getMonths(): int
+	{
+		return $this->months;
+	}
 
-	public function minusDays(int $days): self {}
+	public function withMonths(int $months): self
+	{
+		return new self($this->years, $months, $this->days);
+	}
 
-	public function negated(): self {}
+	public function plusMonths(int $months): self
+	{
+		return $this->withMonths($this->months + $months);
+	}
 
-	public function isZero(): bool {}
+	public function minusMonths(int $months): self
+	{
+		return $this->withMonths($this->months - $months);
+	}
 
-	public function isEqualTo(self $other): bool {}
+	public function getDays(): int
+	{
+		return $this->days;
+	}
 
-	public function toISOString(): string {}
+	public function withDays(int $days): self
+	{
+		return new self($this->years, $this->months, $days);
+	}
 
-	public function jsonSerialize(): string {}
+	public function plusDays(int $days): self
+	{
+		return $this->withDays($this->days + $days);
+	}
 
-	public function __toString(): string {}
+	public function minusDays(int $days): self
+	{
+		return $this->withDays($this->days - $days);
+	}
+
+	public function negated(): self
+	{
+		return new self(
+			-$this->years,
+			-$this->months,
+			-$this->days,
+		);
+	}
+
+	public function isZero(): bool
+	{
+		return $this->years === 0
+			&& $this->months === 0
+			&& $this->days === 0;
+	}
+
+	public function isEqualTo(self $other): bool
+	{
+		return $this->years === $other->years
+			&& $this->months === $other->months
+			&& $this->days === $other->days;
+	}
+
+	public function toISOString(): string
+	{
+		if ($this->isZero()) {
+			return 'P0D';
+		}
+
+		$result = 'P';
+
+		if ($this->years !== 0) {
+			$result .= $this->years . 'Y';
+		}
+
+		if ($this->months !== 0) {
+			$result .= $this->months . 'M';
+		}
+
+		if ($this->days !== 0) {
+			$result .= $this->days . 'D';
+		}
+
+		return $result;
+	}
+
+	public function jsonSerialize(): string
+	{
+		return $this->toISOString();
+	}
+
+	public function __toString(): string
+	{
+		return $this->toISOString();
+	}
 }

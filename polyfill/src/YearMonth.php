@@ -6,62 +6,206 @@ namespace Temporal;
 
 use JsonSerializable;
 use Stringable;
+use function abs;
+use function preg_match;
+use function sprintf;
 
 final class YearMonth implements JsonSerializable, Stringable
 {
-	private function __construct() {}
+	private function __construct(
+		private readonly int $year,
+		private readonly int $month,
+	) {}
 
-	public static function of(int $year, int $month): self {}
+	public static function of(int $year, int $month): self
+	{
+		if ($year < -999_999 || $year > 999_999) {
+			throw TemporalException::valueOutOfRange('year', $year, -999_999, 999_999);
+		}
 
-	public static function now(TimeZone $timeZone, Clock|null $clock = null): self {}
+		if ($month < 1 || $month > 12) {
+			throw TemporalException::valueOutOfRange('month', $month, 1, 12);
+		}
 
-	public static function parse(string $text): self {}
+		return new self($year, $month);
+	}
 
-	public function getYear(): int {}
+	public static function now(TimeZone $timeZone, Clock|null $clock = null): self
+	{
+		return ZonedDateTime::now($timeZone, $clock)->getYearMonth();
+	}
 
-	public function withYear(int $year): self {}
+	public static function parse(string $text): self
+	{
+		$pattern = '/^(-?\d{4})-(\d{2})()$/';
 
-	public function plusYears(int $years): self {}
+		if (preg_match($pattern, $text, $matches) !== 1) {
+			throw TemporalException::failedToParseInput();
+		}
 
-	public function minusYears(int $years): self {}
+		[, $year, $month] = $matches;
 
-	public function getMonth(): int {}
+		$year = (int) $year;
+		$month = (int) $month;
 
-	public function withMonth(int $month): self {}
+		try {
+			return self::of($year, $month);
+		} catch (TemporalException $e) {
+			throw TemporalException::failedToParseInput($e);
+		}
+	}
 
-	public function plusMonths(int $months): self {}
+	public function getYear(): int
+	{
+		return $this->year;
+	}
 
-	public function minusMonths(int $months): self {}
+	public function withYear(int $year): self
+	{
+		if ($year < -999_999 || $year > 999_999) {
+			throw TemporalException::valueOutOfRange('year', $year, -999_999, 999_999);
+		}
 
-	public function getDaysInMonth(): int {}
+		return new self($year, $this->month);
+	}
 
-	public function getDaysInYear(): int {}
+	public function plusYears(int $years): self
+	{
+		return $this->withYear($this->year + $years);
+	}
 
-	public function getWeeksInYear(): int {}
+	public function minusYears(int $years): self
+	{
+		return $this->withYear($this->year - $years);
+	}
 
-	public function isLeapYear(): bool {}
+	public function getMonth(): int
+	{
+		return $this->month;
+	}
 
-	public function atDay(int $dayOfMonth): LocalDate {}
+	public function withMonth(int $month): self
+	{
+		if ($month < 1 || $month > 12) {
+			throw TemporalException::valueOutOfRange('month', $month, 1, 12);
+		}
 
-	public function getFirstDay(): LocalDate {}
+		return new self($this->year, $month);
+	}
 
-	public function getLastDay(): LocalDate {}
+	public function plusMonths(int $months): self
+	{
+		$month = $this->month + $months - 1;
 
-	public function compareTo(self $other): int {}
+		$yearDiff = intdiv($month, 12);
+		$month = ((($month % 12) + 12) % 12) + 1;
 
-	public function isEqualTo(self $other): bool {}
+		$year = $this->year + $yearDiff;
 
-	public function isBefore(self $other): bool {}
+		return new self($year, $month);
+	}
 
-	public function isBeforeOrEqualTo(self $other): bool {}
+	public function minusMonths(int $months): self
+	{
+		return $this->plusMonths(-$months);
+	}
 
-	public function isAfter(self $other): bool {}
+	public function getDaysInMonth(): int
+	{
+		return match ($this->month) {
+			2 => Helpers::isLeapYear($this->year) ? 29 : 28,
+			4, 6, 9, 11 => 30,
+			default => 31,
+		};
+	}
 
-	public function isAfterOrEqualTo(self $other): bool {}
+	public function getDaysInYear(): int
+	{
+		return Helpers::getDaysInYear($this->year);
+	}
 
-	public function toISOString(): string {}
+	public function getWeeksInYear(): int
+	{
+		return Helpers::getWeeksInYear($this->year);
+	}
 
-	public function jsonSerialize(): string {}
+	public function isLeapYear(): bool
+	{
+		return Helpers::isLeapYear($this->year);
+	}
 
-	public function __toString(): string {}
+	public function atDay(int $dayOfMonth): LocalDate
+	{
+		$daysInMonth = $this->getDaysInMonth();
+		if ($dayOfMonth < 1 || $dayOfMonth > $daysInMonth) {
+			throw TemporalException::valueOutOfRange('dayOfMonth', $dayOfMonth, 1, $daysInMonth);
+		}
+
+		return LocalDate::of($this->year, $this->month, $dayOfMonth);
+	}
+
+	public function getFirstDay(): LocalDate
+	{
+		return $this->atDay(1);
+	}
+
+	public function getLastDay(): LocalDate
+	{
+		return $this->atDay($this->getDaysInMonth());
+	}
+
+	public function compareTo(self $other): int
+	{
+		$cmp = $this->year <=> $other->year;
+		if ($cmp !== 0) {
+			return $cmp;
+		}
+
+		return $this->month <=> $other->month;
+	}
+
+	public function isEqualTo(self $other): bool
+	{
+		return $this->compareTo($other) === 0;
+	}
+
+	public function isBefore(self $other): bool
+	{
+		return $this->compareTo($other) < 0;
+	}
+
+	public function isBeforeOrEqualTo(self $other): bool
+	{
+		return $this->compareTo($other) <= 0;
+	}
+
+	public function isAfter(self $other): bool
+	{
+		return $this->compareTo($other) > 0;
+	}
+
+	public function isAfterOrEqualTo(self $other): bool
+	{
+		return $this->compareTo($other) >= 0;
+	}
+
+	public function toISOString(): string
+	{
+		$result = sprintf('%04d-%02d', abs($this->year), $this->month);
+		if ($this->year >= 0) {
+			return $result;
+		}
+
+		return '-' . $result;
+	}
+
+	public function jsonSerialize(): string
+	{
+		return $this->toISOString();
+	}
+
+	public function __toString(): string
+	{
+		return $this->toISOString();
+	}
 }

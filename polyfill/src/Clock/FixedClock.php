@@ -13,7 +13,13 @@ final class FixedClock implements Clock
 		private Instant $instant,
 	) {}
 
-	public function getTime(): Instant {}
+	public function getTime(): Instant
+	{
+		return $this->instant;
+	}
 
-	public function setTime(Instant $instant): void {}
+	public function setTime(Instant $instant): void
+	{
+		$this->instant = $instant;
+	}
 }
