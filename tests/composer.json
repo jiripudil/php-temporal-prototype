@@ -18,7 +18,8 @@
 		"phpunit/phpunit": "^11.5"
 	},
 	"scripts": {
-		"test:polyfill": "phpunit --bootstrap ../polyfill/tests/bootstrap.php tests"
+		"test:polyfill": "phpunit --bootstrap ../polyfill/tests/bootstrap.php tests",
+		"test:polyfill-with-coverage": "phpunit --bootstrap ../polyfill/tests/bootstrap.php --coverage-filter ../polyfill/src --coverage-clover ../coverage.xml tests"
 	},
 	"config": {
 		"sort-packages": true
