@@ -208,10 +208,16 @@ final class LocalDateTest extends TemporalTestCase
 		self::assertLocalDate($date, 1970, 1, 1);
 	}
 
-	public function testToISOString(): void
+	public static function provideToISOStringData(): iterable
 	{
-		$date = LocalDate::of(1970, 1, 1);
-		self::assertSame('1970-01-01', $date->toISOString());
+		yield [LocalDate::of(1970, 1, 1), '1970-01-01'];
+		yield [LocalDate::of(-1, 1, 1), '-0001-01-01'];
+	}
+
+	#[DataProvider('provideToISOStringData')]
+	public function testToISOString(LocalDate $date, string $expectedResult): void
+	{
+		self::assertSame($expectedResult, $date->toISOString());
 	}
 
 	public static function provideFormatData(): iterable

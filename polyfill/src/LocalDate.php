@@ -10,6 +10,7 @@ use DateTimeZone;
 use JsonSerializable;
 use Stringable;
 use Temporal\Format\DateTimeFormatter;
+use function abs;
 use function intdiv;
 use function min;
 use function preg_match;
@@ -457,7 +458,7 @@ final class LocalDate implements JsonSerializable, Stringable
 
 	public function toISOString(): string
 	{
-		$result = sprintf('%04d-%02d-%02d', $this->year, $this->month, $this->day);
+		$result = sprintf('%04d-%02d-%02d', abs($this->year), $this->month, $this->day);
 		if ($this->year >= 0) {
 			return $result;
 		}
