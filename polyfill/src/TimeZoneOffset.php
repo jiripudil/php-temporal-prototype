@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Temporal;
 
 use DateTimeZone;
+use function abs;
 use function preg_match;
 
 final class TimeZoneOffset extends TimeZone
@@ -106,7 +107,7 @@ final class TimeZoneOffset extends TimeZone
 		}
 
 		if ($this->totalSeconds < 0) {
-			return '-' . LocalTime::ofSecondOfDay(-$this->totalSeconds);
+			return '-' . LocalTime::ofSecondOfDay(abs($this->totalSeconds));
 		}
 
 		return 'Z';

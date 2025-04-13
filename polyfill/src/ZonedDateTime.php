@@ -267,7 +267,7 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 	{
 		return self::of($this->dateTime, $timeZone);
 	}
-	
+
 	public function withTimeZoneSameInstant(TimeZone $timeZone): self
 	{
 		return self::ofInstant($this->instant, $timeZone);
