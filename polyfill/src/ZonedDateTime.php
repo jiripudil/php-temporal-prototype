@@ -330,52 +330,52 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 
 	public function plusDuration(Duration $duration): self
 	{
-		return self::of($this->dateTime->plusDuration($duration), $this->timeZone);
+		return self::ofInstant($this->instant->plus($duration), $this->timeZone);
 	}
 
 	public function plusHours(int $hours): self
 	{
-		return self::of($this->dateTime->plusHours($hours), $this->timeZone);
+		return self::ofInstant($this->instant->plusHours($hours), $this->timeZone);
 	}
 
 	public function plusMinutes(int $minutes): self
 	{
-		return self::of($this->dateTime->plusMinutes($minutes), $this->timeZone);
+		return self::ofInstant($this->instant->plusMinutes($minutes), $this->timeZone);
 	}
 
 	public function plusSeconds(int $seconds): self
 	{
-		return self::of($this->dateTime->plusSeconds($seconds), $this->timeZone);
+		return self::ofInstant($this->instant->plusSeconds($seconds), $this->timeZone);
 	}
 
 	public function plusNanos(int $nanos): self
 	{
-		return self::of($this->dateTime->plusNanos($nanos), $this->timeZone);
+		return self::ofInstant($this->instant->plus(Duration::ofSeconds(0, $nanos)), $this->timeZone);
 	}
 
 	public function minusDuration(Duration $duration): self
 	{
-		return self::of($this->dateTime->minusDuration($duration), $this->timeZone);
+		return self::ofInstant($this->instant->minus($duration), $this->timeZone);
 	}
 
 	public function minusHours(int $hours): self
 	{
-		return self::of($this->dateTime->minusHours($hours), $this->timeZone);
+		return self::ofInstant($this->instant->minusHours($hours), $this->timeZone);
 	}
 
 	public function minusMinutes(int $minutes): self
 	{
-		return self::of($this->dateTime->minusMinutes($minutes), $this->timeZone);
+		return self::ofInstant($this->instant->minusMinutes($minutes), $this->timeZone);
 	}
 
 	public function minusSeconds(int $seconds): self
 	{
-		return self::of($this->dateTime->minusSeconds($seconds), $this->timeZone);
+		return self::ofInstant($this->instant->minusSeconds($seconds), $this->timeZone);
 	}
 
 	public function minusNanos(int $nanos): self
 	{
-		return self::of($this->dateTime->minusNanos($nanos), $this->timeZone);
+		return self::ofInstant($this->instant->minus(Duration::ofSeconds(0, $nanos)), $this->timeZone);
 	}
 
 	public function compareTo(self $other): int
