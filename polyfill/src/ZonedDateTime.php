@@ -479,4 +479,38 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'year' => $this->dateTime->getYear(),
+			'month' => $this->dateTime->getMonth(),
+			'day' => $this->dateTime->getDayOfMonth(),
+			'hour' => $this->dateTime->getHour(),
+			'minute' => $this->dateTime->getMinute(),
+			'second' => $this->dateTime->getSecond(),
+			'nano' => $this->dateTime->getNano(),
+			'timeZone' => $this->timeZone->getId(),
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$year = $data['year'];
+		$month = $data['month'];
+		$day = $data['day'];
+		$hour = $data['hour'];
+		$minute = $data['minute'];
+		$second = $data['second'];
+		$nano = $data['nano'];
+
+		$dateTime = LocalDateTime::of($year, $month, $day, $hour, $minute, $second, $nano);
+		$timeZone = TimeZone::parse($data['timeZone']);
+		$zonedDateTime = self::of($dateTime, $timeZone);
+
+		$this->dateTime = $zonedDateTime->dateTime;
+		$this->timeZoneOffset = $zonedDateTime->timeZoneOffset;
+		$this->timeZone = $zonedDateTime->timeZone;
+		$this->instant = $zonedDateTime->instant;
+	}
 }

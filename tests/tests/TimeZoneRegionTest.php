@@ -56,4 +56,14 @@ final class TimeZoneRegionTest extends TemporalTestCase
 
 		self::assertSame('Europe/Prague', $dateTimeZone->getName());
 	}
+
+	public function testSerialization(): void
+	{
+		$zone = TimeZoneRegion::of('Europe/Prague');
+
+		$serialized = serialize($zone);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($zone->isEqualTo($unserialized));
+	}
 }

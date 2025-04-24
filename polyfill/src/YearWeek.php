@@ -206,4 +206,18 @@ final class YearWeek implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'year' => $this->year,
+			'week' => $this->week,
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->year = $data['year'];
+		$this->week = $data['week'];
+	}
 }

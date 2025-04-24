@@ -6,6 +6,7 @@ namespace Temporal\Tests;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestWith;
 use Temporal\Clock\FixedClock;
 use Temporal\Format\DateTimeFormatter;
 use Temporal\Format\FormatStyle;
@@ -17,6 +18,24 @@ use Temporal\TimeZoneOffset;
 
 final class LocalDateTest extends TemporalTestCase
 {
+	public function testOf(): void
+	{
+		$date = LocalDate::of(1970, 1, 1);
+		self::assertLocalDate($date, 1970, 1, 1);
+	}
+
+	#[TestWith([PHP_INT_MAX, 1, 1])]
+	#[TestWith([2025, 0, 1])]
+	#[TestWith([2025, 1, 0])]
+	#[TestWith([2025, 16, 1])]
+	#[TestWith([2025, 12, 40])]
+	#[TestWith([2025, 2, 29])]
+	public function testInvalidOf(int $year, int $month, int $day): void
+	{
+		$this->expectException(TemporalException::class);
+		LocalDate::of($year, $month, $day);
+	}
+
 	public function testNow(): void
 	{
 		$clock = new FixedClock(Instant::epoch());
@@ -227,6 +246,8 @@ final class LocalDateTest extends TemporalTestCase
 		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofPattern('yyyy-MM-dd', 'en-US'), '1970-01-31'];
 		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofPattern('d.M.yy', 'en-US'), '31.1.70'];
 		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofDate(FormatStyle::LONG, 'en-US'), 'January 31, 1970'];
+		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofDate(FormatStyle::LONG, 'ja-JP'), '1970年1月31日'];
+		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofDate(FormatStyle::LONG, 'ar'), '31 يناير 1970'];
 	}
 
 	#[DataProvider('provideFormatData')]
@@ -248,5 +269,15 @@ final class LocalDateTest extends TemporalTestCase
 		$this->expectExceptionMessage('Failed to format a Temporal value.');
 
 		$date->formatWith($formatter);
+	}
+
+	public function testSerialization(): void
+	{
+		$localDate = LocalDate::of(1970, 1, 31);
+
+		$serialized = serialize($localDate);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($localDate->isEqualTo($unserialized));
 	}
 }

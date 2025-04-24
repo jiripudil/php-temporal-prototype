@@ -122,4 +122,16 @@ final class TimeZoneOffset extends TimeZone
 	{
 		return new DateTimeZone($this->getId());
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'totalSeconds' => $this->totalSeconds,
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->totalSeconds = $data['totalSeconds'];
+	}
 }

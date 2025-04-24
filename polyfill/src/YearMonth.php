@@ -208,4 +208,18 @@ final class YearMonth implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'year' => $this->year,
+			'month' => $this->month,
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->year = $data['year'];
+		$this->month = $data['month'];
+	}
 }

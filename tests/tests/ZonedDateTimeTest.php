@@ -333,4 +333,21 @@ final class ZonedDateTimeTest extends TemporalTestCase
 	{
 		self::assertSame($expectedResult, $zonedDateTime->formatWith($formatter));
 	}
+
+	public static function provideSerializationData(): iterable
+	{
+		yield [ZonedDateTime::of(LocalDateTime::of(1970, 1, 31, 14, 30, 59, 1), TimeZoneOffset::utc())];
+		yield [ZonedDateTime::of(LocalDateTime::of(1970, 1, 31, 14, 30, 59, 1), TimeZoneOffset::of(1, 30))];
+		yield [ZonedDateTime::of(LocalDateTime::of(1970, 1, 31, 14, 30, 59, 1), TimeZoneRegion::of('Europe/Prague'))];
+	}
+
+	#[DataProvider('provideSerializationData')]
+	public function testSerialization(ZonedDateTime $zonedDateTime): void
+	{
+		$serialized = serialize($zonedDateTime);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($zonedDateTime->isEqualTo($unserialized));
+		self::assertTrue($zonedDateTime->getTimeZone()->isEqualTo($unserialized->getTimeZone()));
+	}
 }

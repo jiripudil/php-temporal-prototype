@@ -424,4 +424,31 @@ final class LocalDateTime implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'year' => $this->getYear(),
+			'month' => $this->getMonth(),
+			'day' => $this->getDayOfMonth(),
+			'hour' => $this->getHour(),
+			'minute' => $this->getMinute(),
+			'second' => $this->getSecond(),
+			'nano' => $this->getNano(),
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$year = $data['year'];
+		$month = $data['month'];
+		$day = $data['day'];
+		$this->date = LocalDate::of($year, $month, $day);
+
+		$hour = $data['hour'];
+		$minute = $data['minute'];
+		$second = $data['second'];
+		$nano = $data['nano'];
+		$this->time = LocalTime::of($hour, $minute, $second, $nano);
+	}
 }

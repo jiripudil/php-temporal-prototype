@@ -333,4 +333,18 @@ final class Duration implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'seconds' => $this->seconds,
+			'nanos' => $this->nanos,
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->seconds = $data['seconds'];
+		$this->nanos = $data['nanos'];
+	}
 }

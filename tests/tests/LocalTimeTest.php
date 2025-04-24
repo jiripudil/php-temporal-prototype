@@ -18,6 +18,27 @@ use Temporal\TimeZoneOffset;
 
 final class LocalTimeTest extends TemporalTestCase
 {
+	public function testOf(): void
+	{
+		$time = LocalTime::of(12, 30, 59, 1);
+		self::assertLocalTime($time, 12, 30, 59, 1);
+	}
+
+	#[TestWith([-1, 0, 0])]
+	#[TestWith([24, 0, 0])]
+	#[TestWith([24, 0, 0])]
+	#[TestWith([12, -1, 0])]
+	#[TestWith([12, 60, 0])]
+	#[TestWith([12, 30, -1])]
+	#[TestWith([12, 30, 60])]
+	#[TestWith([12, 30, 59, -1])]
+	#[TestWith([12, 30, 59, 1_000_000_000])]
+	public function testInvalidOf(int $hour, int $minute, int $second, int $nano = 0): void
+	{
+		$this->expectException(TemporalException::class);
+		LocalTime::of($hour, $minute, $second, $nano);
+	}
+
 	public function testNow(): void
 	{
 		$clock = new FixedClock(Instant::epoch());
@@ -205,5 +226,15 @@ final class LocalTimeTest extends TemporalTestCase
 		$this->expectExceptionMessage('Failed to format a Temporal value.');
 
 		$time->formatWith($formatter);
+	}
+
+	public function testSerialization(): void
+	{
+		$localTime = LocalTime::of(14, 30, 59, 1);
+
+		$serialized = serialize($localTime);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($localTime->isEqualTo($unserialized));
 	}
 }

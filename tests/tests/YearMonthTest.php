@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Temporal\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestWith;
 use Temporal\Clock\FixedClock;
 use Temporal\Instant;
 use Temporal\TemporalException;
@@ -13,6 +14,21 @@ use Temporal\YearMonth;
 
 final class YearMonthTest extends TemporalTestCase
 {
+	public function testOf(): void
+	{
+		$yearMonth = YearMonth::of(2025, 4);
+		self::assertYearMonth($yearMonth, 2025, 4);
+	}
+
+	#[TestWith([PHP_INT_MAX, 1])]
+	#[TestWith([2025, 0])]
+	#[TestWith([2025, 16])]
+	public function testInvalidOf(int $year, int $month): void
+	{
+		$this->expectException(TemporalException::class);
+		YearMonth::of($year, $month);
+	}
+
 	public function testNow(): void
 	{
 		$clock = new FixedClock(Instant::epoch());
@@ -106,5 +122,15 @@ final class YearMonthTest extends TemporalTestCase
 	public function testToISOString(YearMonth $yearMonth, string $expectedResult): void
 	{
 		self::assertSame($expectedResult, $yearMonth->toISOString());
+	}
+
+	public function testSerialization(): void
+	{
+		$yearMonth = YearMonth::of(1970, 1);
+
+		$serialized = serialize($yearMonth);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($yearMonth->isEqualTo($unserialized));
 	}
 }

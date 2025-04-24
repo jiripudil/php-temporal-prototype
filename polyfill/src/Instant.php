@@ -207,4 +207,18 @@ final class Instant implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'epochSecond' => $this->epochSecond,
+			'nano' => $this->nano,
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->epochSecond = $data['epochSecond'];
+		$this->nano = $data['nano'];
+	}
 }

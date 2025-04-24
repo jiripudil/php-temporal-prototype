@@ -129,4 +129,14 @@ final class PeriodTest extends TemporalTestCase
 	{
 		self::assertSame($period->toISOString(), $expectedResult);
 	}
+
+	public function testSerialization(): void
+	{
+		$period = Period::of(1, 1, 1);
+
+		$serialized = serialize($period);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($period->isEqualTo($unserialized));
+	}
 }

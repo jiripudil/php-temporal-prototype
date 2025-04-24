@@ -6,18 +6,57 @@ namespace Temporal\Tests;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestWith;
 use Temporal\Clock\FixedClock;
 use Temporal\Duration;
 use Temporal\Format\DateTimeFormatter;
 use Temporal\Format\FormatStyle;
 use Temporal\Instant;
+use Temporal\LocalDate;
 use Temporal\LocalDateTime;
+use Temporal\LocalTime;
 use Temporal\Period;
 use Temporal\TemporalException;
 use Temporal\TimeZoneOffset;
 
 final class LocalDateTimeTest extends TemporalTestCase
 {
+	public function testOf(): void
+	{
+		$dateTime = LocalDateTime::of(1970, 1, 1, 12, 30, 59, 123_456_789);
+		self::assertLocalDateTime($dateTime, 1970, 1, 1, 12, 30, 59, 123_456_789);
+	}
+
+	#[TestWith([PHP_INT_MAX, 1, 1, 0, 0, 0, 0])]
+	#[TestWith([2025, 0, 1, 0, 0, 0, 0])]
+	#[TestWith([2025, 1, 0, 0, 0, 0, 0])]
+	#[TestWith([2025, 16, 1, 0, 0, 0, 0])]
+	#[TestWith([2025, 12, 40, 0, 0, 0, 0])]
+	#[TestWith([2025, 2, 29, 0, 0, 0, 0])]
+	#[TestWith([1970, 1, 1, -1, 0, 0])]
+	#[TestWith([1970, 1, 1, 24, 0, 0])]
+	#[TestWith([1970, 1, 1, 24, 0, 0])]
+	#[TestWith([1970, 1, 1, 12, -1, 0])]
+	#[TestWith([1970, 1, 1, 12, 60, 0])]
+	#[TestWith([1970, 1, 1, 12, 30, -1])]
+	#[TestWith([1970, 1, 1, 12, 30, 60])]
+	#[TestWith([1970, 1, 1, 12, 30, 59, -1])]
+	#[TestWith([1970, 1, 1, 12, 30, 59, 1_000_000_000])]
+	public function testInvalidOf(int $year, int $month, int $day, int $hour, int $minute, int $second, int $nano = 0): void
+	{
+		$this->expectException(TemporalException::class);
+		LocalDateTime::of($year, $month, $day, $hour, $minute, $second, $nano);
+	}
+
+	public function testOfDateTime(): void
+	{
+		$date = LocalDate::of(1970, 1, 1);
+		$time = LocalTime::of(12, 30, 59, 123_456_789);
+
+		$dateTime = LocalDateTime::ofDateTime($date, $time);
+		self::assertLocalDateTime($dateTime, 1970, 1, 1, 12, 30, 59, 123_456_789);
+	}
+
 	public function testNow(): void
 	{
 		$clock = new FixedClock(Instant::epoch());
@@ -207,5 +246,15 @@ final class LocalDateTimeTest extends TemporalTestCase
 		$this->expectExceptionMessage('Failed to format a Temporal value.');
 
 		$dateTime->formatWith($formatter);
+	}
+
+	public function testSerialization(): void
+	{
+		$localDateTime = LocalDateTime::of(1970, 1, 31, 14, 30, 59, 1);
+
+		$serialized = serialize($localDateTime);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($localDateTime->isEqualTo($unserialized));
 	}
 }

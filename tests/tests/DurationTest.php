@@ -8,6 +8,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Temporal\Duration;
 use Temporal\Instant;
 use Temporal\TemporalException;
+use function serialize;
+use function unserialize;
 
 final class DurationTest extends TemporalTestCase
 {
@@ -246,5 +248,15 @@ final class DurationTest extends TemporalTestCase
 	public function testToISOString(Duration $duration, string $expectedResult): void
 	{
 		self::assertSame($expectedResult, $duration->toISOString());
+	}
+
+	public function testSerialization(): void
+	{
+		$duration = Duration::ofDays(1)->plusHours(1)->plusMinutes(1)->plusSeconds(1);
+
+		$serialized = serialize($duration);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($duration->isEqualTo($unserialized));
 	}
 }

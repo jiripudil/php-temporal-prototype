@@ -6,6 +6,7 @@ namespace Temporal\Tests;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestWith;
 use Temporal\Instant;
 use Temporal\TemporalException;
 use Temporal\TimeZoneOffset;
@@ -42,6 +43,23 @@ final class TimeZoneOffsetTest extends TemporalTestCase
 	{
 		$this->expectException(TemporalException::class);
 		TimeZoneOffset::of($hours, $minutes, $seconds);
+	}
+
+	#[TestWith([0])]
+	#[TestWith([-3600])]
+	#[TestWith([3600])]
+	public function testOfTotalSeconds(int $totalSeconds): void
+	{
+		$timeZone = TimeZoneOffset::ofTotalSeconds($totalSeconds);
+		self::assertTimeZoneOffset($timeZone, $totalSeconds);;
+	}
+
+	#[TestWith([-68000])]
+	#[TestWith([68000])]
+	public function testInvalidOfTotalSeconds(int $totalSeconds): void
+	{
+		$this->expectException(TemporalException::class);
+		TimeZoneOffset::ofTotalSeconds($totalSeconds);
 	}
 
 	public function testUtc(): void
@@ -110,5 +128,15 @@ final class TimeZoneOffsetTest extends TemporalTestCase
 
 		self::assertSame($expectedName, $dateTimeZone->getName());
 		self::assertSame($totalSeconds, $dateTimeZone->getOffset(new DateTimeImmutable()));
+	}
+
+	public function testSerialization(): void
+	{
+		$zone = TimeZoneOffset::of(1, 30);
+
+		$serialized = serialize($zone);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($zone->isEqualTo($unserialized));
 	}
 }

@@ -197,4 +197,20 @@ final class Period implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'years' => $this->years,
+			'months' => $this->months,
+			'days' => $this->days,
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->years = $data['years'];
+		$this->months = $data['months'];
+		$this->days = $data['days'];
+	}
 }

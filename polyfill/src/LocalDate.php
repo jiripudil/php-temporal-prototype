@@ -486,4 +486,20 @@ final class LocalDate implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'year' => $this->year,
+			'month' => $this->month,
+			'day' => $this->day,
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->year = $data['year'];
+		$this->month = $data['month'];
+		$this->day = $data['day'];
+	}
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Temporal\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestWith;
 use Temporal\Clock\FixedClock;
 use Temporal\Instant;
 use Temporal\MonthDay;
@@ -13,6 +14,23 @@ use Temporal\TimeZoneOffset;
 
 final class MonthDayTest extends TemporalTestCase
 {
+	public function testOf(): void
+	{
+		$monthDay = MonthDay::of(12, 12);
+		self::assertMonthDay($monthDay, 12, 12);
+	}
+
+	#[TestWith([0, 1])]
+	#[TestWith([1, 0])]
+	#[TestWith([16, 0])]
+	#[TestWith([12, 40])]
+	#[TestWith([2, 30])]
+	public function testInvalidOf(int $month, int $day): void
+	{
+		$this->expectException(TemporalException::class);
+		MonthDay::of($month, $day);
+	}
+
 	public function testNow(): void
 	{
 		$clock = new FixedClock(Instant::epoch());
@@ -94,5 +112,15 @@ final class MonthDayTest extends TemporalTestCase
 	public function testToISOString(MonthDay $monthDay, string $expectedResult): void
 	{
 		self::assertSame($expectedResult, $monthDay->toISOString());
+	}
+
+	public function testSerialization(): void
+	{
+		$monthDay = MonthDay::of(1, 31);
+
+		$serialized = serialize($monthDay);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($monthDay->isEqualTo($unserialized));
 	}
 }

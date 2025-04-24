@@ -52,4 +52,16 @@ final class TimeZoneRegion extends TimeZone
 	{
 		return clone $this->zone;
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'id' => $this->getId(),
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->zone = new DateTimeZone($data['id']);
+	}
 }

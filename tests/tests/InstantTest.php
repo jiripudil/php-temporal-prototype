@@ -10,6 +10,8 @@ use PHPUnit\Framework\Attributes\TestWith;
 use Temporal\Clock\FixedClock;
 use Temporal\Duration;
 use Temporal\Instant;
+use function serialize;
+use function unserialize;
 use const PHP_INT_MAX;
 use const PHP_INT_MIN;
 
@@ -128,5 +130,15 @@ final class InstantTest extends TemporalTestCase
 	{
 		$instant = Instant::of($seconds, $nanoAdjustment);
 		self::assertSame($expectedISOString, $instant->toISOString());
+	}
+
+	public function testSerialization(): void
+	{
+		$instant = Instant::of(1, 499_000);
+
+		$serialized = serialize($instant);
+		$unserialized = unserialize($serialized);
+
+		self::assertTrue($instant->isEqualTo($unserialized));
 	}
 }

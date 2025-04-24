@@ -151,4 +151,18 @@ final class MonthDay implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'month' => $this->month,
+			'day' => $this->day,
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->month = $data['month'];
+		$this->day = $data['day'];
+	}
 }

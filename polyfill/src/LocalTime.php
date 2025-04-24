@@ -364,4 +364,22 @@ final class LocalTime implements JsonSerializable, Stringable
 	{
 		return $this->toISOString();
 	}
+
+	public function __serialize(): array
+	{
+		return [
+			'hour' => $this->hour,
+			'minute' => $this->minute,
+			'second' => $this->second,
+			'nano' => $this->nano,
+		];
+	}
+
+	public function __unserialize(array $data): void
+	{
+		$this->hour = $data['hour'];
+		$this->minute = $data['minute'];
+		$this->second = $data['second'];
+		$this->nano = $data['nano'];
+	}
 }
