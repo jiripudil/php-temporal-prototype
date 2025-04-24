@@ -88,7 +88,7 @@ ZEND_METHOD(Temporal_LocalTime, now) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_LocalTime, parse) {
+ZEND_METHOD(Temporal_LocalTime, fromISOString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)

@@ -64,7 +64,7 @@ final class TimeZoneOffset extends TimeZone
 		return $utc;
 	}
 
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		if ($text === 'Z' || $text === 'z') {
 			return self::utc();

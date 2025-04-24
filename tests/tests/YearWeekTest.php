@@ -40,20 +40,20 @@ final class YearWeekTest extends TemporalTestCase
 		self::assertYearWeek($yearWeek, 1970, 1);
 	}
 
-	public static function provideParseData(): iterable
+	public static function provideFromISOStringData(): iterable
 	{
 		yield ['1970-W01', 1970, 1];
 		yield ['-0001-W52', -1, 52];
 	}
 
-	#[DataProvider('provideParseData')]
-	public function testParse(string $text, int $expectedYear, int $expectedWeek): void
+	#[DataProvider('provideFromISOStringData')]
+	public function testFromISOString(string $text, int $expectedYear, int $expectedWeek): void
 	{
-		$yearWeek = YearWeek::parse($text);
+		$yearWeek = YearWeek::fromISOString($text);
 		self::assertYearWeek($yearWeek, $expectedYear, $expectedWeek);
 	}
 
-	public static function provideInvalidParseData(): iterable
+	public static function provideInvalidFromISOStringData(): iterable
 	{
 		yield [''];
 		yield ['70-W52'];
@@ -62,13 +62,13 @@ final class YearWeekTest extends TemporalTestCase
 		yield ['--1970-W42'];
 	}
 
-	#[DataProvider('provideInvalidParseData')]
-	public function testInvalidParse(string $text): void
+	#[DataProvider('provideInvalidFromISOStringData')]
+	public function testInvalidFromISOString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		YearWeek::parse($text);
+		YearWeek::fromISOString($text);
 	}
 
 	public function testAtDay(): void

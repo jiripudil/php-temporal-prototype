@@ -10,7 +10,7 @@ namespace Temporal
 		public static function of(LocalDateTime $dateTime, TimeZone $timeZone): ZonedDateTime {}
 		public static function ofInstant(Instant $instant, TimeZone $timeZone): ZonedDateTime {}
 		public static function now(TimeZone $timeZone, Clock|null $clock = null): ZonedDateTime {}
-		public static function parse(string $text): ZonedDateTime {}
+		public static function fromISOString(string $text): ZonedDateTime {}
 		public function getDateTime(): LocalDateTime {}
 		public function getDate(): LocalDate {}
 		public function withDate(LocalDate $date): ZonedDateTime {}

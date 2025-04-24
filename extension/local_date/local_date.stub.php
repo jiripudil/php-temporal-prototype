@@ -11,7 +11,7 @@ namespace Temporal
 		public static function ofDayOfYear(int $year, int $dayOfYear): LocalDate {}
 		public static function ofEpochDay(int $epochDay): LocalDate {}
 		public static function now(TimeZone $timeZone, Clock|null $clock = null): LocalDate {}
-		public static function parse(string $text): LocalDate {}
+		public static function fromISOString(string $text): LocalDate {}
 		public static function min(): LocalDate {}
 		public static function max(): LocalDate {}
 		public function getYear(): int {}

@@ -10,7 +10,7 @@ namespace Temporal
 		public static function of(int $hour, int $minute, int $second = 0, int $nano = 0): LocalTime {}
 		public static function ofSecondOfDay(int $secondOfDay, int $nano = 0): LocalTime {}
 		public static function now(TimeZone $timeZone, Clock|null $clock = null): LocalTime {}
-		public static function parse(string $text): LocalTime {}
+		public static function fromISOString(string $text): LocalTime {}
 		public static function midnight(): LocalTime {}
 		public static function noon(): LocalTime {}
 		public static function min(): LocalTime {}

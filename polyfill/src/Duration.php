@@ -33,7 +33,7 @@ final class Duration implements JsonSerializable, Stringable
 		return $zero;
 	}
 
-	public static function parse(string $value): self
+	public static function fromISOString(string $value): self
 	{
 		$pattern = '/^([+\-]?)P(?:([+\-]?[0-9]+)D)?(?:T(?:([+\-]?[0-9]+)H)?(?:([+\-]?[0-9]+)M)?(?:([+\-]?[0-9]+)(?:\.([0-9]{1,9}))?S)?)?()$/i';
 

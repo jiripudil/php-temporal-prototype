@@ -10,7 +10,7 @@
 #include "time_zone_handlers.h"
 #include "time_zone_obj.h"
 
-ZEND_METHOD(Temporal_TimeZone, parse) {
+ZEND_METHOD(Temporal_TimeZone, fromISOString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)

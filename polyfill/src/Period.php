@@ -53,7 +53,7 @@ final class Period implements JsonSerializable, Stringable
 		return $start->until($endExclusive);
 	}
 
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		$pattern = '/^([+\-]?)P(?:([+\-]?[0-9]+)Y)?(?:([+\-]?[0-9]+)M)?(?:([+\-]?[0-9]+)W)?(?:([+\-]?[0-9]+)D)?()$/i';
 

@@ -69,7 +69,7 @@ final class LocalTime implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getTime();
 	}
 
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		$pattern = '/^(\d{2}):(\d{2})(?::(\d{2})(?:\\.(\d{1,9}))?)?()$/';
 

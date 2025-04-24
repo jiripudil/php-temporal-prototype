@@ -6,7 +6,7 @@ namespace Temporal
 {
 	abstract class TimeZone implements \JsonSerializable, \Stringable
 	{
-		public static function parse(string $text): TimeZone {}
+		public static function fromISOString(string $text): TimeZone {}
 		public static function utc(): TimeZone {}
 		abstract public function getId(): string {}
 		abstract public function getOffset(Instant $instant): int {}

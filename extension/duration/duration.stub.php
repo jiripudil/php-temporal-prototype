@@ -15,7 +15,7 @@ namespace Temporal
 	
 		private function __construct() {}
 		public static function zero(): Duration {}
-		public static function parse(string $value): Duration {}
+		public static function fromISOString(string $value): Duration {}
 		public static function ofSeconds(int $seconds, int $nanoAdjustment = 0): Duration {}
 		public static function ofMinutes(int $minutes): Duration {}
 		public static function ofHours(int $hours): Duration {}

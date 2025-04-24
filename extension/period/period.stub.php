@@ -14,7 +14,7 @@ namespace Temporal
 		public static function ofDays(int $days): Period {}
 		public static function zero(): Period {}
 		public static function between(LocalDate $start, LocalDate $endExclusive): Period {}
-		public static function parse(string $text): Period {}
+		public static function fromISOString(string $text): Period {}
 		public function getYears(): int {}
 		public function withYears(int $years): Period {}
 		public function plusYears(int $years): Period {}

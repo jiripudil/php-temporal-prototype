@@ -42,20 +42,20 @@ final class MonthDayTest extends TemporalTestCase
 		self::assertMonthDay($monthDay, 12, 31);
 	}
 
-	public static function provideParseData(): iterable
+	public static function provideFromISOStringData(): iterable
 	{
 		yield ['--01-01', 1, 1];
 		yield ['--12-31', 12, 31];
 	}
 
-	#[DataProvider('provideParseData')]
-	public function testParse(string $text, int $expectedMonth, int $expectedDay): void
+	#[DataProvider('provideFromISOStringData')]
+	public function testFromISOString(string $text, int $expectedMonth, int $expectedDay): void
 	{
-		$monthDay = MonthDay::parse($text);
+		$monthDay = MonthDay::fromISOString($text);
 		self::assertMonthDay($monthDay, $expectedMonth, $expectedDay);
 	}
 
-	public static function provideInvalidParseData(): iterable
+	public static function provideInvalidFromISOStringData(): iterable
 	{
 		yield [''];
 		yield ['--'];
@@ -64,13 +64,13 @@ final class MonthDayTest extends TemporalTestCase
 		yield ['1-31'];
 	}
 
-	#[DataProvider('provideInvalidParseData')]
-	public function testInvalidParse(string $text): void
+	#[DataProvider('provideInvalidFromISOStringData')]
+	public function testInvalidFromISOString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		MonthDay::parse($text);
+		MonthDay::fromISOString($text);
 	}
 
 	public function testExistsInYear(): void

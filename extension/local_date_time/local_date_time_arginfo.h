@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: f67a3982fe4bee616f4d32a7f68881c3669929ed */
+ * Stub hash: adc831ee713670cb0f4bb328b0ff86385bae1c76 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_LocalDateTime___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -24,7 +24,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDateTime_now,
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDateTime_parse, 0, 1, Temporal\\LocalDateTime, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDateTime_fromISOString, 0, 1, Temporal\\LocalDateTime, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -230,7 +230,7 @@ ZEND_METHOD(Temporal_LocalDateTime, __construct);
 ZEND_METHOD(Temporal_LocalDateTime, of);
 ZEND_METHOD(Temporal_LocalDateTime, ofDateTime);
 ZEND_METHOD(Temporal_LocalDateTime, now);
-ZEND_METHOD(Temporal_LocalDateTime, parse);
+ZEND_METHOD(Temporal_LocalDateTime, fromISOString);
 ZEND_METHOD(Temporal_LocalDateTime, min);
 ZEND_METHOD(Temporal_LocalDateTime, max);
 ZEND_METHOD(Temporal_LocalDateTime, getDate);
@@ -304,7 +304,7 @@ static const zend_function_entry class_Temporal_LocalDateTime_methods[] = {
 	ZEND_ME(Temporal_LocalDateTime, of, arginfo_class_Temporal_LocalDateTime_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDateTime, ofDateTime, arginfo_class_Temporal_LocalDateTime_ofDateTime, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDateTime, now, arginfo_class_Temporal_LocalDateTime_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_LocalDateTime, parse, arginfo_class_Temporal_LocalDateTime_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_LocalDateTime, fromISOString, arginfo_class_Temporal_LocalDateTime_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDateTime, min, arginfo_class_Temporal_LocalDateTime_min, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDateTime, max, arginfo_class_Temporal_LocalDateTime_max, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDateTime, getDate, arginfo_class_Temporal_LocalDateTime_getDate, ZEND_ACC_PUBLIC)

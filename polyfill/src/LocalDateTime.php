@@ -40,7 +40,7 @@ final class LocalDateTime implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getDateTime();
 	}
 
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		$pattern = '/^(-?\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\\.(\d{1,9}))?)?()$/';
 

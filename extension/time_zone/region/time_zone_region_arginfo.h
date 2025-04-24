@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 542067bd8be7cad92c0283f58865eee3a6838dc7 */
+ * Stub hash: 4edc3657629e7dbd6d3be873f795b4761c0d5bcc */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_TimeZoneRegion___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -8,7 +8,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZoneRegion_of,
 	ZEND_ARG_TYPE_INFO(0, id, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZoneRegion_parse, 0, 1, Temporal\\TimeZoneRegion, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZoneRegion_fromISOString, 0, 1, Temporal\\TimeZoneRegion, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -31,7 +31,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_METHOD(Temporal_TimeZoneRegion, __construct);
 ZEND_METHOD(Temporal_TimeZoneRegion, of);
-ZEND_METHOD(Temporal_TimeZoneRegion, parse);
+ZEND_METHOD(Temporal_TimeZoneRegion, fromISOString);
 ZEND_METHOD(Temporal_TimeZoneRegion, getId);
 ZEND_METHOD(Temporal_TimeZoneRegion, getOffset);
 ZEND_METHOD(Temporal_TimeZoneRegion, toDateTimeZone);
@@ -41,7 +41,7 @@ ZEND_METHOD(Temporal_TimeZoneRegion, __unserialize);
 static const zend_function_entry class_Temporal_TimeZoneRegion_methods[] = {
 	ZEND_ME(Temporal_TimeZoneRegion, __construct, arginfo_class_Temporal_TimeZoneRegion___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_TimeZoneRegion, of, arginfo_class_Temporal_TimeZoneRegion_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_TimeZoneRegion, parse, arginfo_class_Temporal_TimeZoneRegion_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_TimeZoneRegion, fromISOString, arginfo_class_Temporal_TimeZoneRegion_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_TimeZoneRegion, getId, arginfo_class_Temporal_TimeZoneRegion_getId, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_TimeZoneRegion, getOffset, arginfo_class_Temporal_TimeZoneRegion_getOffset, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_TimeZoneRegion, toDateTimeZone, arginfo_class_Temporal_TimeZoneRegion_toDateTimeZone, ZEND_ACC_PUBLIC)

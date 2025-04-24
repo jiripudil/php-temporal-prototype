@@ -81,7 +81,7 @@ final class DurationTest extends TemporalTestCase
 		self::assertDuration($duration, 2, 500_000_000);
 	}
 
-	public static function provideParseData(): iterable
+	public static function provideFromISOStringData(): iterable
 	{
 		yield ['PT0S', 0, 0];
 		yield ['PT-0S', 0, 0];
@@ -104,14 +104,14 @@ final class DurationTest extends TemporalTestCase
 		yield ['P1DT1H1M1.1S', 90061, 100_000_000];
 	}
 
-	#[DataProvider('provideParseData')]
-	public function testParse(string $text, int $expectedSeconds, int $expectedNanos): void
+	#[DataProvider('provideFromISOStringData')]
+	public function testFromISOString(string $text, int $expectedSeconds, int $expectedNanos): void
 	{
-		$duration = Duration::parse($text);
+		$duration = Duration::fromISOString($text);
 		self::assertDuration($duration, $expectedSeconds, $expectedNanos);
 	}
 
-	public static function provideInvalidParseData(): iterable
+	public static function provideInvalidFromISOStringData(): iterable
 	{
 		yield [''];
 		yield ['P'];
@@ -122,13 +122,13 @@ final class DurationTest extends TemporalTestCase
 		yield ['-PT'];
 	}
 
-	#[DataProvider('provideInvalidParseData')]
-	public function testInvalidParse(string $text): void
+	#[DataProvider('provideInvalidFromISOStringData')]
+	public function testInvalidFromISOString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		Duration::parse($text);
+		Duration::fromISOString($text);
 	}
 
 	public function testGetters(): void

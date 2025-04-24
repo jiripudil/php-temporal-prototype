@@ -10,7 +10,7 @@ use Stringable;
 
 abstract class TimeZone implements JsonSerializable, Stringable
 {
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		if ($text === 'Z' || $text === 'z') {
 			return TimeZoneOffset::utc();
@@ -21,10 +21,10 @@ abstract class TimeZone implements JsonSerializable, Stringable
 		}
 
 		if ($text[0] === '+' || $text[0] === '-') {
-			return TimeZoneOffset::parse($text);
+			return TimeZoneOffset::fromISOString($text);
 		}
 
-		return TimeZoneRegion::parse($text);
+		return TimeZoneRegion::fromISOString($text);
 	}
 
 	public static function utc(): self
@@ -45,7 +45,7 @@ abstract class TimeZone implements JsonSerializable, Stringable
 
 	public static function fromDateTimeZone(DateTimeZone $zone): self
 	{
-		return self::parse($zone->getName());
+		return self::fromISOString($zone->getName());
 	}
 
 	public function jsonSerialize(): string

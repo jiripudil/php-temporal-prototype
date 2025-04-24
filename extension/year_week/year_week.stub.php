@@ -9,7 +9,7 @@ namespace Temporal
 		private function __construct() {}
 		public static function of(int $year, int $month): YearWeek {}
 		public static function now(TimeZone $timeZone, Clock|null $clock = null): YearWeek {}
-		public static function parse(string $text): YearWeek {}
+		public static function fromISOString(string $text): YearWeek {}
 		public function getYear(): int {}
 		public function withYear(int $year): YearWeek {}
 		public function plusYears(int $years): YearWeek {}

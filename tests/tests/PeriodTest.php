@@ -56,7 +56,7 @@ final class PeriodTest extends TemporalTestCase
 		self::assertPeriod($period, 2, 10, 21);
 	}
 
-	public static function provideParseData(): iterable
+	public static function provideFromISOStringData(): iterable
 	{
 		yield ['P1Y2M3D', 1, 2, 3];
 		yield ['P1Y-1M', 1, -1, 0];
@@ -65,14 +65,14 @@ final class PeriodTest extends TemporalTestCase
 		yield ['-P4W', 0, 0, -28];
 	}
 
-	#[DataProvider('provideParseData')]
-	public function testParse(string $text, int $expectedYears, int $expectedMonths, int $expectedDays): void
+	#[DataProvider('provideFromISOStringData')]
+	public function testFromISOString(string $text, int $expectedYears, int $expectedMonths, int $expectedDays): void
 	{
-		$period = Period::parse($text);
+		$period = Period::fromISOString($text);
 		self::assertPeriod($period, $expectedYears, $expectedMonths, $expectedDays);
 	}
 
-	public static function provideInvalidParseData(): iterable
+	public static function provideInvalidFromISOStringData(): iterable
 	{
 		yield [''];
 		yield ['PT1S'];
@@ -81,13 +81,13 @@ final class PeriodTest extends TemporalTestCase
 		yield ['-PY'];
 	}
 
-	#[DataProvider('provideInvalidParseData')]
-	public function testInvalidParse(string $text): void
+	#[DataProvider('provideInvalidFromISOStringData')]
+	public function testInvalidFromISOString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		Period::parse($text);
+		Period::fromISOString($text);
 	}
 
 	public function testNegated(): void

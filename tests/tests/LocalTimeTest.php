@@ -58,9 +58,9 @@ final class LocalTimeTest extends TemporalTestCase
 	#[TestWith(['12:30:00.000000', 12, 30])]
 	#[TestWith(['12:30:59', 12, 30, 59])]
 	#[TestWith(['12:30:59.000000001', 12, 30, 59, 1])]
-	public function testParse(string $text, int $expectedHour, int $expectedMinute, int $expectedSecond = 0, int $expectedNano = 0): void
+	public function testFromISOString(string $text, int $expectedHour, int $expectedMinute, int $expectedSecond = 0, int $expectedNano = 0): void
 	{
-		$time = LocalTime::parse($text);
+		$time = LocalTime::fromISOString($text);
 		self::assertLocalTime($time, $expectedHour, $expectedMinute, $expectedSecond, $expectedNano);
 	}
 

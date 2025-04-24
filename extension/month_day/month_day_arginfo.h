@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 15707a2cd30f85baa1c27b309b26abcac327a977 */
+ * Stub hash: ce91ad0c6215558fe810308f06be1397b13f9736 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_MonthDay___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -14,7 +14,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_MonthDay_now, 0, 1
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_MonthDay_parse, 0, 1, Temporal\\MonthDay, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_MonthDay_fromISOString, 0, 1, Temporal\\MonthDay, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -72,7 +72,7 @@ ZEND_END_ARG_INFO()
 ZEND_METHOD(Temporal_MonthDay, __construct);
 ZEND_METHOD(Temporal_MonthDay, of);
 ZEND_METHOD(Temporal_MonthDay, now);
-ZEND_METHOD(Temporal_MonthDay, parse);
+ZEND_METHOD(Temporal_MonthDay, fromISOString);
 ZEND_METHOD(Temporal_MonthDay, getMonth);
 ZEND_METHOD(Temporal_MonthDay, withMonth);
 ZEND_METHOD(Temporal_MonthDay, getDayOfMonth);
@@ -95,7 +95,7 @@ static const zend_function_entry class_Temporal_MonthDay_methods[] = {
 	ZEND_ME(Temporal_MonthDay, __construct, arginfo_class_Temporal_MonthDay___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_MonthDay, of, arginfo_class_Temporal_MonthDay_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_MonthDay, now, arginfo_class_Temporal_MonthDay_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_MonthDay, parse, arginfo_class_Temporal_MonthDay_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_MonthDay, fromISOString, arginfo_class_Temporal_MonthDay_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_MonthDay, getMonth, arginfo_class_Temporal_MonthDay_getMonth, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_MonthDay, withMonth, arginfo_class_Temporal_MonthDay_withMonth, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_MonthDay, getDayOfMonth, arginfo_class_Temporal_MonthDay_getDayOfMonth, ZEND_ACC_PUBLIC)

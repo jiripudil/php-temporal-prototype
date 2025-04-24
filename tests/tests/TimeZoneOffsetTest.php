@@ -70,7 +70,7 @@ final class TimeZoneOffsetTest extends TemporalTestCase
 		self::assertSame('Z', $utc->getId());
 	}
 
-	public static function provideParseData(): iterable
+	public static function provideFromISOStringData(): iterable
 	{
 		yield ['Z', 0];
 		yield ['+01:00', 3600];
@@ -79,14 +79,14 @@ final class TimeZoneOffsetTest extends TemporalTestCase
 		yield ['-01:17:42', -4662];;
 	}
 
-	#[DataProvider('provideParseData')]
-	public function testParse(string $text, int $expectedTotalSeconds): void
+	#[DataProvider('provideFromISOStringData')]
+	public function testFromISOString(string $text, int $expectedTotalSeconds): void
 	{
-		$timeZone = TimeZoneOffset::parse($text);
+		$timeZone = TimeZoneOffset::fromISOString($text);
 		self::assertTimeZoneOffset($timeZone, $expectedTotalSeconds);
 	}
 
-	public static function provideInvalidParseData(): iterable
+	public static function provideInvalidFromISOStringData(): iterable
 	{
 		yield [''];
 		yield ['+01'];
@@ -95,13 +95,13 @@ final class TimeZoneOffsetTest extends TemporalTestCase
 		yield ['+01:1'];
 	}
 
-	#[DataProvider('provideInvalidParseData')]
-	public function testInvalidParse(string $text): void
+	#[DataProvider('provideInvalidFromISOStringData')]
+	public function testInvalidFromISOString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		TimeZoneOffset::parse($text);
+		TimeZoneOffset::fromISOString($text);
 	}
 
 	public function testGetOffset(): void

@@ -35,7 +35,7 @@ final class MonthDay implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getMonthDay();
 	}
 
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		$pattern = '/^--(\d{2})-(\d{2})()$/';
 

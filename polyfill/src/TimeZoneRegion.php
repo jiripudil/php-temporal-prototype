@@ -28,7 +28,7 @@ final class TimeZoneRegion extends TimeZone
 		}
 	}
 
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		try {
 			return self::of($text);

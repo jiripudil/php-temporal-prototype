@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 8fc434db28dfca0b95f59aa12def086911ba3afd */
+ * Stub hash: b2e780d809be9c0e3cfd55ba1291c40b97c91f56 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Duration___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -7,7 +7,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Duration_zero, 0, 0, Temporal\\Duration, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Duration_parse, 0, 1, Temporal\\Duration, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Duration_fromISOString, 0, 1, Temporal\\Duration, 0)
 	ZEND_ARG_TYPE_INFO(0, value, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -125,7 +125,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_METHOD(Temporal_Duration, __construct);
 ZEND_METHOD(Temporal_Duration, zero);
-ZEND_METHOD(Temporal_Duration, parse);
+ZEND_METHOD(Temporal_Duration, fromISOString);
 ZEND_METHOD(Temporal_Duration, ofSeconds);
 ZEND_METHOD(Temporal_Duration, ofMinutes);
 ZEND_METHOD(Temporal_Duration, ofHours);
@@ -173,7 +173,7 @@ ZEND_METHOD(Temporal_Duration, __unserialize);
 static const zend_function_entry class_Temporal_Duration_methods[] = {
 	ZEND_ME(Temporal_Duration, __construct, arginfo_class_Temporal_Duration___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_Duration, zero, arginfo_class_Temporal_Duration_zero, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_Duration, parse, arginfo_class_Temporal_Duration_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_Duration, fromISOString, arginfo_class_Temporal_Duration_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Duration, ofSeconds, arginfo_class_Temporal_Duration_ofSeconds, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Duration, ofMinutes, arginfo_class_Temporal_Duration_ofMinutes, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Duration, ofHours, arginfo_class_Temporal_Duration_ofHours, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)

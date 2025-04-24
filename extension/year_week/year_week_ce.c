@@ -59,7 +59,7 @@ ZEND_METHOD(Temporal_YearWeek, now) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_YearWeek, parse) {
+ZEND_METHOD(Temporal_YearWeek, fromISOString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)

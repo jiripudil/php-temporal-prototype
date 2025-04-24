@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: d5bdab3871fc4b019281b98feb328cd163c42709 */
+ * Stub hash: d0b6bfa444b8e2e2340e311e9c195f8b841bcd96 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_YearWeek___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -14,7 +14,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_YearWeek_now, 0, 1
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_YearWeek_parse, 0, 1, Temporal\\YearWeek, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_YearWeek_fromISOString, 0, 1, Temporal\\YearWeek, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -92,7 +92,7 @@ ZEND_END_ARG_INFO()
 ZEND_METHOD(Temporal_YearWeek, __construct);
 ZEND_METHOD(Temporal_YearWeek, of);
 ZEND_METHOD(Temporal_YearWeek, now);
-ZEND_METHOD(Temporal_YearWeek, parse);
+ZEND_METHOD(Temporal_YearWeek, fromISOString);
 ZEND_METHOD(Temporal_YearWeek, getYear);
 ZEND_METHOD(Temporal_YearWeek, withYear);
 ZEND_METHOD(Temporal_YearWeek, plusYears);
@@ -123,7 +123,7 @@ static const zend_function_entry class_Temporal_YearWeek_methods[] = {
 	ZEND_ME(Temporal_YearWeek, __construct, arginfo_class_Temporal_YearWeek___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_YearWeek, of, arginfo_class_Temporal_YearWeek_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_YearWeek, now, arginfo_class_Temporal_YearWeek_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_YearWeek, parse, arginfo_class_Temporal_YearWeek_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_YearWeek, fromISOString, arginfo_class_Temporal_YearWeek_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_YearWeek, getYear, arginfo_class_Temporal_YearWeek_getYear, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearWeek, withYear, arginfo_class_Temporal_YearWeek_withYear, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearWeek, plusYears, arginfo_class_Temporal_YearWeek_plusYears, ZEND_ACC_PUBLIC)

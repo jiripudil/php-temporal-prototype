@@ -38,7 +38,7 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 		}
 
 		// the date-time might not be valid for the given timeZone because of a DST transition
-		$dateTime = LocalDateTime::parse($dt->format('Y-m-d\TH:i:s'))->withNano($dateTime->getNano());
+		$dateTime = LocalDateTime::fromISOString($dt->format('Y-m-d\TH:i:s'))->withNano($dateTime->getNano());
 
 		return new self($dateTime, $timeZoneOffset, $timeZone, $instant);
 	}
@@ -49,7 +49,7 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 		$dt = new DateTime('@' . $instant->getEpochSecond(), $dtz);
 		$dt->setTimezone($dtz);
 
-		$localDateTime = LocalDateTime::parse($dt->format('Y-m-d\TH:i:s'));
+		$localDateTime = LocalDateTime::fromISOString($dt->format('Y-m-d\TH:i:s'));
 		$localDateTime = $localDateTime->withNano($instant->getNano());
 
 		if ($timeZone instanceof TimeZoneOffset) {
@@ -66,7 +66,7 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 		return self::ofInstant(Instant::now($clock), $timeZone);
 	}
 
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		$pattern = '/^(-?\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,9}))?)?([Zz]|[+-]\d{2}:\d{2}(?::\d{2})?)(?:\[(.+?)])?()$/';
 
@@ -86,9 +86,9 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 
 		$dateTime = LocalDateTime::of($year, $month, $day, $hour, $minute, $second, $nano);
 
-		$timeZone = TimeZoneOffset::parse($offset);
+		$timeZone = TimeZoneOffset::fromISOString($offset);
 		if ($timeZoneId !== '') {
-			$timeZone = TimeZoneRegion::parse($timeZoneId);
+			$timeZone = TimeZoneRegion::fromISOString($timeZoneId);
 		}
 
 		try {
@@ -505,7 +505,7 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 		$nano = $data['nano'];
 
 		$dateTime = LocalDateTime::of($year, $month, $day, $hour, $minute, $second, $nano);
-		$timeZone = TimeZone::parse($data['timeZone']);
+		$timeZone = TimeZone::fromISOString($data['timeZone']);
 		$zonedDateTime = self::of($dateTime, $timeZone);
 
 		$this->dateTime = $zonedDateTime->dateTime;

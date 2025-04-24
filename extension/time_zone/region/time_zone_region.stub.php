@@ -8,7 +8,7 @@ namespace Temporal
 	{
 		private function __construct() {}
 		public static function of(string $id): TimeZoneRegion {}
-		public static function parse(string $text): TimeZoneRegion {}
+		public static function fromISOString(string $text): TimeZoneRegion {}
 		public function getId(): string {}
 		public function getOffset(Instant $instant): int {}
 		public function toDateTimeZone(): \DateTimeZone {}

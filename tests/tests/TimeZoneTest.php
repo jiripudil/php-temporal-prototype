@@ -13,7 +13,7 @@ use Temporal\TimeZoneRegion;
 
 final class TimeZoneTest extends TemporalTestCase
 {
-	public static function provideParseData(): iterable
+	public static function provideFromISOStringData(): iterable
 	{
 		yield ['Z', TimeZoneOffset::class, 'Z'];
 		yield ['z', TimeZoneOffset::class, 'Z'];
@@ -27,16 +27,16 @@ final class TimeZoneTest extends TemporalTestCase
 	/**
 	 * @param class-string<TimeZone> $expectedClassName
 	 */
-	#[DataProvider('provideParseData')]
-	public function testParse(string $text, string $expectedClassName, string $expectedId): void
+	#[DataProvider('provideFromISOStringData')]
+	public function testFromISOString(string $text, string $expectedClassName, string $expectedId): void
 	{
-		$timeZone = TimeZone::parse($text);
+		$timeZone = TimeZone::fromISOString($text);
 
 		self::assertInstanceOf($expectedClassName, $timeZone);
 		self::assertSame($expectedId, $timeZone->getId());
 	}
 
-	public static function provideInvalidParseData(): iterable
+	public static function provideInvalidFromISOStringData(): iterable
 	{
 		yield [''];
 		yield ['+'];
@@ -44,13 +44,13 @@ final class TimeZoneTest extends TemporalTestCase
 		yield ['Europe/Non_Existent_City'];
 	}
 
-	#[DataProvider('provideInvalidParseData')]
-	public function testInvalidParse(string $text): void
+	#[DataProvider('provideInvalidFromISOStringData')]
+	public function testInvalidFromISOString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		TimeZone::parse($text);
+		TimeZone::fromISOString($text);
 	}
 
 	public function testUtc(): void

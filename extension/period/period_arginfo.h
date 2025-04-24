@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: aa984e3f00c7be8a092cc2e670a5b5244b6384de */
+ * Stub hash: 67d040c57d8bfb76ce3ebaa02acbf22bb56b6acb */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Period___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -34,7 +34,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Period_between, 0,
 	ZEND_ARG_OBJ_INFO(0, endExclusive, Temporal\\LocalDate, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Period_parse, 0, 1, Temporal\\Period, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Period_fromISOString, 0, 1, Temporal\\Period, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -94,7 +94,7 @@ ZEND_METHOD(Temporal_Period, ofWeeks);
 ZEND_METHOD(Temporal_Period, ofDays);
 ZEND_METHOD(Temporal_Period, zero);
 ZEND_METHOD(Temporal_Period, between);
-ZEND_METHOD(Temporal_Period, parse);
+ZEND_METHOD(Temporal_Period, fromISOString);
 ZEND_METHOD(Temporal_Period, getYears);
 ZEND_METHOD(Temporal_Period, withYears);
 ZEND_METHOD(Temporal_Period, plusYears);
@@ -125,7 +125,7 @@ static const zend_function_entry class_Temporal_Period_methods[] = {
 	ZEND_ME(Temporal_Period, ofDays, arginfo_class_Temporal_Period_ofDays, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Period, zero, arginfo_class_Temporal_Period_zero, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Period, between, arginfo_class_Temporal_Period_between, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_Period, parse, arginfo_class_Temporal_Period_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_Period, fromISOString, arginfo_class_Temporal_Period_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Period, getYears, arginfo_class_Temporal_Period_getYears, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Period, withYears, arginfo_class_Temporal_Period_withYears, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Period, plusYears, arginfo_class_Temporal_Period_plusYears, ZEND_ACC_PUBLIC)

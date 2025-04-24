@@ -35,7 +35,7 @@ final class YearWeek implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getYearWeek();
 	}
 
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		$pattern = '/^(-?\d{4})-W(\d{2})()$/';
 

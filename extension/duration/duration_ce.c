@@ -22,7 +22,7 @@ ZEND_METHOD(Temporal_Duration, zero) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_Duration, parse) {
+ZEND_METHOD(Temporal_Duration, fromISOString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)

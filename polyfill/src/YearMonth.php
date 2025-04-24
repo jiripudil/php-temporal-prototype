@@ -35,7 +35,7 @@ final class YearMonth implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getYearMonth();
 	}
 
-	public static function parse(string $text): self
+	public static function fromISOString(string $text): self
 	{
 		$pattern = '/^(-?\d{4})-(\d{2})()$/';
 

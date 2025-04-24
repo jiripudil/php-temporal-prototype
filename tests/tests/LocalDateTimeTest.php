@@ -71,7 +71,7 @@ final class LocalDateTimeTest extends TemporalTestCase
 		self::assertLocalDateTime($dateTime, 1970, 1, 1, 1, 45);
 	}
 
-	public static function provideParseData(): iterable
+	public static function provideFromISOStringData(): iterable
 	{
 		yield ['1970-01-01T00:00', 1970, 1, 1, 0, 0];
 		yield ['1970-01-01T12:30', 1970, 1, 1, 12, 30];
@@ -81,10 +81,10 @@ final class LocalDateTimeTest extends TemporalTestCase
 		yield ['1970-01-01T12:30:59.000000001', 1970, 1, 1, 12, 30, 59, 1];
 	}
 
-	#[DataProvider('provideParseData')]
-	public function testParse(string $text, int $expectedYear, int $expectedMonth, int $expectedDay, int $expectedHour, int $expectedMinute, int $expectedSecond = 0, int $expectedNano = 0): void
+	#[DataProvider('provideFromISOStringData')]
+	public function testFromISOString(string $text, int $expectedYear, int $expectedMonth, int $expectedDay, int $expectedHour, int $expectedMinute, int $expectedSecond = 0, int $expectedNano = 0): void
 	{
-		$dateTime = LocalDateTime::parse($text);
+		$dateTime = LocalDateTime::fromISOString($text);
 		self::assertLocalDateTime($dateTime, $expectedYear, $expectedMonth, $expectedDay, $expectedHour, $expectedMinute, $expectedSecond, $expectedNano);
 	}
 

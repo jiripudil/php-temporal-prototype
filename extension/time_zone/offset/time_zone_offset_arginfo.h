@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: e3512101ce40b142718bba7a2eacd70e7cf418b3 */
+ * Stub hash: 48356d782b9b618b62bb1f2867cf33880320da8f */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_TimeZoneOffset___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -14,7 +14,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZoneOffset_ofT
 	ZEND_ARG_TYPE_INFO(0, totalSeconds, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZoneOffset_parse, 0, 1, Temporal\\TimeZoneOffset, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZoneOffset_fromISOString, 0, 1, Temporal\\TimeZoneOffset, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -44,7 +44,7 @@ ZEND_END_ARG_INFO()
 ZEND_METHOD(Temporal_TimeZoneOffset, __construct);
 ZEND_METHOD(Temporal_TimeZoneOffset, of);
 ZEND_METHOD(Temporal_TimeZoneOffset, ofTotalSeconds);
-ZEND_METHOD(Temporal_TimeZoneOffset, parse);
+ZEND_METHOD(Temporal_TimeZoneOffset, fromISOString);
 ZEND_METHOD(Temporal_TimeZoneOffset, utc);
 ZEND_METHOD(Temporal_TimeZoneOffset, getTotalSeconds);
 ZEND_METHOD(Temporal_TimeZoneOffset, getId);
@@ -57,7 +57,7 @@ static const zend_function_entry class_Temporal_TimeZoneOffset_methods[] = {
 	ZEND_ME(Temporal_TimeZoneOffset, __construct, arginfo_class_Temporal_TimeZoneOffset___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_TimeZoneOffset, of, arginfo_class_Temporal_TimeZoneOffset_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_TimeZoneOffset, ofTotalSeconds, arginfo_class_Temporal_TimeZoneOffset_ofTotalSeconds, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_TimeZoneOffset, parse, arginfo_class_Temporal_TimeZoneOffset_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_TimeZoneOffset, fromISOString, arginfo_class_Temporal_TimeZoneOffset_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_TimeZoneOffset, utc, arginfo_class_Temporal_TimeZoneOffset_utc, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_TimeZoneOffset, getTotalSeconds, arginfo_class_Temporal_TimeZoneOffset_getTotalSeconds, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_TimeZoneOffset, getId, arginfo_class_Temporal_TimeZoneOffset_getId, ZEND_ACC_PUBLIC)

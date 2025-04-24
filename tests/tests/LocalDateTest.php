@@ -47,14 +47,14 @@ final class LocalDateTest extends TemporalTestCase
 		self::assertLocalDate($date, 1969, 12, 31);
 	}
 
-	public function testParse(): void
+	public function testFromISOString(): void
 	{
-		$date = LocalDate::parse('1970-01-01');
+		$date = LocalDate::fromISOString('1970-01-01');
 		self::assertLocalDate($date, 1970, 1, 1);
 
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
-		LocalDate::parse('1970-13-42');
+		LocalDate::fromISOString('1970-13-42');
 	}
 
 	public function testMin(): void

@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 2e657bdf3afc12a4153e3390c765abdc4d0a41a4 */
+ * Stub hash: 1108f5472bef1ca299e8d84dd284f6721a884200 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_ZonedDateTime___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -19,7 +19,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_ZonedDateTime_now,
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_ZonedDateTime_parse, 0, 1, Temporal\\ZonedDateTime, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_ZonedDateTime_fromISOString, 0, 1, Temporal\\ZonedDateTime, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -237,7 +237,7 @@ ZEND_METHOD(Temporal_ZonedDateTime, __construct);
 ZEND_METHOD(Temporal_ZonedDateTime, of);
 ZEND_METHOD(Temporal_ZonedDateTime, ofInstant);
 ZEND_METHOD(Temporal_ZonedDateTime, now);
-ZEND_METHOD(Temporal_ZonedDateTime, parse);
+ZEND_METHOD(Temporal_ZonedDateTime, fromISOString);
 ZEND_METHOD(Temporal_ZonedDateTime, getDateTime);
 ZEND_METHOD(Temporal_ZonedDateTime, getDate);
 ZEND_METHOD(Temporal_ZonedDateTime, withDate);
@@ -315,7 +315,7 @@ static const zend_function_entry class_Temporal_ZonedDateTime_methods[] = {
 	ZEND_ME(Temporal_ZonedDateTime, of, arginfo_class_Temporal_ZonedDateTime_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_ZonedDateTime, ofInstant, arginfo_class_Temporal_ZonedDateTime_ofInstant, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_ZonedDateTime, now, arginfo_class_Temporal_ZonedDateTime_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_ZonedDateTime, parse, arginfo_class_Temporal_ZonedDateTime_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_ZonedDateTime, fromISOString, arginfo_class_Temporal_ZonedDateTime_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_ZonedDateTime, getDateTime, arginfo_class_Temporal_ZonedDateTime_getDateTime, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_ZonedDateTime, getDate, arginfo_class_Temporal_ZonedDateTime_getDate, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_ZonedDateTime, withDate, arginfo_class_Temporal_ZonedDateTime_withDate, ZEND_ACC_PUBLIC)

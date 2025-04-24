@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 9953236eb7af627368f20660ea4915b37c901741 */
+ * Stub hash: 53deb59cbb3913dd6604cc1bf3e2667b8fe419b5 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_YearMonth___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -14,7 +14,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_YearMonth_now, 0, 
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_YearMonth_parse, 0, 1, Temporal\\YearMonth, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_YearMonth_fromISOString, 0, 1, Temporal\\YearMonth, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -94,7 +94,7 @@ ZEND_END_ARG_INFO()
 ZEND_METHOD(Temporal_YearMonth, __construct);
 ZEND_METHOD(Temporal_YearMonth, of);
 ZEND_METHOD(Temporal_YearMonth, now);
-ZEND_METHOD(Temporal_YearMonth, parse);
+ZEND_METHOD(Temporal_YearMonth, fromISOString);
 ZEND_METHOD(Temporal_YearMonth, getYear);
 ZEND_METHOD(Temporal_YearMonth, withYear);
 ZEND_METHOD(Temporal_YearMonth, plusYears);
@@ -126,7 +126,7 @@ static const zend_function_entry class_Temporal_YearMonth_methods[] = {
 	ZEND_ME(Temporal_YearMonth, __construct, arginfo_class_Temporal_YearMonth___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_YearMonth, of, arginfo_class_Temporal_YearMonth_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_YearMonth, now, arginfo_class_Temporal_YearMonth_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_YearMonth, parse, arginfo_class_Temporal_YearMonth_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_YearMonth, fromISOString, arginfo_class_Temporal_YearMonth_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_YearMonth, getYear, arginfo_class_Temporal_YearMonth_getYear, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearMonth, withYear, arginfo_class_Temporal_YearMonth_withYear, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearMonth, plusYears, arginfo_class_Temporal_YearMonth_plusYears, ZEND_ACC_PUBLIC)

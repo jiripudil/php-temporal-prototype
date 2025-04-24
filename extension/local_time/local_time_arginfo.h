@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 553d4531c8e321c5d792f066eede6cc5afe99e44 */
+ * Stub hash: 30f99efbf733a3d718789dfbaa7b115208482a2d */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_LocalTime___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -21,7 +21,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalTime_now, 0, 
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalTime_parse, 0, 1, Temporal\\LocalTime, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalTime_fromISOString, 0, 1, Temporal\\LocalTime, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -145,7 +145,7 @@ ZEND_METHOD(Temporal_LocalTime, __construct);
 ZEND_METHOD(Temporal_LocalTime, of);
 ZEND_METHOD(Temporal_LocalTime, ofSecondOfDay);
 ZEND_METHOD(Temporal_LocalTime, now);
-ZEND_METHOD(Temporal_LocalTime, parse);
+ZEND_METHOD(Temporal_LocalTime, fromISOString);
 ZEND_METHOD(Temporal_LocalTime, midnight);
 ZEND_METHOD(Temporal_LocalTime, noon);
 ZEND_METHOD(Temporal_LocalTime, min);
@@ -191,7 +191,7 @@ static const zend_function_entry class_Temporal_LocalTime_methods[] = {
 	ZEND_ME(Temporal_LocalTime, of, arginfo_class_Temporal_LocalTime_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, ofSecondOfDay, arginfo_class_Temporal_LocalTime_ofSecondOfDay, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, now, arginfo_class_Temporal_LocalTime_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_LocalTime, parse, arginfo_class_Temporal_LocalTime_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_LocalTime, fromISOString, arginfo_class_Temporal_LocalTime_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, midnight, arginfo_class_Temporal_LocalTime_midnight, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, noon, arginfo_class_Temporal_LocalTime_noon, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, min, arginfo_class_Temporal_LocalTime_min, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)

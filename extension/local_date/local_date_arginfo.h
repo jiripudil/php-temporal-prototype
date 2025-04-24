@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 9825553bb21d9b5943e15848eb782dafa8e76825 */
+ * Stub hash: 1429d7905294ed784fe6f00ab70a1f450f6e8228 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_LocalDate___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -24,7 +24,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDate_now, 0, 
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDate_parse, 0, 1, Temporal\\LocalDate, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDate_fromISOString, 0, 1, Temporal\\LocalDate, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -173,7 +173,7 @@ ZEND_METHOD(Temporal_LocalDate, of);
 ZEND_METHOD(Temporal_LocalDate, ofDayOfYear);
 ZEND_METHOD(Temporal_LocalDate, ofEpochDay);
 ZEND_METHOD(Temporal_LocalDate, now);
-ZEND_METHOD(Temporal_LocalDate, parse);
+ZEND_METHOD(Temporal_LocalDate, fromISOString);
 ZEND_METHOD(Temporal_LocalDate, min);
 ZEND_METHOD(Temporal_LocalDate, max);
 ZEND_METHOD(Temporal_LocalDate, getYear);
@@ -229,7 +229,7 @@ static const zend_function_entry class_Temporal_LocalDate_methods[] = {
 	ZEND_ME(Temporal_LocalDate, ofDayOfYear, arginfo_class_Temporal_LocalDate_ofDayOfYear, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, ofEpochDay, arginfo_class_Temporal_LocalDate_ofEpochDay, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, now, arginfo_class_Temporal_LocalDate_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_LocalDate, parse, arginfo_class_Temporal_LocalDate_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_LocalDate, fromISOString, arginfo_class_Temporal_LocalDate_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, min, arginfo_class_Temporal_LocalDate_min, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, max, arginfo_class_Temporal_LocalDate_max, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, getYear, arginfo_class_Temporal_LocalDate_getYear, ZEND_ACC_PUBLIC)
