@@ -14,7 +14,7 @@ temporal_zoned_date_time_t *temporal_zoned_date_time_of(temporal_local_date_time
 	temporal_zoned_date_time_t *zoned_date_time = ecalloc(1, sizeof(temporal_zoned_date_time_t));
 
 	zoned_date_time->instant = temporal_time_zone_local_date_time_to_instant(zone, date_time);
-	zoned_date_time->zone = temporal_time_zone_clone(zone);
+	zoned_date_time->zone = zone;
 
 	// the date-time might not be valid for the given timeZone because of a DST transition
 	zoned_date_time->date_time = temporal_time_zone_instant_to_local_date_time(zone, zoned_date_time->instant);
@@ -33,8 +33,8 @@ temporal_zoned_date_time_t *temporal_zoned_date_time_of_instant(temporal_instant
 	temporal_zoned_date_time_t *zoned_date_time = ecalloc(1, sizeof(temporal_zoned_date_time_t));
 
 	zoned_date_time->date_time = temporal_time_zone_instant_to_local_date_time(zone, instant);
-	zoned_date_time->instant = temporal_instant_clone(instant);
-	zoned_date_time->zone = temporal_time_zone_clone(zone);
+	zoned_date_time->instant = instant;
+	zoned_date_time->zone = zone;
 
 	if (IS_TEMPORAL_TIME_ZONE_OFFSET(zone)) {
 		zoned_date_time->zone_offset = temporal_time_zone_offset_clone(zone->offset);

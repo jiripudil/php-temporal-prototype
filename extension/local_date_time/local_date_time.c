@@ -19,8 +19,8 @@ temporal_local_date_time_t *temporal_local_date_time_of(zend_long year, zend_lon
 temporal_local_date_time_t *temporal_local_date_time_of_date_time(temporal_local_date_t *date, temporal_local_time_t *time) {
 	temporal_local_date_time_t *date_time = ecalloc(1, sizeof(temporal_local_date_time_t));
 
-	date_time->date = temporal_local_date_clone(date);
-	date_time->time = temporal_local_time_clone(time);
+	date_time->date = date;
+	date_time->time = time;
 
 	return date_time;
 }

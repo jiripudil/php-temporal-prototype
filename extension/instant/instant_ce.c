@@ -309,7 +309,11 @@ ZEND_METHOD(Temporal_Instant, atTimeZone) {
 	Z_PARAM_OBJECT_OF_CLASS(time_zone, php_temporal_time_zone_ce)
 	ZEND_PARSE_PARAMETERS_END();
 
-	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_of_instant(THIS_TEMPORAL_INSTANT_INTERNAL(), Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone));
+	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_of_instant(
+		temporal_instant_clone(THIS_TEMPORAL_INSTANT_INTERNAL()),
+		temporal_time_zone_clone(Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone))
+	);
+
 	zend_object *object = php_temporal_zoned_date_time_create_object_ex(zoned_date_time);
 	RETURN_OBJ(object);
 }

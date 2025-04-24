@@ -127,7 +127,15 @@ temporal_local_date_t *temporal_local_date_clone(temporal_local_date_t *local_da
 }
 
 temporal_local_date_t *temporal_local_date_plus_years(temporal_local_date_t *local_date, zend_long years) {
-	return temporal_local_date_of(local_date->year + years, local_date->month, local_date->day);
+	zend_long year = local_date->year + years;
+	zend_long month = local_date->month;
+	zend_long day = local_date->day;
+	zend_long max_day = days_in_month(year, local_date->month);
+	if (day > max_day) {
+		day = max_day;
+	}
+
+	return temporal_local_date_of(year, month, day);
 }
 
 temporal_local_date_t *temporal_local_date_plus_months(temporal_local_date_t *local_date, zend_long months) {

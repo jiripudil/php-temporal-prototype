@@ -81,8 +81,8 @@ ZEND_METHOD(Temporal_LocalDateTime, ofDateTime) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_time_t *date_time = temporal_local_date_time_of_date_time(
-		Z_TEMPORAL_LOCAL_DATE_INTERNAL_P(date),
-		Z_TEMPORAL_LOCAL_TIME_INTERNAL_P(time)
+		temporal_local_date_clone(Z_TEMPORAL_LOCAL_DATE_INTERNAL_P(date)),
+		temporal_local_time_clone(Z_TEMPORAL_LOCAL_TIME_INTERNAL_P(time))
 	);
 
 	zend_object *object = php_temporal_local_date_time_create_object_ex(date_time);
@@ -99,7 +99,7 @@ ZEND_METHOD(Temporal_LocalDateTime, now) {
 	Z_PARAM_OBJ_OF_CLASS_OR_NULL(clock, php_temporal_clock_ce)
 	ZEND_PARSE_PARAMETERS_END();
 
-	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_now(Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone), clock);
+	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_now(temporal_time_zone_clone(Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone)), clock);
 	temporal_local_date_time_t *local_date_time = temporal_local_date_time_clone(zoned_date_time->date_time);
 
 	temporal_zoned_date_time_free(zoned_date_time);
@@ -159,7 +159,7 @@ ZEND_METHOD(Temporal_LocalDateTime, withDate) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(
-		Z_TEMPORAL_LOCAL_DATE_INTERNAL_P(date),
+		temporal_local_date_clone(Z_TEMPORAL_LOCAL_DATE_INTERNAL_P(date)),
 		temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time)
 	);
 
@@ -358,7 +358,7 @@ ZEND_METHOD(Temporal_LocalDateTime, withTime) {
 
 	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(
 		temporal_local_date_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->date),
-		Z_TEMPORAL_LOCAL_TIME_INTERNAL_P(time)
+		temporal_local_time_clone(Z_TEMPORAL_LOCAL_TIME_INTERNAL_P(time))
 	);
 
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
@@ -487,7 +487,7 @@ ZEND_METHOD(Temporal_LocalDateTime, plusPeriod) {
 	temporal_local_date_free(y);
 	temporal_local_date_free(m);
 
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -500,7 +500,7 @@ ZEND_METHOD(Temporal_LocalDateTime, plusYears) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_t *date = temporal_local_date_plus_years(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->date, years);
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -513,7 +513,7 @@ ZEND_METHOD(Temporal_LocalDateTime, plusMonths) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_t *date = temporal_local_date_plus_months(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->date, months);
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -526,7 +526,7 @@ ZEND_METHOD(Temporal_LocalDateTime, plusWeeks) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_t *date = temporal_local_date_plus_days(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->date, weeks * 7);
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -539,7 +539,7 @@ ZEND_METHOD(Temporal_LocalDateTime, plusDays) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_t *date = temporal_local_date_plus_days(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->date, days);
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -558,7 +558,7 @@ ZEND_METHOD(Temporal_LocalDateTime, minusPeriod) {
 	temporal_local_date_free(y);
 	temporal_local_date_free(m);
 
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -571,7 +571,7 @@ ZEND_METHOD(Temporal_LocalDateTime, minusYears) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_t *date = temporal_local_date_plus_years(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->date, -years);
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -584,7 +584,7 @@ ZEND_METHOD(Temporal_LocalDateTime, minusMonths) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_t *date = temporal_local_date_plus_months(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->date, -months);
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -597,7 +597,7 @@ ZEND_METHOD(Temporal_LocalDateTime, minusWeeks) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_t *date = temporal_local_date_plus_days(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->date, -weeks * 7);
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -610,7 +610,7 @@ ZEND_METHOD(Temporal_LocalDateTime, minusDays) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_t *date = temporal_local_date_plus_days(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->date, -days);
-	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time);
+	temporal_local_date_time_t *copy = temporal_local_date_time_of_date_time(date, temporal_local_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()->time));
 	zend_object *object = php_temporal_local_date_time_create_object_ex(copy);
 	RETURN_OBJ(object);
 }
@@ -809,7 +809,11 @@ ZEND_METHOD(Temporal_LocalDateTime, atTimeZone) {
 	Z_PARAM_OBJECT_OF_CLASS(time_zone, php_temporal_time_zone_ce)
 	ZEND_PARSE_PARAMETERS_END();
 
-	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_of(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL(), Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone));
+	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_of(
+		temporal_local_date_time_clone(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL()),
+		temporal_time_zone_clone(Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone))
+	);
+
 	zend_object *object = php_temporal_zoned_date_time_create_object_ex(zoned_date_time);
 	RETURN_OBJ(object);
 }

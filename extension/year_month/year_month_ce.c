@@ -48,7 +48,7 @@ ZEND_METHOD(Temporal_YearMonth, now) {
 	Z_PARAM_OBJECT_OF_CLASS_OR_NULL(clock, php_temporal_clock_ce)
 	ZEND_PARSE_PARAMETERS_END();
 
-	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_now(Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone), Z_OBJ_P(clock));
+	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_now(temporal_time_zone_clone(Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone)), Z_OBJ_P(clock));
 	temporal_year_month_t *year_month = temporal_year_month_of(zoned_date_time->date_time->date->year, zoned_date_time->date_time->date->month);
 
 	temporal_zoned_date_time_free(zoned_date_time);

@@ -57,6 +57,7 @@ zend_string *temporal_instant_format_iso(const temporal_instant_t *instant) {
 
 	zend_string *result = temporal_zoned_date_time_format_iso(zoned_date_time);
 
+	temporal_local_date_time_free(utc_date_time);
 	temporal_zoned_date_time_free(zoned_date_time);
 
 	return result;

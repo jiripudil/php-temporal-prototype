@@ -79,7 +79,7 @@ ZEND_METHOD(Temporal_LocalTime, now) {
 	Z_PARAM_OBJ_OF_CLASS_OR_NULL(clock, php_temporal_clock_ce)
 	ZEND_PARSE_PARAMETERS_END();
 
-	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_now(Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone), clock);
+	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_now(temporal_time_zone_clone(Z_TEMPORAL_TIME_ZONE_INTERNAL_P(time_zone)), clock);
 	temporal_local_time_t *local_time = temporal_local_time_clone(zoned_date_time->date_time->time);
 
 	temporal_zoned_date_time_free(zoned_date_time);
@@ -390,7 +390,7 @@ ZEND_METHOD(Temporal_LocalTime, atDate) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	temporal_local_date_t *local_date = temporal_local_date_clone(Z_TEMPORAL_LOCAL_DATE_INTERNAL_P(date));
-	temporal_local_time_t *local_time = THIS_TEMPORAL_LOCAL_TIME_INTERNAL();
+	temporal_local_time_t *local_time = temporal_local_time_clone(THIS_TEMPORAL_LOCAL_TIME_INTERNAL());
 
 	temporal_local_date_time_t *date_time = temporal_local_date_time_of_date_time(local_date, local_time);
 	zend_object *object = php_temporal_local_date_time_create_object_ex(date_time);
