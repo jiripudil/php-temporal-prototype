@@ -1,0 +1,36 @@
+#ifndef TEMPORAL_LOCAL_DATE_TIME_H
+#define TEMPORAL_LOCAL_DATE_TIME_H
+
+#include <php.h>
+#include <unicode/udat.h>
+#include "duration/duration.h"
+#include "local_date/local_date.h"
+#include "local_time/local_time.h"
+
+typedef struct _temporal_local_date_time_t {
+	temporal_local_date_t *date;
+	temporal_local_time_t *time;
+} temporal_local_date_time_t;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+temporal_local_date_time_t *temporal_local_date_time_of(zend_long year, zend_long month, zend_long day, zend_long hour, zend_long minute, zend_long second, zend_long nano);
+temporal_local_date_time_t *temporal_local_date_time_of_date_time(temporal_local_date_t *date, temporal_local_time_t *time);
+
+int temporal_local_date_time_compare(temporal_local_date_time_t *a, temporal_local_date_time_t *b);
+temporal_local_date_time_t *temporal_local_date_time_clone(temporal_local_date_time_t *local_date_time);
+temporal_local_date_time_t *temporal_local_date_time_plus_duration(temporal_local_date_time_t *local_date_time, temporal_duration_t *duration);
+
+temporal_local_date_time_t *temporal_local_date_time_parse_iso(const char *input);
+zend_string *temporal_local_date_time_format_iso(temporal_local_date_time_t *local_date_time);
+zend_string *temporal_local_date_time_format(temporal_local_date_time_t *local_date_time, UDateFormat *fmt);
+
+void temporal_local_date_time_free(temporal_local_date_time_t *local_date_time);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // TEMPORAL_LOCAL_DATE_TIME_H
