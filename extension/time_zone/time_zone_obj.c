@@ -27,6 +27,7 @@ zend_object *php_temporal_time_zone_create_object_ex(temporal_time_zone_t *time_
 zend_object *php_temporal_time_zone_create_object(zend_class_entry *ce) {
 	if (ce != php_temporal_time_zone_region_ce && ce != php_temporal_time_zone_offset_ce) {
 		php_temporal_throw_exception("Temporal\\TimeZone cannot be subclassed.", 0);
+		return NULL;
 	}
 
 	php_temporal_time_zone_t *object = zend_object_alloc(sizeof(php_temporal_time_zone_t), ce);
