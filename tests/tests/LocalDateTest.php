@@ -247,7 +247,8 @@ final class LocalDateTest extends TemporalTestCase
 		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofPattern('d.M.yy', 'en-US'), '31.1.70'];
 		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofDate(FormatStyle::LONG, 'en-US'), 'January 31, 1970'];
 		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofDate(FormatStyle::LONG, 'ja-JP'), '1970年1月31日'];
-		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofDate(FormatStyle::LONG, 'ar'), '31 يناير 1970'];
+		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofDate(FormatStyle::LONG, 'ar-MA'), '31 يناير 1970'];
+		yield [LocalDate::of(1970, 1, 31), DateTimeFormatter::ofDate(FormatStyle::LONG, 'ar-EG'), '٣١ يناير ١٩٧٠'];
 	}
 
 	#[DataProvider('provideFormatData')]
