@@ -1,5 +1,5 @@
 #include "time_zone_offset.h"
-#include <ext/pcre/php_pcre.h>
+#include <pcre2.h>
 #include <php.h>
 #include <zend_smart_str.h>
 #include "duration/duration.h"

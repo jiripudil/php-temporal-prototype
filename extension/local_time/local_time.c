@@ -1,5 +1,5 @@
 #include "local_time.h"
-#include <ext/pcre/pcre2.h>
+#include <pcre2.h>
 #include <php.h>
 #include <zend_smart_str.h>
 #include <unicode/udat.h>

@@ -6,9 +6,17 @@ PHP_ARG_ENABLE(
     [AS_HELP_STRING([--enable-temporal], [Enable temporal extension])]
 )
 
+AH_TEMPLATE([PCRE2_CODE_UNIT_WIDTH], [Number of bits in non-UTF mode for PCRE library.])
+
 if test "$PHP_TEMPORAL" != "no"; then
     PHP_SETUP_ICU([TEMPORAL_SHARED_LIBADD])
     PHP_SUBST([TEMPORAL_SHARED_LIBADD])
+
+    PKG_CHECK_MODULES([PCRE2], [libpcre2-8 >= 10.30])
+
+    PHP_EVAL_INCLINE([$PCRE2_CFLAGS])
+    PHP_EVAL_LIBLINE([$PCRE2_LIBS])
+    AC_DEFINE([PCRE2_CODE_UNIT_WIDTH], [8])
 
     TEMPORAL_COMMON_FLAGS="$ICU_CFLAGS -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1"
 
@@ -136,7 +144,7 @@ if test "$PHP_TEMPORAL" != "no"; then
 
     PHP_ADD_EXTENSION_DEP(temporal, spl)
     PHP_ADD_EXTENSION_DEP(temporal, date)
-    PHP_ADD_EXTENSION_DEP(temporal, pcre)
+    PHP_ADD_EXTENSION_DEP(temporal, json)
 
     PHP_INSTALL_HEADERS([ext/temporal], [php_temporal.h])
 fi

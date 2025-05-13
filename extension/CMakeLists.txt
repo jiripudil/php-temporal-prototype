@@ -17,9 +17,14 @@ include_directories(${PHP_SOURCE}/Zend)
 include_directories(${PHP_SOURCE}/TSRM)
 
 find_package(PkgConfig)
+
 pkg_check_modules(ICU REQUIRED icu-uc>=50.1 icu-io icu-i18n)
 pkg_get_variable(ICU_INCLUDE_DIR icu-uc includedir)
 include_directories(${ICU_INCLUDE_DIR})
+
+pkg_check_modules(PCRE2 REQUIRED libpcre2-8>=10.30)
+pkg_get_variable(PCRE2_INCLUDE_DIR libpcre2-8 includedir)
+include_directories(${PCRE2_INCLUDE_DIR})
 
 include_directories(${PROJECT_SOURCE_DIR})
 

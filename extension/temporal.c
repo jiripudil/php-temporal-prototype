@@ -69,7 +69,7 @@ PHP_MINFO_FUNCTION(temporal) {
 static const zend_module_dep temporal_module_deps[] = {
 	ZEND_MOD_REQUIRED("spl")
 	ZEND_MOD_REQUIRED("date")
-	ZEND_MOD_REQUIRED("pcre")
+	ZEND_MOD_REQUIRED("json")
 	ZEND_MOD_END
 };
 

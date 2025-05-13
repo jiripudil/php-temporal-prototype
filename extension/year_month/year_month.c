@@ -1,5 +1,5 @@
 #include "year_month.h"
-#include <ext/pcre/php_pcre.h>
+#include <pcre2.h>
 #include <php.h>
 #include <zend_smart_str.h>
 #include "utils/compare.h"

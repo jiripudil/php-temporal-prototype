@@ -1,5 +1,5 @@
 #include "zoned_date_time.h"
-#include <ext/pcre/php_pcre.h>
+#include <pcre2.h>
 #include <php.h>
 #include <zend_smart_str.h>
 #include "clock/clock_obj.h"
