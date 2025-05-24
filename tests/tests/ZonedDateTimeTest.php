@@ -25,8 +25,10 @@ final class ZonedDateTimeTest extends TemporalTestCase
 	public static function provideOfData(): iterable
 	{
 		yield [LocalDateTime::of(2025, 3, 30, 2), TimeZoneRegion::of('Europe/Prague'), 2025, 3, 30, 3, 0, 0, 0, 7200, 'Europe/Prague'];
+		yield [LocalDateTime::of(2025, 10, 26, 2), TimeZoneRegion::of('Europe/Prague'), 2025, 10, 26, 2, 0, 0, 0, 3600, 'Europe/Prague'];
 		yield [LocalDateTime::of(2025, 3, 30, 2), TimeZoneOffset::of(1), 2025, 3, 30, 2, 0, 0, 0, 3600, '+01:00'];
 		yield [LocalDateTime::of(2025, 3, 30, 2), TimeZoneOffset::of(2), 2025, 3, 30, 2, 0, 0, 0, 7200, '+02:00'];
+		yield [LocalDateTime::of(2025, 3, 30, 3, 1, 15, 999_999_999), TimeZoneRegion::of('Europe/Prague'), 2025, 3, 30, 3, 1, 15, 999_999_999, 7200, 'Europe/Prague'];
 	}
 
 	#[DataProvider('provideOfData')]
@@ -281,16 +283,16 @@ final class ZonedDateTimeTest extends TemporalTestCase
 
 	public function testToDateTime(): void
 	{
-		$zonedDateTime = ZonedDateTime::of(LocalDateTime::of(2025, 3, 30, 3), TimeZoneRegion::of('Europe/Prague'));
+		$zonedDateTime = ZonedDateTime::of(LocalDateTime::of(2025, 3, 30, 3, 1, 15, 999999999), TimeZoneRegion::of('Europe/Prague'));
 
 		$dateTime = $zonedDateTime->toDateTime();
 		self::assertSame('30', $dateTime->format('j'));
 		self::assertSame('3', $dateTime->format('n'));
 		self::assertSame('2025', $dateTime->format('Y'));
 		self::assertSame('03', $dateTime->format('H'));
-		self::assertSame('00', $dateTime->format('i'));
-		self::assertSame('00', $dateTime->format('s'));
-		self::assertSame('000000', $dateTime->format('u'));
+		self::assertSame('01', $dateTime->format('i'));
+		self::assertSame('15', $dateTime->format('s'));
+		self::assertSame('999999', $dateTime->format('u'));
 
 		self::assertSame('Europe/Prague', $dateTime->getTimezone()->getName());
 		self::assertSame(7200, $dateTime->getOffset());

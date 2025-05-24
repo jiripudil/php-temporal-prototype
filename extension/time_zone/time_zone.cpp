@@ -89,7 +89,13 @@ extern "C" {
 		}
 
 		temporal_time_zone_region_t *region = temporal_time_zone_region_of(input);
-		return temporal_time_zone_of_region(region);
+		temporal_time_zone_t *time_zone = temporal_time_zone_of_region(region);
+		if (time_zone == nullptr) {
+			temporal_time_zone_region_free(region);
+			return nullptr;
+		}
+
+		return time_zone;
 	}
 
 	zend_string *temporal_time_zone_get_id(temporal_time_zone_t *tz) {
@@ -97,7 +103,7 @@ extern "C" {
 			return temporal_time_zone_offset_id(tz->offset);
 		}
 
-		return zend_string_copy(tz->region->id);
+		return zend_string_dup(tz->region->id, false);
 	}
 
 	zend_long temporal_time_zone_get_offset(temporal_time_zone_t *tz, temporal_instant_t *instant) {
@@ -129,7 +135,7 @@ extern "C" {
 			return nullptr;
 		}
 
-		UDate timestamp = static_cast<UDate>(instant->epoch_second) * 1000 + static_cast<UDate>(instant->nano) / 1000000;
+		UDate timestamp = static_cast<UDate>(instant->epoch_second) * 1000;
 		calendar->setTime(timestamp, status);
 		if (U_FAILURE(status)) {
 			return nullptr;
@@ -187,9 +193,7 @@ extern "C" {
 			temporal_time_zone_region_free(tz->region);
 		}
 
-		auto *u_time_zone = reinterpret_cast<TimeZone *>(tz->time_zone);
-		delete u_time_zone;
-
+		delete reinterpret_cast<TimeZone *>(tz->time_zone);
 		delete tz;
 	}
 }

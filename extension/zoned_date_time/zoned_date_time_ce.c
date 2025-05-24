@@ -955,49 +955,80 @@ ZEND_METHOD(Temporal_ZonedDateTime, toDateTime) {
 		}
 	}
 
-	zend_string *tz_id;
+	smart_str_appendc(&buf_f, 'p');
+	zend_string *tz_id = temporal_time_zone_offset_id(zoned_date_time->zone_offset);
+	smart_str_append(&buf_t, tz_id);
+
+	zend_string *format = smart_str_extract(&buf_f);
+	zend_string *value = smart_str_extract(&buf_t);
+
+	zval date_time_immutable;
+
+	php_date_instantiate(php_date_get_immutable_ce(), &date_time_immutable);
+	if (!php_date_initialize(Z_PHPDATE_P(&date_time_immutable), ZSTR_VAL(value), ZSTR_LEN(value), ZSTR_VAL(format), NULL, PHP_DATE_INIT_FORMAT)) {
+		zend_string_release(tz_id);
+		zend_string_release_ex(format, false);
+		zend_string_release_ex(value, false);
+
+		zval_ptr_dtor(&date_time_immutable);
+
+		php_temporal_throw_exception("Failed to convert ZonedDateTime into DateTimeImmutable.", 0);
+		RETURN_THROWS();
+	}
+
+	zend_string_release(tz_id);
+	zend_string_release_ex(format, false);
+	zend_string_release_ex(value, false);
+
 	zval date_time_zone;
+	object_init_ex(&date_time_zone, php_date_get_timezone_ce());
 
 	if (IS_TEMPORAL_TIME_ZONE_OFFSET(zoned_date_time->zone)) {
-		object_init_ex(&date_time_zone, php_date_get_timezone_ce());
 		php_timezone_obj *tz_obj = Z_PHPTIMEZONE_P(&date_time_zone);
 
 		tz_obj->initialized = 1;
 		tz_obj->type = TIMELIB_ZONETYPE_OFFSET;
 		tz_obj->tzi.utc_offset = zoned_date_time->zone->offset->total_seconds;
 
-		smart_str_appends(&buf_f, " p");
-		tz_id = temporal_time_zone_offset_id(zoned_date_time->zone->offset);
-
 	} else {
-		zval z_id;
-		ZVAL_STR_COPY(&z_id, zoned_date_time->zone->region->id);
+		zval id;
+		ZVAL_STR_COPY(&id, zoned_date_time->zone->region->id);
 
-		object_init_with_constructor(&date_time_zone, php_date_get_timezone_ce(), 1, &z_id, NULL);
+		zend_call_known_instance_method_with_1_params(
+			Z_OBJCE(date_time_zone)->constructor,
+			Z_OBJ(date_time_zone),
+			NULL,
+			&id
+		);
 
-		smart_str_appends(&buf_f, " e");
-		tz_id = zend_string_copy(zoned_date_time->zone->region->id);
+		zval_ptr_dtor(&id);
+
+		if (EG(exception)) {
+			php_temporal_throw_exception("Failed to convert ZonedDateTime into DateTimeImmutable.", 0);
+
+			zend_object_store_ctor_failed(Z_OBJ(date_time_zone));
+			zval_ptr_dtor(&date_time_zone);
+
+			zval_ptr_dtor(&date_time_immutable);
+			RETURN_THROWS();
+		}
 	}
 
-	smart_str_appendc(&buf_t, ' ');
-	smart_str_append(&buf_t, tz_id);
+	zend_call_method_with_1_params(Z_OBJ_P(&date_time_immutable), NULL, NULL, "setTimezone", return_value, &date_time_zone);
+	if (Z_ISUNDEF(return_value) || Z_TYPE(return_value) == IS_FALSE) {
+		php_temporal_throw_exception("Failed to convert ZonedDateTime into DateTimeImmutable.", 0);
 
-	zend_string_release(tz_id);
+		zval_ptr_dtor(&date_time_immutable);
+		zval_ptr_dtor(&date_time_zone);
 
-	zend_string *format = smart_str_extract(&buf_f);
-	zend_string *value = smart_str_extract(&buf_t);
+		zval_ptr_dtor(return_value);
+		return_value = NULL;
 
-	php_date_instantiate(php_date_get_immutable_ce(), return_value);
-	if (!php_date_initialize(Z_PHPDATE_P(return_value), ZSTR_VAL(value), ZSTR_LEN(value), ZSTR_VAL(format), &date_time_zone, PHP_DATE_INIT_FORMAT)) {
-		zend_string_release_ex(format, 0);
-		zend_string_release_ex(value, 0);
-
-		php_temporal_throw_exception("Failed to convert LocalDateTime into DateTimeImmutable.", 0);
 		RETURN_THROWS();
 	}
 
-	zend_string_release_ex(format, 0);
-	zend_string_release_ex(value, 0);
+	zval_ptr_dtor(&date_time_immutable);
+	zval_ptr_dtor(&date_time_zone);
 }
 
 ZEND_METHOD(Temporal_ZonedDateTime, fromDateTime) {

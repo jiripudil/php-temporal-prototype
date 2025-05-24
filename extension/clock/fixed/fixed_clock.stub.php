@@ -9,6 +9,6 @@ namespace Temporal\Clock
 		private \Temporal\Instant $instant;
 		public function __construct(\Temporal\Instant $instant) {}
 		public function getTime(): \Temporal\Instant {}
-		public function setTime(\Temporal\Instant $instant): \Temporal\Instant {}
+		public function setTime(\Temporal\Instant $instant): void {}
 	}
 }

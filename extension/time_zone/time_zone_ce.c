@@ -48,7 +48,12 @@ ZEND_METHOD(Temporal_TimeZone, isEqualTo) {
 	zend_string *this_id = temporal_time_zone_get_id(THIS_TEMPORAL_TIME_ZONE_INTERNAL());
 	zend_string *other_id = temporal_time_zone_get_id(Z_TEMPORAL_TIME_ZONE_INTERNAL_P(other));
 
-	RETURN_BOOL(zend_string_equal_content(this_id, other_id));
+	bool result = zend_string_equal_content(this_id, other_id);
+
+	zend_string_release(this_id);
+	zend_string_release(other_id);
+
+	RETURN_BOOL(result);
 }
 
 ZEND_METHOD(Temporal_TimeZone, fromDateTimeZone) {

@@ -73,7 +73,12 @@ temporal_local_time_t *temporal_local_time_plus(temporal_local_time_t *local_tim
 }
 
 temporal_local_time_t *temporal_local_time_minus(temporal_local_time_t *local_time, temporal_duration_t *duration) {
-	return temporal_local_time_plus(local_time, temporal_duration_negated(duration));
+	temporal_duration_t *negated = temporal_duration_negated(duration);
+	temporal_local_time_t *result = temporal_local_time_plus(local_time, negated);
+
+	temporal_duration_free(negated);
+
+	return result;
 }
 
 temporal_local_time_t *temporal_local_time_parse_iso(const char *input) {

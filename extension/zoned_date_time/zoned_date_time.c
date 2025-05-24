@@ -14,9 +14,11 @@ temporal_zoned_date_time_t *temporal_zoned_date_time_of(temporal_local_date_time
 	temporal_zoned_date_time_t *zoned_date_time = ecalloc(1, sizeof(temporal_zoned_date_time_t));
 
 	zoned_date_time->instant = temporal_time_zone_local_date_time_to_instant(zone, date_time);
+	temporal_local_date_time_free(date_time);
+
 	zoned_date_time->zone = zone;
 
-	// the date-time might not be valid for the given timeZone because of a DST transition
+	// the date-time might be invalid for the given timeZone because of a DST transition
 	zoned_date_time->date_time = temporal_time_zone_instant_to_local_date_time(zone, zoned_date_time->instant);
 
 	if (IS_TEMPORAL_TIME_ZONE_OFFSET(zone)) {
@@ -179,7 +181,11 @@ temporal_zoned_date_time_t *temporal_zoned_date_time_parse_iso(const char *input
 		strncpy(time_zone_id_str, input + ovector[18], ovector[19] - ovector[18]);
 		time_zone_id_str[ovector[19] - ovector[18]] = '\0';
 
-		time_zone = temporal_time_zone_of_region(temporal_time_zone_region_of(time_zone_id_str));
+		temporal_time_zone_region_t *region = temporal_time_zone_region_of(time_zone_id_str);
+		time_zone = temporal_time_zone_of_region(region);
+		if (time_zone == NULL) {
+			temporal_time_zone_region_free(region);
+		}
 
 	} else {
 		char time_zone_offset_str[ovector[17] - ovector[16] + 1];
@@ -193,6 +199,7 @@ temporal_zoned_date_time_t *temporal_zoned_date_time_parse_iso(const char *input
 	}
 
 	if (time_zone == NULL) {
+		temporal_local_date_time_free(local_date_time);
 		pcre2_match_data_free(match_data);
 		pcre2_code_free(re);
 		return NULL;
@@ -223,7 +230,7 @@ zend_string *temporal_zoned_date_time_format_iso(temporal_zoned_date_time_t *dat
 	zend_string *id = temporal_time_zone_get_id(date_time->zone);
 
 	smart_str_appendc(&buf, '[');
-	smart_str_appends(&buf, ZSTR_VAL(id));
+	smart_str_append(&buf, id);
 	smart_str_appendc(&buf, ']');
 
 	zend_string_release(id);

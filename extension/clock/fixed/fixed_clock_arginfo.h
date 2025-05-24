@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 994d92089da86f48f2cffd66cec9eef763398fb2 */
+ * Stub hash: 74ff72659291c920078731297c7dbd95f6791223 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Clock_FixedClock___construct, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, instant, Temporal\\Instant, 0)
@@ -8,7 +8,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Clock_FixedClock_getTime, 0, 0, Temporal\\Instant, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Clock_FixedClock_setTime, 0, 1, Temporal\\Instant, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_Clock_FixedClock_setTime, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, instant, Temporal\\Instant, 0)
 ZEND_END_ARG_INFO()
 

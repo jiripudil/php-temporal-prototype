@@ -78,10 +78,30 @@ ZEND_METHOD(Temporal_TimeZoneRegion, getOffset) {
 ZEND_METHOD(Temporal_TimeZoneRegion, toDateTimeZone) {
 	ZEND_PARSE_PARAMETERS_NONE();
 
-	zval z_id;
-	ZVAL_STR_COPY(&z_id, THIS_TEMPORAL_TIME_ZONE_INTERNAL()->region->id);
+	object_init_ex(return_value, php_date_get_timezone_ce());
 
-	object_init_with_constructor(return_value, php_date_get_timezone_ce(), 1, &z_id, NULL);
+	zval id;
+	ZVAL_STR_COPY(&id, THIS_TEMPORAL_TIME_ZONE_INTERNAL()->region->id);
+
+	zend_call_known_instance_method_with_1_params(
+		Z_OBJCE_P(return_value)->constructor,
+		Z_OBJ_P(return_value),
+		NULL,
+		&id
+	);
+
+	if (EG(exception)) {
+		php_temporal_throw_exception("Failed to convert TimeZoneRegion into DateTimeZone.", 0);
+
+		zend_object_store_ctor_failed(Z_OBJ_P(return_value));
+		zval_ptr_dtor(return_value);
+		return_value = NULL;
+
+		zval_ptr_dtor(&id);
+		RETURN_THROWS();
+	}
+
+	zval_ptr_dtor(&id);
 }
 
 ZEND_METHOD(Temporal_TimeZoneRegion, __serialize) {

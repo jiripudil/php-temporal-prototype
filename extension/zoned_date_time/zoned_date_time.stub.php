@@ -73,11 +73,11 @@ namespace Temporal
 		public function isBeforeOrEqualTo(ZonedDateTime $other): bool {}
 		public function isAfter(ZonedDateTime $other): bool {}
 		public function isAfterOrEqualTo(ZonedDateTime $other): bool {}
-		public function toDateTime(): DateTimeImmutable {}
-		public static function fromDateTime(DateTimeInterface $dateTime): ZonedDateTime {}
+		public function toDateTime(): \DateTimeImmutable {}
+		public static function fromDateTime(\DateTimeInterface $dateTime): ZonedDateTime {}
 		public function toISOString(): string {}
 		public function format(string $localizedPattern, string|null $locale = null): string {}
-		public function formatWith(DateTimeFormatter $formatter): string {}
+		public function formatWith(Format\DateTimeFormatter $formatter): string {}
 		public function jsonSerialize(): string {}
 		public function __toString(): string {}
 		public function __serialize(): array {}

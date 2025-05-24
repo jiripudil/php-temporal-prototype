@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 1108f5472bef1ca299e8d84dd284f6721a884200 */
+ * Stub hash: 589f496da5fc409e0cbceeefaa27f6162765adc4 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_ZonedDateTime___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -203,11 +203,11 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_Temporal_ZonedDateTime_isAfterOrEqualTo arginfo_class_Temporal_ZonedDateTime_isEqualTo
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_ZonedDateTime_toDateTime, 0, 0, Temporal\\DateTimeImmutable, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_ZonedDateTime_toDateTime, 0, 0, DateTimeImmutable, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_ZonedDateTime_fromDateTime, 0, 1, Temporal\\ZonedDateTime, 0)
-	ZEND_ARG_OBJ_INFO(0, dateTime, Temporal\\DateTimeInterface, 0)
+	ZEND_ARG_OBJ_INFO(0, dateTime, DateTimeInterface, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_ZonedDateTime_toISOString, 0, 0, IS_STRING, 0)
@@ -219,7 +219,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_ZonedDateTime_for
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_ZonedDateTime_formatWith, 0, 1, IS_STRING, 0)
-	ZEND_ARG_OBJ_INFO(0, formatter, Temporal\\DateTimeFormatter, 0)
+	ZEND_ARG_OBJ_INFO(0, formatter, Temporal\\Format\\DateTimeFormatter, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_class_Temporal_ZonedDateTime_jsonSerialize arginfo_class_Temporal_ZonedDateTime_toISOString

@@ -412,22 +412,28 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 	{
 		$format = 'Y-m-d\TH:i';
 
+		// round down to microseconds
 		$nano = 1000 * intdiv($this->dateTime->getNano(), 1000);
 
-		$dateTime = (string) $this->dateTime->withNano(0);
+		$dateTime = (string) $this->dateTime->withNano($nano);
 		$dateTimeZone = $this->timeZone->toDateTimeZone();
 
 		if ($this->dateTime->getSecond() !== 0 || $nano !== 0) {
-			$format .= 's';
+			$format .= ':s';
 			if ($nano !== 0) {
 				$format .= '.u';
 			}
 		}
 
-		$nativeDateTime = DateTimeImmutable::createFromFormat($format, $dateTime, $dateTimeZone);
+		$format .= 'p';
+		$dateTime .= $this->timeZoneOffset->getId();
+
+		$nativeDateTime = DateTimeImmutable::createFromFormat($format, $dateTime);
 		if ($nativeDateTime === false) {
 			throw TemporalException::failedToConvertToDateTime();
 		}
+
+		$nativeDateTime = $nativeDateTime->setTimezone($dateTimeZone);
 
 		return $nativeDateTime;
 	}

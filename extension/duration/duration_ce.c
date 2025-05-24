@@ -228,6 +228,9 @@ ZEND_METHOD(Temporal_Duration, plusSeconds) {
 
 	temporal_duration_t *other = temporal_duration_of(seconds, 0);
 	temporal_duration_t *result = temporal_duration_plus(THIS_TEMPORAL_DURATION_INTERNAL(), other);
+
+	temporal_duration_free(other);
+
 	zend_object *object = php_temporal_duration_create_object_ex(result);
 	RETURN_OBJ(object);
 }
@@ -241,6 +244,9 @@ ZEND_METHOD(Temporal_Duration, plusMinutes) {
 
 	temporal_duration_t *other = temporal_duration_of(minutes * SECONDS_PER_MINUTE, 0);
 	temporal_duration_t *result = temporal_duration_plus(THIS_TEMPORAL_DURATION_INTERNAL(), other);
+
+	temporal_duration_free(other);
+
 	zend_object *object = php_temporal_duration_create_object_ex(result);
 	RETURN_OBJ(object);
 }
@@ -254,6 +260,9 @@ ZEND_METHOD(Temporal_Duration, plusHours) {
 
 	temporal_duration_t *other = temporal_duration_of(hours * SECONDS_PER_HOUR, 0);
 	temporal_duration_t *result = temporal_duration_plus(THIS_TEMPORAL_DURATION_INTERNAL(), other);
+
+	temporal_duration_free(other);
+
 	zend_object *object = php_temporal_duration_create_object_ex(result);
 	RETURN_OBJ(object);
 }
@@ -267,6 +276,9 @@ ZEND_METHOD(Temporal_Duration, plusDays) {
 
 	temporal_duration_t *other = temporal_duration_of(days * SECONDS_PER_DAY, 0);
 	temporal_duration_t *result = temporal_duration_plus(THIS_TEMPORAL_DURATION_INTERNAL(), other);
+
+	temporal_duration_free(other);
+
 	zend_object *object = php_temporal_duration_create_object_ex(result);
 	RETURN_OBJ(object);
 }
@@ -292,6 +304,9 @@ ZEND_METHOD(Temporal_Duration, minusSeconds) {
 
 	temporal_duration_t *other = temporal_duration_of(seconds, 0);
 	temporal_duration_t *result = temporal_duration_minus(THIS_TEMPORAL_DURATION_INTERNAL(), other);
+
+	temporal_duration_free(other);
+
 	zend_object *object = php_temporal_duration_create_object_ex(result);
 	RETURN_OBJ(object);
 }
@@ -305,6 +320,9 @@ ZEND_METHOD(Temporal_Duration, minusMinutes) {
 
 	temporal_duration_t *other = temporal_duration_of(minutes * SECONDS_PER_MINUTE, 0);
 	temporal_duration_t *result = temporal_duration_minus(THIS_TEMPORAL_DURATION_INTERNAL(), other);
+
+	temporal_duration_free(other);
+
 	zend_object *object = php_temporal_duration_create_object_ex(result);
 	RETURN_OBJ(object);
 }
@@ -318,6 +336,9 @@ ZEND_METHOD(Temporal_Duration, minusHours) {
 
 	temporal_duration_t *other = temporal_duration_of(hours * SECONDS_PER_HOUR, 0);
 	temporal_duration_t *result = temporal_duration_minus(THIS_TEMPORAL_DURATION_INTERNAL(), other);
+
+	temporal_duration_free(other);
+
 	zend_object *object = php_temporal_duration_create_object_ex(result);
 	RETURN_OBJ(object);
 }
@@ -331,6 +352,9 @@ ZEND_METHOD(Temporal_Duration, minusDays) {
 
 	temporal_duration_t *other = temporal_duration_of(days * SECONDS_PER_DAY, 0);
 	temporal_duration_t *result = temporal_duration_minus(THIS_TEMPORAL_DURATION_INTERNAL(), other);
+
+	temporal_duration_free(other);
+
 	zend_object *object = php_temporal_duration_create_object_ex(result);
 	RETURN_OBJ(object);
 }
