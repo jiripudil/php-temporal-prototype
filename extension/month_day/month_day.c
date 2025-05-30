@@ -47,9 +47,6 @@ temporal_month_day_t *temporal_month_day_parse_iso(const char *input) {
 
 	PCRE2_SIZE *ovector = pcre2_get_ovector_pointer(match_data);
 
-	zend_long month = 1;
-	zend_long day = 1;
-
 	if (ovector[2] == PCRE2_UNSET && ovector[4] == PCRE2_UNSET) {
 		pcre2_match_data_free(match_data);
 		pcre2_code_free(re);
@@ -59,7 +56,7 @@ temporal_month_day_t *temporal_month_day_parse_iso(const char *input) {
 	char month_str[ovector[3] - ovector[2] + 1];
 	strncpy(month_str, input + ovector[2], ovector[3] - ovector[2]);
 	month_str[ovector[3] - ovector[2]] = '\0';
-	month = strtol(month_str, NULL, 10);
+	zend_long month = strtol(month_str, NULL, 10);
 	if (month < 1 || month > 12) {
 		pcre2_match_data_free(match_data);
 		pcre2_code_free(re);
@@ -69,7 +66,7 @@ temporal_month_day_t *temporal_month_day_parse_iso(const char *input) {
 	char day_str[ovector[5] - ovector[4] + 1];
 	strncpy(day_str, input + ovector[4], ovector[5] - ovector[4]);
 	day_str[ovector[5] - ovector[4]] = '\0';
-	day = strtol(day_str, NULL, 10);
+	zend_long day = strtol(day_str, NULL, 10);
 	zend_long max_day = max_days_in_month(month);
 	if (day < 1 || day > max_day) {
 		pcre2_match_data_free(match_data);

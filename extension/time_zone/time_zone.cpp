@@ -167,12 +167,12 @@ extern "C" {
 		}
 
 		calendar->set(
-			local_date_time->date->year,
-			local_date_time->date->month - 1,
-			local_date_time->date->day,
-			local_date_time->time->hour,
-			local_date_time->time->minute,
-			local_date_time->time->second
+			static_cast<int32_t>(local_date_time->date->year),
+			static_cast<int32_t>(local_date_time->date->month - 1),
+			static_cast<int32_t>(local_date_time->date->day),
+			static_cast<int32_t>(local_date_time->time->hour),
+			static_cast<int32_t>(local_date_time->time->minute),
+			static_cast<int32_t>(local_date_time->time->second)
 		);
 
 		const UDate timestamp = calendar->getTime(status);
@@ -183,7 +183,7 @@ extern "C" {
 			return nullptr;
 		}
 
-		return temporal_instant_of(timestamp / 1000, local_date_time->time->nano);
+		return temporal_instant_of(static_cast<zend_long>(timestamp / 1000), local_date_time->time->nano);
 	}
 
 	void temporal_time_zone_free(temporal_time_zone_t *tz) {

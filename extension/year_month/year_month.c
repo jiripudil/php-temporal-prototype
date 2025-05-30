@@ -56,9 +56,6 @@ temporal_year_month_t *temporal_year_month_parse_iso(const char *input) {
 
 	PCRE2_SIZE *ovector = pcre2_get_ovector_pointer(match_data);
 
-	zend_long year = 0;
-	zend_long month = 1;
-
 	if (ovector[2] == PCRE2_UNSET && ovector[4] == PCRE2_UNSET) {
 		pcre2_match_data_free(match_data);
 		pcre2_code_free(re);
@@ -68,7 +65,7 @@ temporal_year_month_t *temporal_year_month_parse_iso(const char *input) {
 	char year_str[ovector[3] - ovector[2] + 1];
 	strncpy(year_str, input + ovector[2], ovector[3] - ovector[2]);
 	year_str[ovector[3] - ovector[2]] = '\0';
-	year = strtol(year_str, NULL, 10);
+	zend_long year = strtol(year_str, NULL, 10);
 	if (year < -999999 || year > 999999) {
 		pcre2_match_data_free(match_data);
 		pcre2_code_free(re);
@@ -78,7 +75,7 @@ temporal_year_month_t *temporal_year_month_parse_iso(const char *input) {
 	char month_str[ovector[5] - ovector[4] + 1];
 	strncpy(month_str, input + ovector[4], ovector[5] - ovector[4]);
 	month_str[ovector[5] - ovector[4]] = '\0';
-	month = strtol(month_str, NULL, 10);
+	zend_long month = strtol(month_str, NULL, 10);
 	if (month < 1 || month > 12) {
 		pcre2_match_data_free(match_data);
 		pcre2_code_free(re);

@@ -185,14 +185,10 @@ temporal_local_date_t *temporal_local_date_parse_iso(const char *input) {
 
 	PCRE2_SIZE *ovector = pcre2_get_ovector_pointer(match_data);
 
-	zend_long year = 0;
-	zend_long month = 1;
-	zend_long day = 1;
-
 	char year_str[ovector[3] - ovector[2] + 1];
 	strncpy(year_str, input + ovector[2], ovector[3] - ovector[2]);
 	year_str[ovector[3] - ovector[2]] = '\0';
-	year = strtol(year_str, NULL, 10);
+	zend_long year = strtol(year_str, NULL, 10);
 	if (year < -999999 || year > 999999) {
 		pcre2_match_data_free(match_data);
 		pcre2_code_free(re);
@@ -202,7 +198,7 @@ temporal_local_date_t *temporal_local_date_parse_iso(const char *input) {
 	char month_str[ovector[5] - ovector[4] + 1];
 	strncpy(month_str, input + ovector[4], ovector[5] - ovector[4]);
 	month_str[ovector[5] - ovector[4]] = '\0';
-	month = strtol(month_str, NULL, 10);
+	zend_long month = strtol(month_str, NULL, 10);
 	if (month < 1 || month > 12) {
 		pcre2_match_data_free(match_data);
 		pcre2_code_free(re);
@@ -212,7 +208,7 @@ temporal_local_date_t *temporal_local_date_parse_iso(const char *input) {
 	char day_str[ovector[7] - ovector[6] + 1];
 	strncpy(day_str, input + ovector[6], ovector[7] - ovector[6]);
 	day_str[ovector[7] - ovector[6]] = '\0';
-	day = strtol(day_str, NULL, 10);
+	zend_long day = strtol(day_str, NULL, 10);
 	zend_long max_day = days_in_month(year, month);
 	if (day < 1 || day > max_day) {
 		pcre2_match_data_free(match_data);
