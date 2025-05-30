@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 67d040c57d8bfb76ce3ebaa02acbf22bb56b6acb */
+ * Stub hash: 83241d59328a6261982dd37c74625ff6449e2b25 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Period___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -154,7 +154,12 @@ static zend_class_entry *register_class_Temporal_Period(zend_class_entry *class_
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal", "Period", class_Temporal_Period_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 	zend_class_implements(class_entry, 2, class_entry_JsonSerializable, class_entry_Stringable);
 
 	return class_entry;

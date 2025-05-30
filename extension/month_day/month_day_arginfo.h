@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: ce91ad0c6215558fe810308f06be1397b13f9736 */
+ * Stub hash: 6b46dd73148df07f9cf37799d5d022332ae048d0 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_MonthDay___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -121,7 +121,12 @@ static zend_class_entry *register_class_Temporal_MonthDay(zend_class_entry *clas
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal", "MonthDay", class_Temporal_MonthDay_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 	zend_class_implements(class_entry, 2, class_entry_JsonSerializable, class_entry_Stringable);
 
 	return class_entry;

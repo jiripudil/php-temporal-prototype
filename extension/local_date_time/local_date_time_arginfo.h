@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: adc831ee713670cb0f4bb328b0ff86385bae1c76 */
+ * Stub hash: eb5805f4811e8ac07aa30621e7e1b0e8abb11078 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_LocalDateTime___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -380,7 +380,12 @@ static zend_class_entry *register_class_Temporal_LocalDateTime(zend_class_entry 
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal", "LocalDateTime", class_Temporal_LocalDateTime_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 	zend_class_implements(class_entry, 2, class_entry_JsonSerializable, class_entry_Stringable);
 
 	return class_entry;

@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 240c6db2062b2a8bd5dac2663dafdc59a1d2362e */
+ * Stub hash: 76886f3343f5d96cb606aacda3354880eec69540 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZone_fromISOString, 0, 1, Temporal\\TimeZone, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
@@ -40,10 +40,22 @@ ZEND_METHOD(Temporal_TimeZone, __toString);
 static const zend_function_entry class_Temporal_TimeZone_methods[] = {
 	ZEND_ME(Temporal_TimeZone, fromISOString, arginfo_class_Temporal_TimeZone_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_TimeZone, utc, arginfo_class_Temporal_TimeZone_utc, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+#if (PHP_VERSION_ID >= 80400)
 	ZEND_RAW_FENTRY("getId", NULL, arginfo_class_Temporal_TimeZone_getId, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT, NULL, NULL)
+#else
+	ZEND_RAW_FENTRY("getId", NULL, arginfo_class_Temporal_TimeZone_getId, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT)
+#endif
+#if (PHP_VERSION_ID >= 80400)
 	ZEND_RAW_FENTRY("getOffset", NULL, arginfo_class_Temporal_TimeZone_getOffset, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT, NULL, NULL)
+#else
+	ZEND_RAW_FENTRY("getOffset", NULL, arginfo_class_Temporal_TimeZone_getOffset, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT)
+#endif
 	ZEND_ME(Temporal_TimeZone, isEqualTo, arginfo_class_Temporal_TimeZone_isEqualTo, ZEND_ACC_PUBLIC)
+#if (PHP_VERSION_ID >= 80400)
 	ZEND_RAW_FENTRY("toDateTimeZone", NULL, arginfo_class_Temporal_TimeZone_toDateTimeZone, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT, NULL, NULL)
+#else
+	ZEND_RAW_FENTRY("toDateTimeZone", NULL, arginfo_class_Temporal_TimeZone_toDateTimeZone, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT)
+#endif
 	ZEND_ME(Temporal_TimeZone, fromDateTimeZone, arginfo_class_Temporal_TimeZone_fromDateTimeZone, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_TimeZone, jsonSerialize, arginfo_class_Temporal_TimeZone_jsonSerialize, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_TimeZone, __toString, arginfo_class_Temporal_TimeZone___toString, ZEND_ACC_PUBLIC)
@@ -55,7 +67,12 @@ static zend_class_entry *register_class_Temporal_TimeZone(zend_class_entry *clas
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal", "TimeZone", class_Temporal_TimeZone_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_ABSTRACT);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_ABSTRACT;
+#endif
 	zend_class_implements(class_entry, 2, class_entry_JsonSerializable, class_entry_Stringable);
 
 	return class_entry;

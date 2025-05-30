@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 4edc3657629e7dbd6d3be873f795b4761c0d5bcc */
+ * Stub hash: 98d8926e4b4acb6e0d76d41ad02d8c9d3d6d8068 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_TimeZoneRegion___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -55,7 +55,12 @@ static zend_class_entry *register_class_Temporal_TimeZoneRegion(zend_class_entry
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal", "TimeZoneRegion", class_Temporal_TimeZoneRegion_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, class_entry_Temporal_TimeZone, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, class_entry_Temporal_TimeZone);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 
 	return class_entry;
 }

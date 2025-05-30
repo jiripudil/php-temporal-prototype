@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: b2e780d809be9c0e3cfd55ba1291c40b97c91f56 */
+ * Stub hash: 48833e7e84822b2634682b6af3d370ffcded1d62 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Duration___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -225,43 +225,72 @@ static zend_class_entry *register_class_Temporal_Duration(zend_class_entry *clas
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal", "Duration", class_Temporal_Duration_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 	zend_class_implements(class_entry, 2, class_entry_JsonSerializable, class_entry_Stringable);
 
 	zval const_NANOS_PER_SECOND_value;
 	ZVAL_LONG(&const_NANOS_PER_SECOND_value, 1000000000);
 	zend_string *const_NANOS_PER_SECOND_name = zend_string_init_interned("NANOS_PER_SECOND", sizeof("NANOS_PER_SECOND") - 1, 1);
+#if (PHP_VERSION_ID >= 80300)
 	zend_declare_typed_class_constant(class_entry, const_NANOS_PER_SECOND_name, &const_NANOS_PER_SECOND_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+#else
+	zend_declare_class_constant_ex(class_entry, const_NANOS_PER_SECOND_name, &const_NANOS_PER_SECOND_value, ZEND_ACC_PUBLIC, NULL);
+#endif
 	zend_string_release(const_NANOS_PER_SECOND_name);
 
 	zval const_SECONDS_PER_MINUTE_value;
 	ZVAL_LONG(&const_SECONDS_PER_MINUTE_value, 60);
 	zend_string *const_SECONDS_PER_MINUTE_name = zend_string_init_interned("SECONDS_PER_MINUTE", sizeof("SECONDS_PER_MINUTE") - 1, 1);
+#if (PHP_VERSION_ID >= 80300)
 	zend_declare_typed_class_constant(class_entry, const_SECONDS_PER_MINUTE_name, &const_SECONDS_PER_MINUTE_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+#else
+	zend_declare_class_constant_ex(class_entry, const_SECONDS_PER_MINUTE_name, &const_SECONDS_PER_MINUTE_value, ZEND_ACC_PUBLIC, NULL);
+#endif
 	zend_string_release(const_SECONDS_PER_MINUTE_name);
 
 	zval const_SECONDS_PER_HOUR_value;
 	ZVAL_LONG(&const_SECONDS_PER_HOUR_value, 3600);
 	zend_string *const_SECONDS_PER_HOUR_name = zend_string_init_interned("SECONDS_PER_HOUR", sizeof("SECONDS_PER_HOUR") - 1, 1);
+#if (PHP_VERSION_ID >= 80300)
 	zend_declare_typed_class_constant(class_entry, const_SECONDS_PER_HOUR_name, &const_SECONDS_PER_HOUR_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+#else
+	zend_declare_class_constant_ex(class_entry, const_SECONDS_PER_HOUR_name, &const_SECONDS_PER_HOUR_value, ZEND_ACC_PUBLIC, NULL);
+#endif
 	zend_string_release(const_SECONDS_PER_HOUR_name);
 
 	zval const_SECONDS_PER_DAY_value;
 	ZVAL_LONG(&const_SECONDS_PER_DAY_value, 86400);
 	zend_string *const_SECONDS_PER_DAY_name = zend_string_init_interned("SECONDS_PER_DAY", sizeof("SECONDS_PER_DAY") - 1, 1);
+#if (PHP_VERSION_ID >= 80300)
 	zend_declare_typed_class_constant(class_entry, const_SECONDS_PER_DAY_name, &const_SECONDS_PER_DAY_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+#else
+	zend_declare_class_constant_ex(class_entry, const_SECONDS_PER_DAY_name, &const_SECONDS_PER_DAY_value, ZEND_ACC_PUBLIC, NULL);
+#endif
 	zend_string_release(const_SECONDS_PER_DAY_name);
 
 	zval const_MINUTES_PER_HOUR_value;
 	ZVAL_LONG(&const_MINUTES_PER_HOUR_value, 60);
 	zend_string *const_MINUTES_PER_HOUR_name = zend_string_init_interned("MINUTES_PER_HOUR", sizeof("MINUTES_PER_HOUR") - 1, 1);
+#if (PHP_VERSION_ID >= 80300)
 	zend_declare_typed_class_constant(class_entry, const_MINUTES_PER_HOUR_name, &const_MINUTES_PER_HOUR_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+#else
+	zend_declare_class_constant_ex(class_entry, const_MINUTES_PER_HOUR_name, &const_MINUTES_PER_HOUR_value, ZEND_ACC_PUBLIC, NULL);
+#endif
 	zend_string_release(const_MINUTES_PER_HOUR_name);
 
 	zval const_HOURS_PER_DAY_value;
 	ZVAL_LONG(&const_HOURS_PER_DAY_value, 24);
 	zend_string *const_HOURS_PER_DAY_name = zend_string_init_interned("HOURS_PER_DAY", sizeof("HOURS_PER_DAY") - 1, 1);
+#if (PHP_VERSION_ID >= 80300)
 	zend_declare_typed_class_constant(class_entry, const_HOURS_PER_DAY_name, &const_HOURS_PER_DAY_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+#else
+	zend_declare_class_constant_ex(class_entry, const_HOURS_PER_DAY_name, &const_HOURS_PER_DAY_value, ZEND_ACC_PUBLIC, NULL);
+#endif
 	zend_string_release(const_HOURS_PER_DAY_name);
 
 	return class_entry;

@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 589f496da5fc409e0cbceeefaa27f6162765adc4 */
+ * Stub hash: 84ceec1f5448fc8971ed9f25ccd01c81c574d7d0 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_ZonedDateTime___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -395,7 +395,12 @@ static zend_class_entry *register_class_Temporal_ZonedDateTime(zend_class_entry 
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal", "ZonedDateTime", class_Temporal_ZonedDateTime_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 	zend_class_implements(class_entry, 2, class_entry_JsonSerializable, class_entry_Stringable);
 
 	return class_entry;

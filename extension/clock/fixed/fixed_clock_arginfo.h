@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 74ff72659291c920078731297c7dbd95f6791223 */
+ * Stub hash: aa2febcef1d65beb1b51aeef58d978462eca3e12 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Clock_FixedClock___construct, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, instant, Temporal\\Instant, 0)
@@ -28,7 +28,12 @@ static zend_class_entry *register_class_Temporal_Clock_FixedClock(zend_class_ent
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal\\Clock", "FixedClock", class_Temporal_Clock_FixedClock_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 	zend_class_implements(class_entry, 1, class_entry_Temporal_Clock);
 
 	zval property_instant_default_value;

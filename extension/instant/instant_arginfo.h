@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 00adcba819af0d036b2317e4d48afd5a9d70d6e6 */
+ * Stub hash: 6a05b50e78897ccaf30e5ce060569f4ae49b17bd */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Instant___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -175,7 +175,12 @@ static zend_class_entry *register_class_Temporal_Instant(zend_class_entry *class
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal", "Instant", class_Temporal_Instant_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 	zend_class_implements(class_entry, 2, class_entry_JsonSerializable, class_entry_Stringable);
 
 	return class_entry;

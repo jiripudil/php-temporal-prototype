@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: d0786f9b6fcd9e0f4f7b0f8df25e23ae1be5483b */
+ * Stub hash: 9a4a9d98665668a68736baae6d0e6af5899b901f */
 
 static zend_class_entry *register_class_Temporal_Format_FormatStyle(void)
 {

@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 53deb59cbb3913dd6604cc1bf3e2667b8fe419b5 */
+ * Stub hash: 86510e9ba8279b79661a1f75093103ff2acc5a12 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_YearMonth___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -161,7 +161,12 @@ static zend_class_entry *register_class_Temporal_YearMonth(zend_class_entry *cla
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal", "YearMonth", class_Temporal_YearMonth_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 	zend_class_implements(class_entry, 2, class_entry_JsonSerializable, class_entry_Stringable);
 
 	return class_entry;

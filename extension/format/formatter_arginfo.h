@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 4cf283c93f9ac0f2965b16aceff053d381b149fa */
+ * Stub hash: 046bb06d93028aebc95ad7ccf1444432d2857dc6 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Format_DateTimeFormatter___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -73,7 +73,12 @@ static zend_class_entry *register_class_Temporal_Format_DateTimeFormatter(void)
 	zend_class_entry ce, *class_entry;
 
 	INIT_NS_CLASS_ENTRY(ce, "Temporal\\Format", "DateTimeFormatter", class_Temporal_Format_DateTimeFormatter_methods);
+#if (PHP_VERSION_ID >= 80400)
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+#else
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+#endif
 
 	return class_entry;
 }
