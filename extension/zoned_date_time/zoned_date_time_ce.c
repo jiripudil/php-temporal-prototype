@@ -1014,15 +1014,12 @@ ZEND_METHOD(Temporal_ZonedDateTime, toDateTime) {
 		}
 	}
 
-	zend_call_method_with_1_params(Z_OBJ_P(&date_time_immutable), NULL, NULL, "setTimezone", return_value, &date_time_zone);
-	if (Z_ISUNDEF(return_value) || Z_TYPE(return_value) == IS_FALSE) {
+	zend_call_method_with_1_params(Z_OBJ(date_time_immutable), NULL, NULL, "setTimezone", return_value, &date_time_zone);
+	if (Z_ISUNDEF_P(return_value) || Z_TYPE_P(return_value) == IS_FALSE) {
 		php_temporal_throw_exception("Failed to convert ZonedDateTime into DateTimeImmutable.", 0);
 
 		zval_ptr_dtor(&date_time_immutable);
 		zval_ptr_dtor(&date_time_zone);
-
-		zval_ptr_dtor(return_value);
-		return_value = NULL;
 
 		RETURN_THROWS();
 	}
