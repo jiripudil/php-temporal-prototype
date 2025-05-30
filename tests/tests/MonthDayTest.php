@@ -42,20 +42,20 @@ final class MonthDayTest extends TemporalTestCase
 		self::assertMonthDay($monthDay, 12, 31);
 	}
 
-	public static function provideFromISOStringData(): iterable
+	public static function provideFromIsoStringData(): iterable
 	{
 		yield ['--01-01', 1, 1];
 		yield ['--12-31', 12, 31];
 	}
 
-	#[DataProvider('provideFromISOStringData')]
-	public function testFromISOString(string $text, int $expectedMonth, int $expectedDay): void
+	#[DataProvider('provideFromIsoStringData')]
+	public function testFromIsoString(string $text, int $expectedMonth, int $expectedDay): void
 	{
-		$monthDay = MonthDay::fromISOString($text);
+		$monthDay = MonthDay::fromIsoString($text);
 		self::assertMonthDay($monthDay, $expectedMonth, $expectedDay);
 	}
 
-	public static function provideInvalidFromISOStringData(): iterable
+	public static function provideInvalidFromIsoStringData(): iterable
 	{
 		yield [''];
 		yield ['--'];
@@ -64,13 +64,13 @@ final class MonthDayTest extends TemporalTestCase
 		yield ['1-31'];
 	}
 
-	#[DataProvider('provideInvalidFromISOStringData')]
-	public function testInvalidFromISOString(string $text): void
+	#[DataProvider('provideInvalidFromIsoStringData')]
+	public function testInvalidFromIsoString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		MonthDay::fromISOString($text);
+		MonthDay::fromIsoString($text);
 	}
 
 	public function testExistsInYear(): void
@@ -101,17 +101,17 @@ final class MonthDayTest extends TemporalTestCase
 		self::assertSame($expectedResult >= 0, $a->isAfterOrEqualTo($b));
 	}
 
-	public static function provideToISOStringData(): iterable
+	public static function provideToIsoStringData(): iterable
 	{
 		yield [MonthDay::of(1, 1), '--01-01'];
 		yield [MonthDay::of(2, 29), '--02-29'];
 		yield [MonthDay::of(12, 31), '--12-31'];
 	}
 
-	#[DataProvider('provideToISOStringData')]
-	public function testToISOString(MonthDay $monthDay, string $expectedResult): void
+	#[DataProvider('provideToIsoStringData')]
+	public function testToIsoString(MonthDay $monthDay, string $expectedResult): void
 	{
-		self::assertSame($expectedResult, $monthDay->toISOString());
+		self::assertSame($expectedResult, $monthDay->toIsoString());
 	}
 
 	public function testSerialization(): void

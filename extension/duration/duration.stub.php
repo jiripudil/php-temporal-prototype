@@ -18,7 +18,7 @@ namespace Temporal
 	
 		private function __construct() {}
 		public static function zero(): Duration {}
-		public static function fromISOString(string $value): Duration {}
+		public static function fromIsoString(string $value): Duration {}
 		public static function ofSeconds(int $seconds, int $nanoAdjustment = 0): Duration {}
 		public static function ofMinutes(int $minutes): Duration {}
 		public static function ofHours(int $hours): Duration {}
@@ -57,7 +57,7 @@ namespace Temporal
 		public function isGreaterThanOrEqualTo(Duration $other): bool {}
 		public function isLesserThan(Duration $other): bool {}
 		public function isLesserThanOrEqualTo(Duration $other): bool {}
-		public function toISOString(): string {}
+		public function toIsoString(): string {}
 		public function jsonSerialize(): string {}
 		public function __toString(): string {}
 		public function __serialize(): array {}

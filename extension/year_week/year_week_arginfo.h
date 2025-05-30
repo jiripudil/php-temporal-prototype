@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 28729fb2f61053fa9b0e3187fac87ea63ef80226 */
+ * Stub hash: 9f6c7be4c64f22a70291051ed5df63bb884e1d28 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_YearWeek___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -14,7 +14,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_YearWeek_now, 0, 1
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_YearWeek_fromISOString, 0, 1, Temporal\\YearWeek, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_YearWeek_fromIsoString, 0, 1, Temporal\\YearWeek, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -75,12 +75,12 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_Temporal_YearWeek_isAfterOrEqualTo arginfo_class_Temporal_YearWeek_isEqualTo
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_YearWeek_toISOString, 0, 0, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_YearWeek_toIsoString, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_Temporal_YearWeek_jsonSerialize arginfo_class_Temporal_YearWeek_toISOString
+#define arginfo_class_Temporal_YearWeek_jsonSerialize arginfo_class_Temporal_YearWeek_toIsoString
 
-#define arginfo_class_Temporal_YearWeek___toString arginfo_class_Temporal_YearWeek_toISOString
+#define arginfo_class_Temporal_YearWeek___toString arginfo_class_Temporal_YearWeek_toIsoString
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_YearWeek___serialize, 0, 0, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
@@ -92,7 +92,7 @@ ZEND_END_ARG_INFO()
 ZEND_METHOD(Temporal_YearWeek, __construct);
 ZEND_METHOD(Temporal_YearWeek, of);
 ZEND_METHOD(Temporal_YearWeek, now);
-ZEND_METHOD(Temporal_YearWeek, fromISOString);
+ZEND_METHOD(Temporal_YearWeek, fromIsoString);
 ZEND_METHOD(Temporal_YearWeek, getYear);
 ZEND_METHOD(Temporal_YearWeek, withYear);
 ZEND_METHOD(Temporal_YearWeek, plusYears);
@@ -113,7 +113,7 @@ ZEND_METHOD(Temporal_YearWeek, isBefore);
 ZEND_METHOD(Temporal_YearWeek, isBeforeOrEqualTo);
 ZEND_METHOD(Temporal_YearWeek, isAfter);
 ZEND_METHOD(Temporal_YearWeek, isAfterOrEqualTo);
-ZEND_METHOD(Temporal_YearWeek, toISOString);
+ZEND_METHOD(Temporal_YearWeek, toIsoString);
 ZEND_METHOD(Temporal_YearWeek, jsonSerialize);
 ZEND_METHOD(Temporal_YearWeek, __toString);
 ZEND_METHOD(Temporal_YearWeek, __serialize);
@@ -123,7 +123,7 @@ static const zend_function_entry class_Temporal_YearWeek_methods[] = {
 	ZEND_ME(Temporal_YearWeek, __construct, arginfo_class_Temporal_YearWeek___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_YearWeek, of, arginfo_class_Temporal_YearWeek_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_YearWeek, now, arginfo_class_Temporal_YearWeek_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_YearWeek, fromISOString, arginfo_class_Temporal_YearWeek_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_YearWeek, fromIsoString, arginfo_class_Temporal_YearWeek_fromIsoString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_YearWeek, getYear, arginfo_class_Temporal_YearWeek_getYear, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearWeek, withYear, arginfo_class_Temporal_YearWeek_withYear, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearWeek, plusYears, arginfo_class_Temporal_YearWeek_plusYears, ZEND_ACC_PUBLIC)
@@ -144,7 +144,7 @@ static const zend_function_entry class_Temporal_YearWeek_methods[] = {
 	ZEND_ME(Temporal_YearWeek, isBeforeOrEqualTo, arginfo_class_Temporal_YearWeek_isBeforeOrEqualTo, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearWeek, isAfter, arginfo_class_Temporal_YearWeek_isAfter, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearWeek, isAfterOrEqualTo, arginfo_class_Temporal_YearWeek_isAfterOrEqualTo, ZEND_ACC_PUBLIC)
-	ZEND_ME(Temporal_YearWeek, toISOString, arginfo_class_Temporal_YearWeek_toISOString, ZEND_ACC_PUBLIC)
+	ZEND_ME(Temporal_YearWeek, toIsoString, arginfo_class_Temporal_YearWeek_toIsoString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearWeek, jsonSerialize, arginfo_class_Temporal_YearWeek_jsonSerialize, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearWeek, __toString, arginfo_class_Temporal_YearWeek___toString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_YearWeek, __serialize, arginfo_class_Temporal_YearWeek___serialize, ZEND_ACC_PUBLIC)

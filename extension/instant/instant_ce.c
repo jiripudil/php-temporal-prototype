@@ -338,7 +338,7 @@ ZEND_METHOD(Temporal_Instant, toDecimal) {
 	RETURN_STR(str);
 }
 
-ZEND_METHOD(Temporal_Instant, toISOString) {
+ZEND_METHOD(Temporal_Instant, toIsoString) {
 	ZEND_PARSE_PARAMETERS_NONE();
 
 	zend_string *str = temporal_instant_format_iso(THIS_TEMPORAL_INSTANT_INTERNAL());

@@ -69,7 +69,7 @@ final class LocalTime implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getTime();
 	}
 
-	public static function fromISOString(string $text): self
+	public static function fromIsoString(string $text): self
 	{
 		$pattern = '/^(\d{2}):(\d{2})(?::(\d{2})(?:\\.(\d{1,9}))?)?()$/';
 
@@ -328,7 +328,7 @@ final class LocalTime implements JsonSerializable, Stringable
 		);
 	}
 
-	public function toISOString(): string
+	public function toIsoString(): string
 	{
 		$result = sprintf('%02d:%02d', $this->hour, $this->minute);
 
@@ -357,12 +357,12 @@ final class LocalTime implements JsonSerializable, Stringable
 
 	public function jsonSerialize(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __toString(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __serialize(): array

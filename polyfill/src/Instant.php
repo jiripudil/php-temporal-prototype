@@ -193,19 +193,19 @@ final class Instant implements JsonSerializable, Stringable
 		return $result;
 	}
 
-	public function toISOString(): string
+	public function toIsoString(): string
 	{
-		return $this->atTimeZone(TimeZoneOffset::utc())->toISOString();
+		return $this->atTimeZone(TimeZoneOffset::utc())->toIsoString();
 	}
 
 	public function jsonSerialize(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __toString(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __serialize(): array

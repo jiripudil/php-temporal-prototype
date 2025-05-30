@@ -14,7 +14,7 @@ namespace Temporal
 		public static function ofDayOfYear(int $year, int $dayOfYear): LocalDate {}
 		public static function ofEpochDay(int $epochDay): LocalDate {}
 		public static function now(TimeZone $timeZone, Clock|null $clock = null): LocalDate {}
-		public static function fromISOString(string $text): LocalDate {}
+		public static function fromIsoString(string $text): LocalDate {}
 		public static function min(): LocalDate {}
 		public static function max(): LocalDate {}
 		public function getYear(): int {}
@@ -56,7 +56,7 @@ namespace Temporal
 		public function isAfterOrEqualTo(LocalDate $other): bool {}
 		public function toDateTime(): \DateTimeImmutable {}
 		public static function fromDateTime(\DateTimeInterface $dateTime): LocalDate {}
-		public function toISOString(): string {}
+		public function toIsoString(): string {}
 		public function format(string $localizedPattern, string|null $locale = null): string {}
 		public function formatWith(\Temporal\Format\DateTimeFormatter $formatter): string {}
 		public function jsonSerialize(): string {}

@@ -108,7 +108,7 @@ ZEND_METHOD(Temporal_LocalDateTime, now) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_LocalDateTime, fromISOString) {
+ZEND_METHOD(Temporal_LocalDateTime, fromIsoString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -902,7 +902,7 @@ ZEND_METHOD(Temporal_LocalDateTime, fromDateTime) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_LocalDateTime, toISOString) {
+ZEND_METHOD(Temporal_LocalDateTime, toIsoString) {
 	ZEND_PARSE_PARAMETERS_NONE();
 
 	zend_string *str = temporal_local_date_time_format_iso(THIS_TEMPORAL_LOCAL_DATE_TIME_INTERNAL());

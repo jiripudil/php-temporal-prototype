@@ -60,7 +60,7 @@ ZEND_METHOD(Temporal_TimeZoneOffset, ofTotalSeconds) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_TimeZoneOffset, fromISOString) {
+ZEND_METHOD(Temporal_TimeZoneOffset, fromIsoString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)

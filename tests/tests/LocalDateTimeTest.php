@@ -71,7 +71,7 @@ final class LocalDateTimeTest extends TemporalTestCase
 		self::assertLocalDateTime($dateTime, 1970, 1, 1, 1, 45);
 	}
 
-	public static function provideFromISOStringData(): iterable
+	public static function provideFromIsoStringData(): iterable
 	{
 		yield ['1970-01-01T00:00', 1970, 1, 1, 0, 0];
 		yield ['1970-01-01T12:30', 1970, 1, 1, 12, 30];
@@ -81,10 +81,10 @@ final class LocalDateTimeTest extends TemporalTestCase
 		yield ['1970-01-01T12:30:59.000000001', 1970, 1, 1, 12, 30, 59, 1];
 	}
 
-	#[DataProvider('provideFromISOStringData')]
-	public function testFromISOString(string $text, int $expectedYear, int $expectedMonth, int $expectedDay, int $expectedHour, int $expectedMinute, int $expectedSecond = 0, int $expectedNano = 0): void
+	#[DataProvider('provideFromIsoStringData')]
+	public function testFromIsoString(string $text, int $expectedYear, int $expectedMonth, int $expectedDay, int $expectedHour, int $expectedMinute, int $expectedSecond = 0, int $expectedNano = 0): void
 	{
-		$dateTime = LocalDateTime::fromISOString($text);
+		$dateTime = LocalDateTime::fromIsoString($text);
 		self::assertLocalDateTime($dateTime, $expectedYear, $expectedMonth, $expectedDay, $expectedHour, $expectedMinute, $expectedSecond, $expectedNano);
 	}
 
@@ -201,7 +201,7 @@ final class LocalDateTimeTest extends TemporalTestCase
 		self::assertLocalDateTime($dateTime, 1970, 1, 1, 12, 30, 59, 123_456_000);
 	}
 
-	public static function provideToISOStringData(): iterable
+	public static function provideToIsoStringData(): iterable
 	{
 		yield [LocalDateTime::of(1970, 1, 1, 12, 30), '1970-01-01T12:30'];
 		yield [LocalDateTime::of(1970, 1, 1, 12, 30, 59), '1970-01-01T12:30:59'];
@@ -210,10 +210,10 @@ final class LocalDateTimeTest extends TemporalTestCase
 		yield [LocalDateTime::of(1970, 1, 1, 12, 30, 59, 999_999_999), '1970-01-01T12:30:59.999999999'];
 	}
 
-	#[DataProvider('provideToISOStringData')]
-	public function testToISOString(LocalDateTime $dateTime, string $expectedResult): void
+	#[DataProvider('provideToIsoStringData')]
+	public function testToIsoString(LocalDateTime $dateTime, string $expectedResult): void
 	{
-		self::assertSame($expectedResult, $dateTime->toISOString());
+		self::assertSame($expectedResult, $dateTime->toIsoString());
 	}
 
 	public static function provideFormatData(): iterable

@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: b42a2c947ca37dc7ccaa9b31f23992ab9e1548a5 */
+ * Stub hash: d23a6fbcdf8e780e4a7fa3648dd61b205de29582 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_LocalTime___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -21,7 +21,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalTime_now, 0, 
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalTime_fromISOString, 0, 1, Temporal\\LocalTime, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalTime_fromIsoString, 0, 1, Temporal\\LocalTime, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -118,7 +118,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalTime_fromDate
 	ZEND_ARG_OBJ_INFO(0, dateTime, DateTimeInterface, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalTime_toISOString, 0, 0, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalTime_toIsoString, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalTime_format, 0, 1, IS_STRING, 0)
@@ -130,9 +130,9 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalTime_formatW
 	ZEND_ARG_OBJ_INFO(0, formatter, Temporal\\Format\\DateTimeFormatter, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_Temporal_LocalTime_jsonSerialize arginfo_class_Temporal_LocalTime_toISOString
+#define arginfo_class_Temporal_LocalTime_jsonSerialize arginfo_class_Temporal_LocalTime_toIsoString
 
-#define arginfo_class_Temporal_LocalTime___toString arginfo_class_Temporal_LocalTime_toISOString
+#define arginfo_class_Temporal_LocalTime___toString arginfo_class_Temporal_LocalTime_toIsoString
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalTime___serialize, 0, 0, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
@@ -145,7 +145,7 @@ ZEND_METHOD(Temporal_LocalTime, __construct);
 ZEND_METHOD(Temporal_LocalTime, of);
 ZEND_METHOD(Temporal_LocalTime, ofSecondOfDay);
 ZEND_METHOD(Temporal_LocalTime, now);
-ZEND_METHOD(Temporal_LocalTime, fromISOString);
+ZEND_METHOD(Temporal_LocalTime, fromIsoString);
 ZEND_METHOD(Temporal_LocalTime, midnight);
 ZEND_METHOD(Temporal_LocalTime, noon);
 ZEND_METHOD(Temporal_LocalTime, min);
@@ -178,7 +178,7 @@ ZEND_METHOD(Temporal_LocalTime, isAfter);
 ZEND_METHOD(Temporal_LocalTime, isAfterOrEqualTo);
 ZEND_METHOD(Temporal_LocalTime, toDateTime);
 ZEND_METHOD(Temporal_LocalTime, fromDateTime);
-ZEND_METHOD(Temporal_LocalTime, toISOString);
+ZEND_METHOD(Temporal_LocalTime, toIsoString);
 ZEND_METHOD(Temporal_LocalTime, format);
 ZEND_METHOD(Temporal_LocalTime, formatWith);
 ZEND_METHOD(Temporal_LocalTime, jsonSerialize);
@@ -191,7 +191,7 @@ static const zend_function_entry class_Temporal_LocalTime_methods[] = {
 	ZEND_ME(Temporal_LocalTime, of, arginfo_class_Temporal_LocalTime_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, ofSecondOfDay, arginfo_class_Temporal_LocalTime_ofSecondOfDay, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, now, arginfo_class_Temporal_LocalTime_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_LocalTime, fromISOString, arginfo_class_Temporal_LocalTime_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_LocalTime, fromIsoString, arginfo_class_Temporal_LocalTime_fromIsoString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, midnight, arginfo_class_Temporal_LocalTime_midnight, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, noon, arginfo_class_Temporal_LocalTime_noon, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalTime, min, arginfo_class_Temporal_LocalTime_min, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
@@ -224,7 +224,7 @@ static const zend_function_entry class_Temporal_LocalTime_methods[] = {
 	ZEND_ME(Temporal_LocalTime, isAfterOrEqualTo, arginfo_class_Temporal_LocalTime_isAfterOrEqualTo, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalTime, toDateTime, arginfo_class_Temporal_LocalTime_toDateTime, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalTime, fromDateTime, arginfo_class_Temporal_LocalTime_fromDateTime, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_LocalTime, toISOString, arginfo_class_Temporal_LocalTime_toISOString, ZEND_ACC_PUBLIC)
+	ZEND_ME(Temporal_LocalTime, toIsoString, arginfo_class_Temporal_LocalTime_toIsoString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalTime, format, arginfo_class_Temporal_LocalTime_format, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalTime, formatWith, arginfo_class_Temporal_LocalTime_formatWith, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalTime, jsonSerialize, arginfo_class_Temporal_LocalTime_jsonSerialize, ZEND_ACC_PUBLIC)

@@ -1,7 +1,7 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 76886f3343f5d96cb606aacda3354880eec69540 */
+ * Stub hash: 3dd380516d862a53f90a9fd9b37f10a5768fd76b */
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZone_fromISOString, 0, 1, Temporal\\TimeZone, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZone_fromIsoString, 0, 1, Temporal\\TimeZone, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -30,7 +30,7 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_Temporal_TimeZone___toString arginfo_class_Temporal_TimeZone_getId
 
-ZEND_METHOD(Temporal_TimeZone, fromISOString);
+ZEND_METHOD(Temporal_TimeZone, fromIsoString);
 ZEND_METHOD(Temporal_TimeZone, utc);
 ZEND_METHOD(Temporal_TimeZone, isEqualTo);
 ZEND_METHOD(Temporal_TimeZone, fromDateTimeZone);
@@ -38,7 +38,7 @@ ZEND_METHOD(Temporal_TimeZone, jsonSerialize);
 ZEND_METHOD(Temporal_TimeZone, __toString);
 
 static const zend_function_entry class_Temporal_TimeZone_methods[] = {
-	ZEND_ME(Temporal_TimeZone, fromISOString, arginfo_class_Temporal_TimeZone_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_TimeZone, fromIsoString, arginfo_class_Temporal_TimeZone_fromIsoString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_TimeZone, utc, arginfo_class_Temporal_TimeZone_utc, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 #if (PHP_VERSION_ID >= 80400)
 	ZEND_RAW_FENTRY("getId", NULL, arginfo_class_Temporal_TimeZone_getId, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT, NULL, NULL)

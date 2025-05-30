@@ -17,7 +17,7 @@ namespace Temporal
 		public static function ofDays(int $days): Period {}
 		public static function zero(): Period {}
 		public static function between(LocalDate $start, LocalDate $endExclusive): Period {}
-		public static function fromISOString(string $text): Period {}
+		public static function fromIsoString(string $text): Period {}
 		public function getYears(): int {}
 		public function withYears(int $years): Period {}
 		public function plusYears(int $years): Period {}
@@ -33,7 +33,7 @@ namespace Temporal
 		public function negated(): Period {}
 		public function isZero(): bool {}
 		public function isEqualTo(Period $other): bool {}
-		public function toISOString(): string {}
+		public function toIsoString(): string {}
 		public function jsonSerialize(): string {}
 		public function __toString(): string {}
 		public function __serialize(): array {}

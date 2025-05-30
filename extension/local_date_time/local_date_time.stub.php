@@ -13,7 +13,7 @@ namespace Temporal
 		public static function of(int $year, int $month, int $day, int $hour = 0, int $minute = 0, int $second = 0, int $nano = 0): LocalDateTime {}
 		public static function ofDateTime(LocalDate $date, LocalTime $time): LocalDateTime {}
 		public static function now(TimeZone $timeZone, Clock|null $clock = null): LocalDateTime {}
-		public static function fromISOString(string $text): LocalDateTime {}
+		public static function fromIsoString(string $text): LocalDateTime {}
 		public static function min(): LocalDateTime {}
 		public static function max(): LocalDateTime {}
 		public function getDate(): LocalDate {}
@@ -74,7 +74,7 @@ namespace Temporal
 		public function atTimeZone(TimeZone $timeZone): ZonedDateTime {}
 		public function toDateTime(): \DateTimeImmutable {}
 		public static function fromDateTime(\DateTimeInterface $dateTime): LocalDateTime {}
-		public function toISOString(): string {}
+		public function toIsoString(): string {}
 		public function format(string $localizedPattern, string|null $locale = null): string {}
 		public function formatWith(\Temporal\Format\DateTimeFormatter $formatter): string {}
 		public function jsonSerialize(): string {}

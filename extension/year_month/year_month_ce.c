@@ -57,7 +57,7 @@ ZEND_METHOD(Temporal_YearMonth, now) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_YearMonth, fromISOString) {
+ZEND_METHOD(Temporal_YearMonth, fromIsoString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -266,7 +266,7 @@ ZEND_METHOD(Temporal_YearMonth, isAfterOrEqualTo) {
 	RETURN_BOOL(result >= 0);
 }
 
-ZEND_METHOD(Temporal_YearMonth, toISOString) {
+ZEND_METHOD(Temporal_YearMonth, toIsoString) {
 	ZEND_PARSE_PARAMETERS_NONE();
 
 	zend_string *str = temporal_year_month_format_iso(THIS_TEMPORAL_YEAR_MONTH_INTERNAL());

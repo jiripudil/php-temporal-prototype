@@ -105,7 +105,7 @@ final class LocalDate implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getDate();
 	}
 
-	public static function fromISOString(string $text): self
+	public static function fromIsoString(string $text): self
 	{
 		$pattern = '/^(-?\d{4})-(\d{2})-(\d{2})()$/';
 
@@ -456,7 +456,7 @@ final class LocalDate implements JsonSerializable, Stringable
 		);
 	}
 
-	public function toISOString(): string
+	public function toIsoString(): string
 	{
 		$result = sprintf('%04d-%02d-%02d', abs($this->year), $this->month, $this->day);
 		if ($this->year >= 0) {
@@ -479,12 +479,12 @@ final class LocalDate implements JsonSerializable, Stringable
 
 	public function jsonSerialize(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __toString(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __serialize(): array

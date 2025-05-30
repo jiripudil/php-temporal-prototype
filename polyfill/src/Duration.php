@@ -33,7 +33,7 @@ final class Duration implements JsonSerializable, Stringable
 		return $zero;
 	}
 
-	public static function fromISOString(string $value): self
+	public static function fromIsoString(string $value): self
 	{
 		$pattern = '/^([+\-]?)P(?:([+\-]?[0-9]+)D)?(?:T(?:([+\-]?[0-9]+)H)?(?:([+\-]?[0-9]+)M)?(?:([+\-]?[0-9]+)(?:\.([0-9]{1,9}))?S)?)?()$/i';
 
@@ -281,7 +281,7 @@ final class Duration implements JsonSerializable, Stringable
 		return $this->compareTo($other) <= 0;
 	}
 
-	public function toISOString(): string
+	public function toIsoString(): string
 	{
 		$seconds = $this->seconds;
 		$nanos = $this->nanos;
@@ -326,12 +326,12 @@ final class Duration implements JsonSerializable, Stringable
 
 	public function jsonSerialize(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __toString(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __serialize(): array

@@ -22,7 +22,7 @@ ZEND_METHOD(Temporal_Duration, zero) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_Duration, fromISOString) {
+ZEND_METHOD(Temporal_Duration, fromIsoString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -427,7 +427,7 @@ ZEND_METHOD(Temporal_Duration, isLesserThanOrEqualTo) {
 	RETURN_BOOL(result <= 0);
 }
 
-ZEND_METHOD(Temporal_Duration, toISOString) {
+ZEND_METHOD(Temporal_Duration, toIsoString) {
 	ZEND_PARSE_PARAMETERS_NONE();
 
 	zend_string *result = temporal_duration_format_iso(THIS_TEMPORAL_DURATION_INTERNAL());

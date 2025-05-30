@@ -81,7 +81,7 @@ final class DurationTest extends TemporalTestCase
 		self::assertDuration($duration, 2, 500_000_000);
 	}
 
-	public static function provideFromISOStringData(): iterable
+	public static function provideFromIsoStringData(): iterable
 	{
 		yield ['PT0S', 0, 0];
 		yield ['PT-0S', 0, 0];
@@ -104,14 +104,14 @@ final class DurationTest extends TemporalTestCase
 		yield ['P1DT1H1M1.1S', 90061, 100_000_000];
 	}
 
-	#[DataProvider('provideFromISOStringData')]
-	public function testFromISOString(string $text, int $expectedSeconds, int $expectedNanos): void
+	#[DataProvider('provideFromIsoStringData')]
+	public function testFromIsoString(string $text, int $expectedSeconds, int $expectedNanos): void
 	{
-		$duration = Duration::fromISOString($text);
+		$duration = Duration::fromIsoString($text);
 		self::assertDuration($duration, $expectedSeconds, $expectedNanos);
 	}
 
-	public static function provideInvalidFromISOStringData(): iterable
+	public static function provideInvalidFromIsoStringData(): iterable
 	{
 		yield [''];
 		yield ['P'];
@@ -122,13 +122,13 @@ final class DurationTest extends TemporalTestCase
 		yield ['-PT'];
 	}
 
-	#[DataProvider('provideInvalidFromISOStringData')]
-	public function testInvalidFromISOString(string $text): void
+	#[DataProvider('provideInvalidFromIsoStringData')]
+	public function testInvalidFromIsoString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		Duration::fromISOString($text);
+		Duration::fromIsoString($text);
 	}
 
 	public function testGetters(): void
@@ -229,7 +229,7 @@ final class DurationTest extends TemporalTestCase
 		self::assertSame($expectedResult >= 0, $a->isGreaterThanOrEqualTo($b));
 	}
 
-	public static function provideToISOStringData(): iterable
+	public static function provideToIsoStringData(): iterable
 	{
 		yield [Duration::zero(), 'PT0S'];
 
@@ -244,10 +244,10 @@ final class DurationTest extends TemporalTestCase
 		yield [Duration::ofSeconds(-123_456), 'PT-34H-17M-36S'];
 	}
 
-	#[DataProvider('provideToISOStringData')]
-	public function testToISOString(Duration $duration, string $expectedResult): void
+	#[DataProvider('provideToIsoStringData')]
+	public function testToIsoString(Duration $duration, string $expectedResult): void
 	{
-		self::assertSame($expectedResult, $duration->toISOString());
+		self::assertSame($expectedResult, $duration->toIsoString());
 	}
 
 	public function testSerialization(): void

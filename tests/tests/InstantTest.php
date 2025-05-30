@@ -126,10 +126,10 @@ final class InstantTest extends TemporalTestCase
 
 	#[TestWith([0, 0, '1970-01-01T00:00Z'])]
 	#[TestWith([1, 1, '1970-01-01T00:00:01.000000001Z'])]
-	public function testToISOString(int $seconds, int $nanoAdjustment, string $expectedISOString): void
+	public function testToIsoString(int $seconds, int $nanoAdjustment, string $expectedIsoString): void
 	{
 		$instant = Instant::of($seconds, $nanoAdjustment);
-		self::assertSame($expectedISOString, $instant->toISOString());
+		self::assertSame($expectedIsoString, $instant->toIsoString());
 	}
 
 	public function testSerialization(): void

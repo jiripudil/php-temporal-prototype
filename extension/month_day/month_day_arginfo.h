@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 6b46dd73148df07f9cf37799d5d022332ae048d0 */
+ * Stub hash: 7d76e747f9d2b90d0af840afb7f4086f9f814d68 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_MonthDay___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -14,7 +14,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_MonthDay_now, 0, 1
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_MonthDay_fromISOString, 0, 1, Temporal\\MonthDay, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_MonthDay_fromIsoString, 0, 1, Temporal\\MonthDay, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -55,12 +55,12 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_Temporal_MonthDay_isAfterOrEqualTo arginfo_class_Temporal_MonthDay_isEqualTo
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_MonthDay_toISOString, 0, 0, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_MonthDay_toIsoString, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_Temporal_MonthDay_jsonSerialize arginfo_class_Temporal_MonthDay_toISOString
+#define arginfo_class_Temporal_MonthDay_jsonSerialize arginfo_class_Temporal_MonthDay_toIsoString
 
-#define arginfo_class_Temporal_MonthDay___toString arginfo_class_Temporal_MonthDay_toISOString
+#define arginfo_class_Temporal_MonthDay___toString arginfo_class_Temporal_MonthDay_toIsoString
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_MonthDay___serialize, 0, 0, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
@@ -72,7 +72,7 @@ ZEND_END_ARG_INFO()
 ZEND_METHOD(Temporal_MonthDay, __construct);
 ZEND_METHOD(Temporal_MonthDay, of);
 ZEND_METHOD(Temporal_MonthDay, now);
-ZEND_METHOD(Temporal_MonthDay, fromISOString);
+ZEND_METHOD(Temporal_MonthDay, fromIsoString);
 ZEND_METHOD(Temporal_MonthDay, getMonth);
 ZEND_METHOD(Temporal_MonthDay, withMonth);
 ZEND_METHOD(Temporal_MonthDay, getDayOfMonth);
@@ -85,7 +85,7 @@ ZEND_METHOD(Temporal_MonthDay, isBefore);
 ZEND_METHOD(Temporal_MonthDay, isBeforeOrEqualTo);
 ZEND_METHOD(Temporal_MonthDay, isAfter);
 ZEND_METHOD(Temporal_MonthDay, isAfterOrEqualTo);
-ZEND_METHOD(Temporal_MonthDay, toISOString);
+ZEND_METHOD(Temporal_MonthDay, toIsoString);
 ZEND_METHOD(Temporal_MonthDay, jsonSerialize);
 ZEND_METHOD(Temporal_MonthDay, __toString);
 ZEND_METHOD(Temporal_MonthDay, __serialize);
@@ -95,7 +95,7 @@ static const zend_function_entry class_Temporal_MonthDay_methods[] = {
 	ZEND_ME(Temporal_MonthDay, __construct, arginfo_class_Temporal_MonthDay___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_MonthDay, of, arginfo_class_Temporal_MonthDay_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_MonthDay, now, arginfo_class_Temporal_MonthDay_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_MonthDay, fromISOString, arginfo_class_Temporal_MonthDay_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_MonthDay, fromIsoString, arginfo_class_Temporal_MonthDay_fromIsoString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_MonthDay, getMonth, arginfo_class_Temporal_MonthDay_getMonth, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_MonthDay, withMonth, arginfo_class_Temporal_MonthDay_withMonth, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_MonthDay, getDayOfMonth, arginfo_class_Temporal_MonthDay_getDayOfMonth, ZEND_ACC_PUBLIC)
@@ -108,7 +108,7 @@ static const zend_function_entry class_Temporal_MonthDay_methods[] = {
 	ZEND_ME(Temporal_MonthDay, isBeforeOrEqualTo, arginfo_class_Temporal_MonthDay_isBeforeOrEqualTo, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_MonthDay, isAfter, arginfo_class_Temporal_MonthDay_isAfter, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_MonthDay, isAfterOrEqualTo, arginfo_class_Temporal_MonthDay_isAfterOrEqualTo, ZEND_ACC_PUBLIC)
-	ZEND_ME(Temporal_MonthDay, toISOString, arginfo_class_Temporal_MonthDay_toISOString, ZEND_ACC_PUBLIC)
+	ZEND_ME(Temporal_MonthDay, toIsoString, arginfo_class_Temporal_MonthDay_toIsoString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_MonthDay, jsonSerialize, arginfo_class_Temporal_MonthDay_jsonSerialize, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_MonthDay, __toString, arginfo_class_Temporal_MonthDay___toString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_MonthDay, __serialize, arginfo_class_Temporal_MonthDay___serialize, ZEND_ACC_PUBLIC)

@@ -56,7 +56,7 @@ final class PeriodTest extends TemporalTestCase
 		self::assertPeriod($period, 2, 10, 21);
 	}
 
-	public static function provideFromISOStringData(): iterable
+	public static function provideFromIsoStringData(): iterable
 	{
 		yield ['P1Y2M3D', 1, 2, 3];
 		yield ['P1Y-1M', 1, -1, 0];
@@ -65,14 +65,14 @@ final class PeriodTest extends TemporalTestCase
 		yield ['-P4W', 0, 0, -28];
 	}
 
-	#[DataProvider('provideFromISOStringData')]
-	public function testFromISOString(string $text, int $expectedYears, int $expectedMonths, int $expectedDays): void
+	#[DataProvider('provideFromIsoStringData')]
+	public function testFromIsoString(string $text, int $expectedYears, int $expectedMonths, int $expectedDays): void
 	{
-		$period = Period::fromISOString($text);
+		$period = Period::fromIsoString($text);
 		self::assertPeriod($period, $expectedYears, $expectedMonths, $expectedDays);
 	}
 
-	public static function provideInvalidFromISOStringData(): iterable
+	public static function provideInvalidFromIsoStringData(): iterable
 	{
 		yield [''];
 		yield ['PT1S'];
@@ -81,13 +81,13 @@ final class PeriodTest extends TemporalTestCase
 		yield ['-PY'];
 	}
 
-	#[DataProvider('provideInvalidFromISOStringData')]
-	public function testInvalidFromISOString(string $text): void
+	#[DataProvider('provideInvalidFromIsoStringData')]
+	public function testInvalidFromIsoString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		Period::fromISOString($text);
+		Period::fromIsoString($text);
 	}
 
 	public function testNegated(): void
@@ -118,16 +118,16 @@ final class PeriodTest extends TemporalTestCase
 		self::assertSame($expectedResult, $b->isEqualTo($a));
 	}
 
-	public static function provideToISOStringData(): iterable
+	public static function provideToIsoStringData(): iterable
 	{
 		yield [Period::ofYears(1), 'P1Y'];
 		yield [Period::of(1, -10, 21), 'P1Y-10M21D'];
 	}
 
-	#[DataProvider('provideToISOStringData')]
-	public function testToISOString(Period $period, string $expectedResult): void
+	#[DataProvider('provideToIsoStringData')]
+	public function testToIsoString(Period $period, string $expectedResult): void
 	{
-		self::assertSame($period->toISOString(), $expectedResult);
+		self::assertSame($period->toIsoString(), $expectedResult);
 	}
 
 	public function testSerialization(): void

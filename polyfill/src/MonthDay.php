@@ -35,7 +35,7 @@ final class MonthDay implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getMonthDay();
 	}
 
-	public static function fromISOString(string $text): self
+	public static function fromIsoString(string $text): self
 	{
 		$pattern = '/^--(\d{2})-(\d{2})()$/';
 
@@ -137,19 +137,19 @@ final class MonthDay implements JsonSerializable, Stringable
 		return $this->compareTo($other) >= 0;
 	}
 
-	public function toISOString(): string
+	public function toIsoString(): string
 	{
 		return sprintf('--%02d-%02d', $this->month, $this->day);
 	}
 
 	public function jsonSerialize(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __toString(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __serialize(): array

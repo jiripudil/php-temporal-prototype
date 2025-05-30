@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 48833e7e84822b2634682b6af3d370ffcded1d62 */
+ * Stub hash: 662f6d6fe944c1fc58d5b0ff68ed6b95f2bf8c3b */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Duration___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -7,7 +7,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Duration_zero, 0, 0, Temporal\\Duration, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Duration_fromISOString, 0, 1, Temporal\\Duration, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Duration_fromIsoString, 0, 1, Temporal\\Duration, 0)
 	ZEND_ARG_TYPE_INFO(0, value, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -109,12 +109,12 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_Temporal_Duration_isLesserThanOrEqualTo arginfo_class_Temporal_Duration_isEqualTo
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_Duration_toISOString, 0, 0, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_Duration_toIsoString, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_Temporal_Duration_jsonSerialize arginfo_class_Temporal_Duration_toISOString
+#define arginfo_class_Temporal_Duration_jsonSerialize arginfo_class_Temporal_Duration_toIsoString
 
-#define arginfo_class_Temporal_Duration___toString arginfo_class_Temporal_Duration_toISOString
+#define arginfo_class_Temporal_Duration___toString arginfo_class_Temporal_Duration_toIsoString
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_Duration___serialize, 0, 0, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
@@ -125,7 +125,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_METHOD(Temporal_Duration, __construct);
 ZEND_METHOD(Temporal_Duration, zero);
-ZEND_METHOD(Temporal_Duration, fromISOString);
+ZEND_METHOD(Temporal_Duration, fromIsoString);
 ZEND_METHOD(Temporal_Duration, ofSeconds);
 ZEND_METHOD(Temporal_Duration, ofMinutes);
 ZEND_METHOD(Temporal_Duration, ofHours);
@@ -164,7 +164,7 @@ ZEND_METHOD(Temporal_Duration, isGreaterThan);
 ZEND_METHOD(Temporal_Duration, isGreaterThanOrEqualTo);
 ZEND_METHOD(Temporal_Duration, isLesserThan);
 ZEND_METHOD(Temporal_Duration, isLesserThanOrEqualTo);
-ZEND_METHOD(Temporal_Duration, toISOString);
+ZEND_METHOD(Temporal_Duration, toIsoString);
 ZEND_METHOD(Temporal_Duration, jsonSerialize);
 ZEND_METHOD(Temporal_Duration, __toString);
 ZEND_METHOD(Temporal_Duration, __serialize);
@@ -173,7 +173,7 @@ ZEND_METHOD(Temporal_Duration, __unserialize);
 static const zend_function_entry class_Temporal_Duration_methods[] = {
 	ZEND_ME(Temporal_Duration, __construct, arginfo_class_Temporal_Duration___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_Duration, zero, arginfo_class_Temporal_Duration_zero, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_Duration, fromISOString, arginfo_class_Temporal_Duration_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_Duration, fromIsoString, arginfo_class_Temporal_Duration_fromIsoString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Duration, ofSeconds, arginfo_class_Temporal_Duration_ofSeconds, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Duration, ofMinutes, arginfo_class_Temporal_Duration_ofMinutes, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Duration, ofHours, arginfo_class_Temporal_Duration_ofHours, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
@@ -212,7 +212,7 @@ static const zend_function_entry class_Temporal_Duration_methods[] = {
 	ZEND_ME(Temporal_Duration, isGreaterThanOrEqualTo, arginfo_class_Temporal_Duration_isGreaterThanOrEqualTo, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Duration, isLesserThan, arginfo_class_Temporal_Duration_isLesserThan, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Duration, isLesserThanOrEqualTo, arginfo_class_Temporal_Duration_isLesserThanOrEqualTo, ZEND_ACC_PUBLIC)
-	ZEND_ME(Temporal_Duration, toISOString, arginfo_class_Temporal_Duration_toISOString, ZEND_ACC_PUBLIC)
+	ZEND_ME(Temporal_Duration, toIsoString, arginfo_class_Temporal_Duration_toIsoString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Duration, jsonSerialize, arginfo_class_Temporal_Duration_jsonSerialize, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Duration, __toString, arginfo_class_Temporal_Duration___toString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Duration, __serialize, arginfo_class_Temporal_Duration___serialize, ZEND_ACC_PUBLIC)

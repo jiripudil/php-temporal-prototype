@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 83241d59328a6261982dd37c74625ff6449e2b25 */
+ * Stub hash: 496401d32f9d21e14b7aa2fc1666ac437896447c */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Period___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -34,7 +34,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Period_between, 0,
 	ZEND_ARG_OBJ_INFO(0, endExclusive, Temporal\\LocalDate, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Period_fromISOString, 0, 1, Temporal\\Period, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_Period_fromIsoString, 0, 1, Temporal\\Period, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -72,12 +72,12 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_Period_isEqualTo,
 	ZEND_ARG_OBJ_INFO(0, other, Temporal\\Period, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_Period_toISOString, 0, 0, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_Period_toIsoString, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_Temporal_Period_jsonSerialize arginfo_class_Temporal_Period_toISOString
+#define arginfo_class_Temporal_Period_jsonSerialize arginfo_class_Temporal_Period_toIsoString
 
-#define arginfo_class_Temporal_Period___toString arginfo_class_Temporal_Period_toISOString
+#define arginfo_class_Temporal_Period___toString arginfo_class_Temporal_Period_toIsoString
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_Period___serialize, 0, 0, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
@@ -94,7 +94,7 @@ ZEND_METHOD(Temporal_Period, ofWeeks);
 ZEND_METHOD(Temporal_Period, ofDays);
 ZEND_METHOD(Temporal_Period, zero);
 ZEND_METHOD(Temporal_Period, between);
-ZEND_METHOD(Temporal_Period, fromISOString);
+ZEND_METHOD(Temporal_Period, fromIsoString);
 ZEND_METHOD(Temporal_Period, getYears);
 ZEND_METHOD(Temporal_Period, withYears);
 ZEND_METHOD(Temporal_Period, plusYears);
@@ -110,7 +110,7 @@ ZEND_METHOD(Temporal_Period, minusDays);
 ZEND_METHOD(Temporal_Period, negated);
 ZEND_METHOD(Temporal_Period, isZero);
 ZEND_METHOD(Temporal_Period, isEqualTo);
-ZEND_METHOD(Temporal_Period, toISOString);
+ZEND_METHOD(Temporal_Period, toIsoString);
 ZEND_METHOD(Temporal_Period, jsonSerialize);
 ZEND_METHOD(Temporal_Period, __toString);
 ZEND_METHOD(Temporal_Period, __serialize);
@@ -125,7 +125,7 @@ static const zend_function_entry class_Temporal_Period_methods[] = {
 	ZEND_ME(Temporal_Period, ofDays, arginfo_class_Temporal_Period_ofDays, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Period, zero, arginfo_class_Temporal_Period_zero, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Period, between, arginfo_class_Temporal_Period_between, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_Period, fromISOString, arginfo_class_Temporal_Period_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_Period, fromIsoString, arginfo_class_Temporal_Period_fromIsoString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_Period, getYears, arginfo_class_Temporal_Period_getYears, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Period, withYears, arginfo_class_Temporal_Period_withYears, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Period, plusYears, arginfo_class_Temporal_Period_plusYears, ZEND_ACC_PUBLIC)
@@ -141,7 +141,7 @@ static const zend_function_entry class_Temporal_Period_methods[] = {
 	ZEND_ME(Temporal_Period, negated, arginfo_class_Temporal_Period_negated, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Period, isZero, arginfo_class_Temporal_Period_isZero, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Period, isEqualTo, arginfo_class_Temporal_Period_isEqualTo, ZEND_ACC_PUBLIC)
-	ZEND_ME(Temporal_Period, toISOString, arginfo_class_Temporal_Period_toISOString, ZEND_ACC_PUBLIC)
+	ZEND_ME(Temporal_Period, toIsoString, arginfo_class_Temporal_Period_toIsoString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Period, jsonSerialize, arginfo_class_Temporal_Period_jsonSerialize, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Period, __toString, arginfo_class_Temporal_Period___toString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Period, __serialize, arginfo_class_Temporal_Period___serialize, ZEND_ACC_PUBLIC)

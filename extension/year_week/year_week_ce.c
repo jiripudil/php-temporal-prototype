@@ -59,7 +59,7 @@ ZEND_METHOD(Temporal_YearWeek, now) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_YearWeek, fromISOString) {
+ZEND_METHOD(Temporal_YearWeek, fromIsoString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -258,7 +258,7 @@ ZEND_METHOD(Temporal_YearWeek, isAfterOrEqualTo) {
 	RETURN_BOOL(result >= 0);
 }
 
-ZEND_METHOD(Temporal_YearWeek, toISOString) {
+ZEND_METHOD(Temporal_YearWeek, toIsoString) {
 	ZEND_PARSE_PARAMETERS_NONE();
 
 	zend_string *str = temporal_year_week_format_iso(THIS_TEMPORAL_YEAR_WEEK_INTERNAL());

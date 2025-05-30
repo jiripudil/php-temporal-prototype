@@ -58,9 +58,9 @@ final class LocalTimeTest extends TemporalTestCase
 	#[TestWith(['12:30:00.000000', 12, 30])]
 	#[TestWith(['12:30:59', 12, 30, 59])]
 	#[TestWith(['12:30:59.000000001', 12, 30, 59, 1])]
-	public function testFromISOString(string $text, int $expectedHour, int $expectedMinute, int $expectedSecond = 0, int $expectedNano = 0): void
+	public function testFromIsoString(string $text, int $expectedHour, int $expectedMinute, int $expectedSecond = 0, int $expectedNano = 0): void
 	{
-		$time = LocalTime::fromISOString($text);
+		$time = LocalTime::fromIsoString($text);
 		self::assertLocalTime($time, $expectedHour, $expectedMinute, $expectedSecond, $expectedNano);
 	}
 
@@ -182,7 +182,7 @@ final class LocalTimeTest extends TemporalTestCase
 		self::assertLocalTime($time, 12, 30, 59, 123_456_000);
 	}
 
-	public static function provideToISOStringData(): iterable
+	public static function provideToIsoStringData(): iterable
 	{
 		yield [LocalTime::of(12, 30), '12:30'];
 		yield [LocalTime::of(12, 30, 59), '12:30:59'];
@@ -191,10 +191,10 @@ final class LocalTimeTest extends TemporalTestCase
 		yield [LocalTime::of(12, 30, 59, 999_999_999), '12:30:59.999999999'];
 	}
 
-	#[DataProvider('provideToISOStringData')]
-	public function testToISOString(LocalTime $time, string $expectedResult): void
+	#[DataProvider('provideToIsoStringData')]
+	public function testToIsoString(LocalTime $time, string $expectedResult): void
 	{
-		self::assertSame($expectedResult, $time->toISOString());
+		self::assertSame($expectedResult, $time->toIsoString());
 	}
 
 	public static function provideFormatData(): iterable

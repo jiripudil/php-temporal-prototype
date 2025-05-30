@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 98d8926e4b4acb6e0d76d41ad02d8c9d3d6d8068 */
+ * Stub hash: d97b852dd605d9747753e8cfa9ef6945c1839ef6 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_TimeZoneRegion___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -8,7 +8,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZoneRegion_of,
 	ZEND_ARG_TYPE_INFO(0, id, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZoneRegion_fromISOString, 0, 1, Temporal\\TimeZoneRegion, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_TimeZoneRegion_fromIsoString, 0, 1, Temporal\\TimeZoneRegion, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -31,7 +31,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_METHOD(Temporal_TimeZoneRegion, __construct);
 ZEND_METHOD(Temporal_TimeZoneRegion, of);
-ZEND_METHOD(Temporal_TimeZoneRegion, fromISOString);
+ZEND_METHOD(Temporal_TimeZoneRegion, fromIsoString);
 ZEND_METHOD(Temporal_TimeZoneRegion, getId);
 ZEND_METHOD(Temporal_TimeZoneRegion, getOffset);
 ZEND_METHOD(Temporal_TimeZoneRegion, toDateTimeZone);
@@ -41,7 +41,7 @@ ZEND_METHOD(Temporal_TimeZoneRegion, __unserialize);
 static const zend_function_entry class_Temporal_TimeZoneRegion_methods[] = {
 	ZEND_ME(Temporal_TimeZoneRegion, __construct, arginfo_class_Temporal_TimeZoneRegion___construct, ZEND_ACC_PRIVATE)
 	ZEND_ME(Temporal_TimeZoneRegion, of, arginfo_class_Temporal_TimeZoneRegion_of, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_TimeZoneRegion, fromISOString, arginfo_class_Temporal_TimeZoneRegion_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_TimeZoneRegion, fromIsoString, arginfo_class_Temporal_TimeZoneRegion_fromIsoString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_TimeZoneRegion, getId, arginfo_class_Temporal_TimeZoneRegion_getId, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_TimeZoneRegion, getOffset, arginfo_class_Temporal_TimeZoneRegion_getOffset, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_TimeZoneRegion, toDateTimeZone, arginfo_class_Temporal_TimeZoneRegion_toDateTimeZone, ZEND_ACC_PUBLIC)

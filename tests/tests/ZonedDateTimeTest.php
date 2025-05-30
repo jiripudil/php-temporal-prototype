@@ -69,7 +69,7 @@ final class ZonedDateTimeTest extends TemporalTestCase
 		self::assertTimeZoneOffset($zonedDateTime->getTimeZoneOffset(), 5400);
 	}
 
-	public static function provideFromISOStringData(): iterable
+	public static function provideFromIsoStringData(): iterable
 	{
 		yield ['2025-03-30T03:00:00+02:00[Europe/Prague]', 2025, 3, 30, 3, 0, 0, 0, 'Europe/Prague', 7200];
 		yield ['2025-03-30T03:00:00+01:00', 2025, 3, 30, 3, 0, 0, 0, '+01:00', 3600];
@@ -77,17 +77,17 @@ final class ZonedDateTimeTest extends TemporalTestCase
 		yield ['2025-03-30T03:00:00Z', 2025, 3, 30, 3, 0, 0, 0, 'Z', 0];
 	}
 
-	#[DataProvider('provideFromISOStringData')]
-	public function testFromISOString(string $text, int $expectedYear, int $expectedMonth, int $expectedDay, int $expectedHour, int $expectedMinute, int $expectedSecond, int $expectedNano, string $expectedTimeZoneId, int $expectedTimeZoneOffset): void
+	#[DataProvider('provideFromIsoStringData')]
+	public function testFromIsoString(string $text, int $expectedYear, int $expectedMonth, int $expectedDay, int $expectedHour, int $expectedMinute, int $expectedSecond, int $expectedNano, string $expectedTimeZoneId, int $expectedTimeZoneOffset): void
 	{
-		$zonedDateTime = ZonedDateTime::fromISOString($text);
+		$zonedDateTime = ZonedDateTime::fromIsoString($text);
 
 		self::assertZonedDateTime($zonedDateTime, $expectedYear, $expectedMonth, $expectedDay, $expectedHour, $expectedMinute, $expectedSecond, $expectedNano);
 		self::assertTimeZoneOffset($zonedDateTime->getTimeZoneOffset(), $expectedTimeZoneOffset);
 		self::assertSame($expectedTimeZoneId, $zonedDateTime->getTimeZone()->getId());
 	}
 
-	public static function provideInvalidFromISOStringData(): iterable
+	public static function provideInvalidFromIsoStringData(): iterable
 	{
 		yield [''];
 		yield ['2025-03-30T03:00'];
@@ -96,13 +96,13 @@ final class ZonedDateTimeTest extends TemporalTestCase
 		yield ['2025-03-30T03:00+12:00[Europe/Non_Existent_City]'];
 	}
 
-	#[DataProvider('provideInvalidFromISOStringData')]
-	public function testInvalidFromISOString(string $text): void
+	#[DataProvider('provideInvalidFromIsoStringData')]
+	public function testInvalidFromIsoString(string $text): void
 	{
 		$this->expectException(TemporalException::class);
 		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
 
-		ZonedDateTime::fromISOString($text);
+		ZonedDateTime::fromIsoString($text);
 	}
 
 	public function testWithTimeZoneSameLocal(): void
@@ -308,7 +308,7 @@ final class ZonedDateTimeTest extends TemporalTestCase
 		self::assertSame('Europe/Prague', $zonedDateTime->getTimeZone()->getId());
 	}
 
-	public static function provideToISOStringData(): iterable
+	public static function provideToIsoStringData(): iterable
 	{
 		yield [ZonedDateTime::of(LocalDateTime::of(2025, 3, 30, 3), TimeZoneRegion::of('Europe/Prague')), '2025-03-30T03:00+02:00[Europe/Prague]'];
 		yield [ZonedDateTime::of(LocalDateTime::of(2025, 3, 30, 3), TimeZoneOffset::of(2)), '2025-03-30T03:00+02:00'];
@@ -316,10 +316,10 @@ final class ZonedDateTimeTest extends TemporalTestCase
 		yield [ZonedDateTime::of(LocalDateTime::of(2025, 3, 30, 3), TimeZoneOffset::utc()), '2025-03-30T03:00Z'];
 	}
 
-	#[DataProvider('provideToISOStringData')]
-	public function testToISOString(ZonedDateTime $zonedDateTime, string $expectedResult): void
+	#[DataProvider('provideToIsoStringData')]
+	public function testToIsoString(ZonedDateTime $zonedDateTime, string $expectedResult): void
 	{
-		self::assertSame($expectedResult, $zonedDateTime->toISOString());
+		self::assertSame($expectedResult, $zonedDateTime->toIsoString());
 	}
 
 	public static function provideFormatData(): iterable

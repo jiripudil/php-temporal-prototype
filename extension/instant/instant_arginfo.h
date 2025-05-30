@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 6a05b50e78897ccaf30e5ce060569f4ae49b17bd */
+ * Stub hash: f2734ce829d5902551d80806cc18d9ecb7894af8 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_Instant___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -86,7 +86,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_Instant_toDecimal, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_Temporal_Instant_toISOString arginfo_class_Temporal_Instant_toDecimal
+#define arginfo_class_Temporal_Instant_toIsoString arginfo_class_Temporal_Instant_toDecimal
 
 #define arginfo_class_Temporal_Instant_jsonSerialize arginfo_class_Temporal_Instant_toDecimal
 
@@ -127,7 +127,7 @@ ZEND_METHOD(Temporal_Instant, isAfter);
 ZEND_METHOD(Temporal_Instant, isAfterOrEqualTo);
 ZEND_METHOD(Temporal_Instant, atTimeZone);
 ZEND_METHOD(Temporal_Instant, toDecimal);
-ZEND_METHOD(Temporal_Instant, toISOString);
+ZEND_METHOD(Temporal_Instant, toIsoString);
 ZEND_METHOD(Temporal_Instant, jsonSerialize);
 ZEND_METHOD(Temporal_Instant, __toString);
 ZEND_METHOD(Temporal_Instant, __serialize);
@@ -162,7 +162,7 @@ static const zend_function_entry class_Temporal_Instant_methods[] = {
 	ZEND_ME(Temporal_Instant, isAfterOrEqualTo, arginfo_class_Temporal_Instant_isAfterOrEqualTo, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Instant, atTimeZone, arginfo_class_Temporal_Instant_atTimeZone, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Instant, toDecimal, arginfo_class_Temporal_Instant_toDecimal, ZEND_ACC_PUBLIC)
-	ZEND_ME(Temporal_Instant, toISOString, arginfo_class_Temporal_Instant_toISOString, ZEND_ACC_PUBLIC)
+	ZEND_ME(Temporal_Instant, toIsoString, arginfo_class_Temporal_Instant_toIsoString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Instant, jsonSerialize, arginfo_class_Temporal_Instant_jsonSerialize, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Instant, __toString, arginfo_class_Temporal_Instant___toString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_Instant, __serialize, arginfo_class_Temporal_Instant___serialize, ZEND_ACC_PUBLIC)

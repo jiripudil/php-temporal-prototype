@@ -101,7 +101,7 @@ ZEND_METHOD(Temporal_Period, between) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_Period, fromISOString) {
+ZEND_METHOD(Temporal_Period, fromIsoString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -294,7 +294,7 @@ ZEND_METHOD(Temporal_Period, isEqualTo) {
 	RETURN_BOOL(period->years == other_period->years && period->months == other_period->months && period->days == other_period->days);
 }
 
-ZEND_METHOD(Temporal_Period, toISOString) {
+ZEND_METHOD(Temporal_Period, toIsoString) {
 	ZEND_PARSE_PARAMETERS_NONE();
 
 	zend_string *str = temporal_period_format_iso(THIS_TEMPORAL_PERIOD_INTERNAL());

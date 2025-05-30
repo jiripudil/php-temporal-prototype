@@ -12,7 +12,7 @@ namespace Temporal
 		private function __construct() {}
 		public static function of(int $month, int $day): MonthDay {}
 		public static function now(TimeZone $timeZone, Clock|null $clock = null): MonthDay {}
-		public static function fromISOString(string $text): MonthDay {}
+		public static function fromIsoString(string $text): MonthDay {}
 		public function getMonth(): int {}
 		public function withMonth(int $month): MonthDay {}
 		public function getDayOfMonth(): int {}
@@ -25,7 +25,7 @@ namespace Temporal
 		public function isBeforeOrEqualTo(MonthDay $other): bool {}
 		public function isAfter(MonthDay $other): bool {}
 		public function isAfterOrEqualTo(MonthDay $other): bool {}
-		public function toISOString(): string {}
+		public function toIsoString(): string {}
 		public function jsonSerialize(): string {}
 		public function __toString(): string {}
 		public function __serialize(): array {}

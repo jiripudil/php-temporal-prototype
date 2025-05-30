@@ -13,7 +13,7 @@ namespace Temporal
 		public static function of(LocalDateTime $dateTime, TimeZone $timeZone): ZonedDateTime {}
 		public static function ofInstant(Instant $instant, TimeZone $timeZone): ZonedDateTime {}
 		public static function now(TimeZone $timeZone, Clock|null $clock = null): ZonedDateTime {}
-		public static function fromISOString(string $text): ZonedDateTime {}
+		public static function fromIsoString(string $text): ZonedDateTime {}
 		public function getDateTime(): LocalDateTime {}
 		public function getDate(): LocalDate {}
 		public function withDate(LocalDate $date): ZonedDateTime {}
@@ -78,7 +78,7 @@ namespace Temporal
 		public function isAfterOrEqualTo(ZonedDateTime $other): bool {}
 		public function toDateTime(): \DateTimeImmutable {}
 		public static function fromDateTime(\DateTimeInterface $dateTime): ZonedDateTime {}
-		public function toISOString(): string {}
+		public function toIsoString(): string {}
 		public function format(string $localizedPattern, string|null $locale = null): string {}
 		public function formatWith(Format\DateTimeFormatter $formatter): string {}
 		public function jsonSerialize(): string {}

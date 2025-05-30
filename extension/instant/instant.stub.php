@@ -37,7 +37,7 @@ namespace Temporal
 		public function isAfterOrEqualTo(Instant $other): bool {}
 		public function atTimeZone(TimeZone $timeZone): ZonedDateTime {}
 		public function toDecimal(): string {}
-		public function toISOString(): string {}
+		public function toIsoString(): string {}
 		public function jsonSerialize(): string {}
 		public function __toString(): string {}
 		public function __serialize(): array {}

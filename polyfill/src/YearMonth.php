@@ -35,7 +35,7 @@ final class YearMonth implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getYearMonth();
 	}
 
-	public static function fromISOString(string $text): self
+	public static function fromIsoString(string $text): self
 	{
 		$pattern = '/^(-?\d{4})-(\d{2})()$/';
 
@@ -189,7 +189,7 @@ final class YearMonth implements JsonSerializable, Stringable
 		return $this->compareTo($other) >= 0;
 	}
 
-	public function toISOString(): string
+	public function toIsoString(): string
 	{
 		$result = sprintf('%04d-%02d', abs($this->year), $this->month);
 		if ($this->year >= 0) {
@@ -201,12 +201,12 @@ final class YearMonth implements JsonSerializable, Stringable
 
 	public function jsonSerialize(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __toString(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __serialize(): array

@@ -13,7 +13,7 @@ namespace Temporal
 		public static function of(int $hour, int $minute, int $second = 0, int $nano = 0): LocalTime {}
 		public static function ofSecondOfDay(int $secondOfDay, int $nano = 0): LocalTime {}
 		public static function now(TimeZone $timeZone, Clock|null $clock = null): LocalTime {}
-		public static function fromISOString(string $text): LocalTime {}
+		public static function fromIsoString(string $text): LocalTime {}
 		public static function midnight(): LocalTime {}
 		public static function noon(): LocalTime {}
 		public static function min(): LocalTime {}
@@ -46,7 +46,7 @@ namespace Temporal
 		public function isAfterOrEqualTo(LocalTime $other): bool {}
 		public function toDateTime(): \DateTimeImmutable {}
 		public static function fromDateTime(\DateTimeInterface $dateTime): LocalTime {}
-		public function toISOString(): string {}
+		public function toIsoString(): string {}
 		public function format(string $localizedPattern, string|null $locale = null): string {}
 		public function formatWith(Format\DateTimeFormatter $formatter): string {}
 		public function jsonSerialize(): string {}

@@ -36,7 +36,7 @@ ZEND_METHOD(Temporal_TimeZoneRegion, of) {
 	RETURN_OBJ(object);
 }
 
-ZEND_METHOD(Temporal_TimeZoneRegion, fromISOString) {
+ZEND_METHOD(Temporal_TimeZoneRegion, fromIsoString) {
 	zend_string *input;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)

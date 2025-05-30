@@ -40,7 +40,7 @@ final class LocalDateTime implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getDateTime();
 	}
 
-	public static function fromISOString(string $text): self
+	public static function fromIsoString(string $text): self
 	{
 		$pattern = '/^(-?\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\\.(\d{1,9}))?)?()$/';
 
@@ -399,9 +399,9 @@ final class LocalDateTime implements JsonSerializable, Stringable
 		);
 	}
 
-	public function toISOString(): string
+	public function toIsoString(): string
 	{
-		return sprintf('%sT%s', $this->date->toISOString(), $this->time->toISOString());
+		return sprintf('%sT%s', $this->date->toIsoString(), $this->time->toIsoString());
 	}
 
 	public function format(string $localizedPattern, string|null $locale = null): string
@@ -417,12 +417,12 @@ final class LocalDateTime implements JsonSerializable, Stringable
 
 	public function jsonSerialize(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __toString(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __serialize(): array

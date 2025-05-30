@@ -35,7 +35,7 @@ final class YearWeek implements JsonSerializable, Stringable
 		return ZonedDateTime::now($timeZone, $clock)->getYearWeek();
 	}
 
-	public static function fromISOString(string $text): self
+	public static function fromIsoString(string $text): self
 	{
 		$pattern = '/^(-?\d{4})-W(\d{2})()$/';
 
@@ -187,7 +187,7 @@ final class YearWeek implements JsonSerializable, Stringable
 		return $this->compareTo($other) >= 0;
 	}
 
-	public function toISOString(): string
+	public function toIsoString(): string
 	{
 		$result = sprintf('%04d-W%02d', abs($this->year), $this->week);
 		if ($this->year >= 0) {
@@ -199,12 +199,12 @@ final class YearWeek implements JsonSerializable, Stringable
 
 	public function jsonSerialize(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __toString(): string
 	{
-		return $this->toISOString();
+		return $this->toIsoString();
 	}
 
 	public function __serialize(): array

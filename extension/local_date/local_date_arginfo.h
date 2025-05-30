@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 07635353ea704b78ffefe2f53f6a27bcb1503670 */
+ * Stub hash: 8dbc396ad6ded0ec0fbc64d778b64fa58bb1100f */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Temporal_LocalDate___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -24,7 +24,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDate_now, 0, 
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, clock, Temporal\\Clock, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDate_fromISOString, 0, 1, Temporal\\LocalDate, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDate_fromIsoString, 0, 1, Temporal\\LocalDate, 0)
 	ZEND_ARG_TYPE_INFO(0, text, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -145,7 +145,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_Temporal_LocalDate_fromDate
 	ZEND_ARG_OBJ_INFO(0, dateTime, DateTimeInterface, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalDate_toISOString, 0, 0, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalDate_toIsoString, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalDate_format, 0, 1, IS_STRING, 0)
@@ -157,9 +157,9 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalDate_formatW
 	ZEND_ARG_OBJ_INFO(0, formatter, Temporal\\Format\\DateTimeFormatter, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_Temporal_LocalDate_jsonSerialize arginfo_class_Temporal_LocalDate_toISOString
+#define arginfo_class_Temporal_LocalDate_jsonSerialize arginfo_class_Temporal_LocalDate_toIsoString
 
-#define arginfo_class_Temporal_LocalDate___toString arginfo_class_Temporal_LocalDate_toISOString
+#define arginfo_class_Temporal_LocalDate___toString arginfo_class_Temporal_LocalDate_toIsoString
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Temporal_LocalDate___serialize, 0, 0, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
@@ -173,7 +173,7 @@ ZEND_METHOD(Temporal_LocalDate, of);
 ZEND_METHOD(Temporal_LocalDate, ofDayOfYear);
 ZEND_METHOD(Temporal_LocalDate, ofEpochDay);
 ZEND_METHOD(Temporal_LocalDate, now);
-ZEND_METHOD(Temporal_LocalDate, fromISOString);
+ZEND_METHOD(Temporal_LocalDate, fromIsoString);
 ZEND_METHOD(Temporal_LocalDate, min);
 ZEND_METHOD(Temporal_LocalDate, max);
 ZEND_METHOD(Temporal_LocalDate, getYear);
@@ -215,7 +215,7 @@ ZEND_METHOD(Temporal_LocalDate, isAfter);
 ZEND_METHOD(Temporal_LocalDate, isAfterOrEqualTo);
 ZEND_METHOD(Temporal_LocalDate, toDateTime);
 ZEND_METHOD(Temporal_LocalDate, fromDateTime);
-ZEND_METHOD(Temporal_LocalDate, toISOString);
+ZEND_METHOD(Temporal_LocalDate, toIsoString);
 ZEND_METHOD(Temporal_LocalDate, format);
 ZEND_METHOD(Temporal_LocalDate, formatWith);
 ZEND_METHOD(Temporal_LocalDate, jsonSerialize);
@@ -229,7 +229,7 @@ static const zend_function_entry class_Temporal_LocalDate_methods[] = {
 	ZEND_ME(Temporal_LocalDate, ofDayOfYear, arginfo_class_Temporal_LocalDate_ofDayOfYear, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, ofEpochDay, arginfo_class_Temporal_LocalDate_ofEpochDay, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, now, arginfo_class_Temporal_LocalDate_now, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_LocalDate, fromISOString, arginfo_class_Temporal_LocalDate_fromISOString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(Temporal_LocalDate, fromIsoString, arginfo_class_Temporal_LocalDate_fromIsoString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, min, arginfo_class_Temporal_LocalDate_min, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, max, arginfo_class_Temporal_LocalDate_max, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(Temporal_LocalDate, getYear, arginfo_class_Temporal_LocalDate_getYear, ZEND_ACC_PUBLIC)
@@ -271,7 +271,7 @@ static const zend_function_entry class_Temporal_LocalDate_methods[] = {
 	ZEND_ME(Temporal_LocalDate, isAfterOrEqualTo, arginfo_class_Temporal_LocalDate_isAfterOrEqualTo, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalDate, toDateTime, arginfo_class_Temporal_LocalDate_toDateTime, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalDate, fromDateTime, arginfo_class_Temporal_LocalDate_fromDateTime, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(Temporal_LocalDate, toISOString, arginfo_class_Temporal_LocalDate_toISOString, ZEND_ACC_PUBLIC)
+	ZEND_ME(Temporal_LocalDate, toIsoString, arginfo_class_Temporal_LocalDate_toIsoString, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalDate, format, arginfo_class_Temporal_LocalDate_format, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalDate, formatWith, arginfo_class_Temporal_LocalDate_formatWith, ZEND_ACC_PUBLIC)
 	ZEND_ME(Temporal_LocalDate, jsonSerialize, arginfo_class_Temporal_LocalDate_jsonSerialize, ZEND_ACC_PUBLIC)
