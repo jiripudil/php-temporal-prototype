@@ -342,6 +342,9 @@ final class Duration implements JsonSerializable, Stringable
 		];
 	}
 
+	/**
+	 * @param array{seconds: int, nanos: int} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$this->seconds = $data['seconds'];

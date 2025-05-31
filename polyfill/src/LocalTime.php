@@ -375,6 +375,9 @@ final class LocalTime implements JsonSerializable, Stringable
 		];
 	}
 
+	/**
+	 * @param array{hour: int, minute: int, second: int, nano: int} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$this->hour = $data['hour'];

@@ -130,6 +130,9 @@ final class TimeZoneOffset extends TimeZone
 		];
 	}
 
+	/**
+	 * @param array{totalSeconds: int} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$this->totalSeconds = $data['totalSeconds'];

@@ -438,6 +438,9 @@ final class LocalDateTime implements JsonSerializable, Stringable
 		];
 	}
 
+	/**
+	 * @param array{year: int, month: int, day: int, hour: int, minute: int, second: int, nano: int} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$year = $data['year'];

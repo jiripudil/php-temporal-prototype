@@ -217,6 +217,9 @@ final class YearMonth implements JsonSerializable, Stringable
 		];
 	}
 
+	/**
+	 * @param array{year: int, month: int} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$this->year = $data['year'];

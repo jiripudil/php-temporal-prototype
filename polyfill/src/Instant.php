@@ -216,6 +216,9 @@ final class Instant implements JsonSerializable, Stringable
 		];
 	}
 
+	/**
+	 * @param array{epochSecond: int, nano: int} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$this->epochSecond = $data['epochSecond'];

@@ -207,6 +207,9 @@ final class Period implements JsonSerializable, Stringable
 		];
 	}
 
+	/**
+	 * @param array{years: int, months: int, days: int} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$this->years = $data['years'];

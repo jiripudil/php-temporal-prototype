@@ -60,6 +60,9 @@ final class TimeZoneRegion extends TimeZone
 		];
 	}
 
+	/**
+	 * @param array{id: string} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$this->zone = new DateTimeZone($data['id']);

@@ -496,6 +496,9 @@ final class LocalDate implements JsonSerializable, Stringable
 		];
 	}
 
+	/**
+	 * @param array{year: int, month: int, day: int} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$this->year = $data['year'];

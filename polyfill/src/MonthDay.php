@@ -160,6 +160,9 @@ final class MonthDay implements JsonSerializable, Stringable
 		];
 	}
 
+	/**
+	 * @param array{month: int, day: int} $data
+	 */
 	public function __unserialize(array $data): void
 	{
 		$this->month = $data['month'];
