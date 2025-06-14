@@ -28,7 +28,7 @@ ZEND_METHOD(Temporal_TimeZoneRegion, of) {
 	temporal_time_zone_t *time_zone = temporal_time_zone_of_region(region);
 	if (time_zone == NULL) {
 		temporal_time_zone_region_free(region);
-		php_temporal_throw_exception("Unrecognized time zone ID.", 0);
+		php_temporal_throw_unknown_time_zone(input_s);
 		RETURN_THROWS();
 	}
 
@@ -49,7 +49,7 @@ ZEND_METHOD(Temporal_TimeZoneRegion, fromIsoString) {
 	temporal_time_zone_t *time_zone = temporal_time_zone_of_region(region);
 	if (time_zone == NULL) {
 		temporal_time_zone_region_free(region);
-		php_temporal_throw_exception("Failed to parse given input into a Temporal value.", 0);
+		php_temporal_throw_parsing_unknown_time_zone(input_s, input_s);
 		RETURN_THROWS();
 	}
 

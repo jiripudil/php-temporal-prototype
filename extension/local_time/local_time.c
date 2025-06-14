@@ -81,7 +81,7 @@ temporal_local_time_t *temporal_local_time_minus(temporal_local_time_t *local_ti
 	return result;
 }
 
-temporal_local_time_t *temporal_local_time_parse_iso(const char *input) {
+temporal_parse_iso_result_t *temporal_local_time_parse_iso(const char *input) {
 	PCRE2_SPTR pattern = "^([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.([0-9]{1,9}))?)?()$";
 	PCRE2_SPTR input_string = (PCRE2_SPTR) input;
 	PCRE2_SIZE input_length = strlen(input);
@@ -104,60 +104,35 @@ temporal_local_time_t *temporal_local_time_parse_iso(const char *input) {
 
 	PCRE2_SIZE *ovector = pcre2_get_ovector_pointer(match_data);
 
-	zend_long hour = 0;
-	zend_long minute = 0;
-	zend_long second = 0;
-	zend_long nano = 0;
+	temporal_parse_iso_result_t *result = temporal_parse_iso_result_create();
 
 	char hour_str[ovector[3] - ovector[2] + 1];
 	strncpy(hour_str, input + ovector[2], ovector[3] - ovector[2]);
 	hour_str[ovector[3] - ovector[2]] = '\0';
-	hour = strtol(hour_str, NULL, 10);
-	if (hour < 0 || hour > 23) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->hour = strtol(hour_str, NULL, 10);
 
 	char minute_str[ovector[5] - ovector[4] + 1];
 	strncpy(minute_str, input + ovector[4], ovector[5] - ovector[4]);
 	minute_str[ovector[5] - ovector[4]] = '\0';
-	minute = strtol(minute_str, NULL, 10);
-	if (minute < 0 || minute > 59) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->minute = strtol(minute_str, NULL, 10);
 
 	if (ovector[6] != PCRE2_UNSET) {
 		char second_str[ovector[7] - ovector[6] + 1];
 		strncpy(second_str, input + ovector[6], ovector[7] - ovector[6]);
 		second_str[ovector[7] - ovector[6]] = '\0';
-		second = strtol(second_str, NULL, 10);
-		if (second < 0 || second > 59) {
-			pcre2_match_data_free(match_data);
-			pcre2_code_free(re);
-			return NULL;
-		}
+		result->second = strtol(second_str, NULL, 10);
 	}
 
 	if (ovector[8] != PCRE2_UNSET) {
 		char nano_str[ovector[9] - ovector[8] + 1];
 		strncpy(nano_str, input + ovector[8], ovector[9] - ovector[8]);
 		nano_str[ovector[9] - ovector[8]] = '\0';
-		nano = strtol(nano_str, NULL, 10) * (long) pow(10, 9 - (double) (ovector[9] - ovector[8]));
-		if (nano < 0 || nano > 999999999) {
-			pcre2_match_data_free(match_data);
-			pcre2_code_free(re);
-			return NULL;
-		}
+		result->nano = strtol(nano_str, NULL, 10) * (long) pow(10, 9 - (double) (ovector[9] - ovector[8]));
 	}
-
-	temporal_local_time_t *local_time = temporal_local_time_of(hour, minute, second, nano);
 
 	pcre2_match_data_free(match_data);
 	pcre2_code_free(re);
-	return local_time;
+	return result;
 }
 
 zend_string *temporal_local_time_format_iso(temporal_local_time_t *local_time) {
@@ -194,7 +169,7 @@ zend_string *temporal_local_time_format_iso(temporal_local_time_t *local_time) {
 
 zend_string *temporal_local_time_format(temporal_local_time_t *local_time, UDateFormat *fmt) {
 	if (!temporal_formatter_is_valid_pattern(fmt, TEMPORAL_FORMATTER_FIELD_MASK_TIME)) {
-		php_temporal_throw_exception("Failed to format a Temporal value.", 0);
+		php_temporal_throw_formatting_invalid_pattern("LocalTime");
 		return NULL;
 	}
 
@@ -202,7 +177,7 @@ zend_string *temporal_local_time_format(temporal_local_time_t *local_time, UDate
 
 	zend_string *result = temporal_formatter_format(fmt, timestamp, NULL);
 	if (result == NULL) {
-		php_temporal_throw_exception("Failed to format a Temporal value.", 0);
+		php_temporal_throw_formatting_failed_to_format_value("LocalTime", "internal formatter error");
 		return NULL;
 	}
 

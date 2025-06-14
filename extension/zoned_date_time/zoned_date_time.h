@@ -7,6 +7,7 @@
 #include "local_date_time/local_date_time.h"
 #include "time_zone/offset/time_zone_offset.h"
 #include "time_zone/time_zone.h"
+#include "utils/parse_iso_result.h"
 
 typedef struct _temporal_zoned_date_time_t {
 	temporal_local_date_time_t *date_time;
@@ -26,7 +27,7 @@ temporal_zoned_date_time_t *temporal_zoned_date_time_now(temporal_time_zone_t *z
 int temporal_zoned_date_time_compare(temporal_zoned_date_time_t *a, temporal_zoned_date_time_t *b);
 temporal_zoned_date_time_t *temporal_zoned_date_time_clone(temporal_zoned_date_time_t *zoned_date_time);
 
-temporal_zoned_date_time_t *temporal_zoned_date_time_parse_iso(const char *input);
+temporal_parse_iso_result_t *temporal_zoned_date_time_parse_iso(const char *input);
 zend_string *temporal_zoned_date_time_format_iso(temporal_zoned_date_time_t *date_time);
 zend_string *temporal_zoned_date_time_format(temporal_zoned_date_time_t *date_time, UDateFormat *fmt);
 

@@ -116,11 +116,17 @@ ZEND_METHOD(Temporal_LocalDate, fromIsoString) {
 
 	const char *input_s = ZSTR_VAL(input);
 
-	temporal_local_date_t *local_date = temporal_local_date_parse_iso(input_s);
-	if (local_date == NULL) {
-		php_temporal_throw_exception("Failed to parse given input into a Temporal value.", 0);
+	temporal_parse_iso_result_t *result = temporal_local_date_parse_iso(input_s);
+	if (result == NULL) {
+		php_temporal_throw_parsing_invalid_iso_string(input_s);
 		RETURN_THROWS();
 	}
+
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "month", result->month, 1, 12)
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "day", result->day, 1, days_in_month(result->year, result->month))
+
+	temporal_local_date_t *local_date = temporal_local_date_of(result->year, result->month, result->day);
+	temporal_parse_iso_result_free(result);
 
 	zend_object *object = php_temporal_local_date_create_object_ex(local_date);
 	RETURN_OBJ(object);

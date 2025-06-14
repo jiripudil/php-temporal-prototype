@@ -3,6 +3,7 @@
 
 #include <php.h>
 #include <unicode/udat.h>
+#include "utils/parse_iso_result.h"
 
 #define DAYS_PER_CYCLE 146097
 #define DAYS_0000_TO_1970 ((DAYS_PER_CYCLE * 5) - (30 * 365 + 7))
@@ -31,7 +32,7 @@ temporal_local_date_t *temporal_local_date_plus_years(temporal_local_date_t *loc
 temporal_local_date_t *temporal_local_date_plus_months(temporal_local_date_t *local_date, zend_long months);
 temporal_local_date_t *temporal_local_date_plus_days(temporal_local_date_t *local_date, zend_long days);
 
-temporal_local_date_t *temporal_local_date_parse_iso(const char *input);
+temporal_parse_iso_result_t *temporal_local_date_parse_iso(const char *input);
 zend_string *temporal_local_date_format_iso(temporal_local_date_t *local_date);
 zend_string *temporal_local_date_format(temporal_local_date_t *local_date, UDateFormat *fmt);
 

@@ -9,6 +9,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestWith;
 use Temporal\Clock\FixedClock;
 use Temporal\Duration;
+use Temporal\Exception\FormattingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use Temporal\Format\DateTimeFormatter;
 use Temporal\Format\FormatStyle;
 use Temporal\Instant;
@@ -16,7 +18,6 @@ use Temporal\LocalDate;
 use Temporal\LocalDateTime;
 use Temporal\LocalTime;
 use Temporal\Period;
-use Temporal\TemporalException;
 use Temporal\TimeZoneOffset;
 
 final class LocalDateTimeTest extends TemporalTestCase
@@ -44,7 +45,7 @@ final class LocalDateTimeTest extends TemporalTestCase
 	#[TestWith([1970, 1, 1, 12, 30, 59, 1_000_000_000])]
 	public function testInvalidOf(int $year, int $month, int $day, int $hour, int $minute, int $second, int $nano = 0): void
 	{
-		$this->expectException(TemporalException::class);
+		$this->expectException(ValueOutOfRangeException::class);
 		LocalDateTime::of($year, $month, $day, $hour, $minute, $second, $nano);
 	}
 
@@ -242,9 +243,7 @@ final class LocalDateTimeTest extends TemporalTestCase
 	#[DataProvider('provideInvalidFormatData')]
 	public function testInvalidFormat(LocalDateTime $dateTime, DateTimeFormatter $formatter): void
 	{
-		$this->expectException(TemporalException::class);
-		$this->expectExceptionMessage('Failed to format a Temporal value.');
-
+		$this->expectException(FormattingException::class);
 		$dateTime->formatWith($formatter);
 	}
 

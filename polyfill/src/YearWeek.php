@@ -6,6 +6,8 @@ namespace Temporal;
 
 use JsonSerializable;
 use Stringable;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use function abs;
 use function min;
 
@@ -19,12 +21,12 @@ final class YearWeek implements JsonSerializable, Stringable
 	public static function of(int $year, int $week): self
 	{
 		if ($year < -999_999 || $year > 999_999) {
-			throw TemporalException::valueOutOfRange('year', $year, -999_999, 999_999);
+			throw ValueOutOfRangeException::of('year', $year, -999_999, 999_999);
 		}
 
 		$weeksInYear = Helpers::getWeeksInYear($year);
 		if ($week < 1 || $week > $weeksInYear) {
-			throw TemporalException::valueOutOfRange('week', $week, 1, $weeksInYear);
+			throw ValueOutOfRangeException::of('week', $week, 1, $weeksInYear);
 		}
 
 		return new self($year, $week);
@@ -40,7 +42,7 @@ final class YearWeek implements JsonSerializable, Stringable
 		$pattern = '/^(-?\d{4})-W(\d{2})()$/';
 
 		if (preg_match($pattern, $text, $matches) !== 1) {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		[, $year, $week] = $matches;
@@ -50,8 +52,8 @@ final class YearWeek implements JsonSerializable, Stringable
 
 		try {
 			return self::of($year, $week);
-		} catch (TemporalException $e) {
-			throw TemporalException::failedToParseInput($e);
+		} catch (ValueOutOfRangeException $e) {
+			throw ParsingException::valueOutOfRange($text, $e);
 		}
 	}
 
@@ -63,7 +65,7 @@ final class YearWeek implements JsonSerializable, Stringable
 	public function withYear(int $year): self
 	{
 		if ($year < -999_999 || $year > 999_999) {
-			throw TemporalException::valueOutOfRange('year', $year, -999_999, 999_999);
+			throw ValueOutOfRangeException::of('year', $year, -999_999, 999_999);
 		}
 
 		$week = min($this->week, Helpers::getWeeksInYear($year));
@@ -90,7 +92,7 @@ final class YearWeek implements JsonSerializable, Stringable
 	{
 		$weeksInYear = Helpers::getWeeksInYear($this->year);
 		if ($week < 1 || $week > $weeksInYear) {
-			throw TemporalException::valueOutOfRange('week', $week, 1, $weeksInYear);
+			throw ValueOutOfRangeException::of('week', $week, 1, $weeksInYear);
 		}
 
 		return new self($this->year, $week);

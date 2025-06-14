@@ -162,7 +162,7 @@ temporal_local_date_t *temporal_local_date_plus_days(temporal_local_date_t *loca
 	return temporal_local_date_of_epoch_day(temporal_local_date_to_epoch_day(local_date) + days);
 }
 
-temporal_local_date_t *temporal_local_date_parse_iso(const char *input) {
+temporal_parse_iso_result_t *temporal_local_date_parse_iso(const char *input) {
 	PCRE2_SPTR pattern = "^(-?[0-9]{4})-([0-9]{2})-([0-9]{2})()$";
 	PCRE2_SPTR input_string = (PCRE2_SPTR) input;
 	PCRE2_SIZE input_length = strlen(input);
@@ -185,42 +185,26 @@ temporal_local_date_t *temporal_local_date_parse_iso(const char *input) {
 
 	PCRE2_SIZE *ovector = pcre2_get_ovector_pointer(match_data);
 
+	temporal_parse_iso_result_t *result = temporal_parse_iso_result_create();
+
 	char year_str[ovector[3] - ovector[2] + 1];
 	strncpy(year_str, input + ovector[2], ovector[3] - ovector[2]);
 	year_str[ovector[3] - ovector[2]] = '\0';
-	zend_long year = strtol(year_str, NULL, 10);
-	if (year < -999999 || year > 999999) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->year = strtol(year_str, NULL, 10);
 
 	char month_str[ovector[5] - ovector[4] + 1];
 	strncpy(month_str, input + ovector[4], ovector[5] - ovector[4]);
 	month_str[ovector[5] - ovector[4]] = '\0';
-	zend_long month = strtol(month_str, NULL, 10);
-	if (month < 1 || month > 12) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->month = strtol(month_str, NULL, 10);
 
 	char day_str[ovector[7] - ovector[6] + 1];
 	strncpy(day_str, input + ovector[6], ovector[7] - ovector[6]);
 	day_str[ovector[7] - ovector[6]] = '\0';
-	zend_long day = strtol(day_str, NULL, 10);
-	zend_long max_day = days_in_month(year, month);
-	if (day < 1 || day > max_day) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
-
-	temporal_local_date_t *local_date = temporal_local_date_of(year, month, day);
+	result->day = strtol(day_str, NULL, 10);
 
 	pcre2_match_data_free(match_data);
 	pcre2_code_free(re);
-	return local_date;
+	return result;
 }
 
 zend_string *temporal_local_date_format_iso(temporal_local_date_t *local_date) {
@@ -249,7 +233,7 @@ zend_string *temporal_local_date_format_iso(temporal_local_date_t *local_date) {
 
 zend_string *temporal_local_date_format(temporal_local_date_t *local_date, UDateFormat *fmt) {
 	if (!temporal_formatter_is_valid_pattern(fmt, TEMPORAL_FORMATTER_FIELD_MASK_DATE)) {
-		php_temporal_throw_exception("Failed to format a Temporal value.", 0);
+		php_temporal_throw_formatting_invalid_pattern("LocalDate");
 		return NULL;
 	}
 
@@ -257,7 +241,7 @@ zend_string *temporal_local_date_format(temporal_local_date_t *local_date, UDate
 
 	zend_string *result = temporal_formatter_format(fmt, timestamp, NULL);
 	if (result == NULL) {
-		php_temporal_throw_exception("Failed to format a Temporal value.", 0);
+		php_temporal_throw_formatting_failed_to_format_value("LocalDate", "internal formatter error");
 		return NULL;
 	}
 

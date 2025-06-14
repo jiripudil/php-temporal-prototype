@@ -64,7 +64,7 @@ temporal_zoned_date_time_t *temporal_zoned_date_time_clone(temporal_zoned_date_t
 	);
 }
 
-temporal_zoned_date_time_t *temporal_zoned_date_time_parse_iso(const char *input) {
+temporal_parse_iso_result_t *temporal_zoned_date_time_parse_iso(const char *input) {
 	PCRE2_SPTR pattern = "^(-?[0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.([0-9]{1,9}))?)?([Zz]|[+\\-][0-9]{2}:[0-9]{2}(?::[0-9]{2})?)(?:\\[(.+)])?()$";
 	PCRE2_SPTR input_string = (PCRE2_SPTR) input;
 	PCRE2_SIZE input_length = strlen(input);
@@ -87,129 +87,70 @@ temporal_zoned_date_time_t *temporal_zoned_date_time_parse_iso(const char *input
 
 	PCRE2_SIZE *ovector = pcre2_get_ovector_pointer(match_data);
 
-	zend_long year = 0;
-	zend_long month = 0;
-	zend_long day = 0;
-	zend_long hour = 0;
-	zend_long minute = 0;
-	zend_long second = 0;
-	zend_long nano = 0;
+	temporal_parse_iso_result_t *result = temporal_parse_iso_result_create();
 
 	char year_str[ovector[3] - ovector[2] + 1];
 	strncpy(year_str, input + ovector[2], ovector[3] - ovector[2]);
 	year_str[ovector[3] - ovector[2]] = '\0';
-	year = strtol(year_str, NULL, 10);
-	if (year < -999999 || year > 999999) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->year = strtol(year_str, NULL, 10);
 
 	char month_str[ovector[5] - ovector[4] + 1];
 	strncpy(month_str, input + ovector[4], ovector[5] - ovector[4]);
 	month_str[ovector[5] - ovector[4]] = '\0';
-	month = strtol(month_str, NULL, 10);
-	if (month < 1 || month > 12) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->month = strtol(month_str, NULL, 10);
 
 	char day_str[ovector[7] - ovector[6] + 1];
 	strncpy(day_str, input + ovector[6], ovector[7] - ovector[6]);
 	day_str[ovector[7] - ovector[6]] = '\0';
-	day = strtol(day_str, NULL, 10);
-	zend_long max_day = days_in_month(year, month);
-	if (day < 1 || day > max_day) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->day = strtol(day_str, NULL, 10);
 
 	char hour_str[ovector[9] - ovector[8] + 1];
 	strncpy(hour_str, input + ovector[8], ovector[9] - ovector[8]);
 	hour_str[ovector[9] - ovector[8]] = '\0';
-	hour = strtol(hour_str, NULL, 10);
-	if (hour < 0 || hour > 23) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->hour = strtol(hour_str, NULL, 10);
 
 	char minute_str[ovector[11] - ovector[10] + 1];
 	strncpy(minute_str, input + ovector[10], ovector[11] - ovector[10]);
 	minute_str[ovector[11] - ovector[10]] = '\0';
-	minute = strtol(minute_str, NULL, 10);
-	if (minute < 0 || minute > 59) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->minute = strtol(minute_str, NULL, 10);
 
 	if (ovector[12] != PCRE2_UNSET) {
 		char second_str[ovector[13] - ovector[12] + 1];
 		strncpy(second_str, input + ovector[12], ovector[13] - ovector[12]);
 		second_str[ovector[13] - ovector[12]] = '\0';
-		second = strtol(second_str, NULL, 10);
-		if (second < 0 || second > 59) {
-			pcre2_match_data_free(match_data);
-			pcre2_code_free(re);
-			return NULL;
-		}
+		result->second = strtol(second_str, NULL, 10);
 	}
 
 	if (ovector[14] != PCRE2_UNSET) {
 		char nano_str[ovector[15] - ovector[14] + 1];
 		strncpy(nano_str, input + ovector[14], ovector[15] - ovector[14]);
 		nano_str[ovector[15] - ovector[14]] = '\0';
-		nano = strtol(nano_str, NULL, 10) * (long) pow(10, 9 - (double) (ovector[15] - ovector[14]));
-		if (nano < 0 || nano > 999999999) {
-			pcre2_match_data_free(match_data);
-			pcre2_code_free(re);
-			return NULL;
-		}
+		result->nano = strtol(nano_str, NULL, 10) * (long) pow(10, 9 - (double) (ovector[15] - ovector[14]));
 	}
-
-	temporal_local_date_t *local_date = temporal_local_date_of(year, month, day);
-	temporal_local_time_t *local_time = temporal_local_time_of(hour, minute, second, nano);
-	temporal_local_date_time_t *local_date_time = temporal_local_date_time_of_date_time(local_date, local_time);
-
-	temporal_time_zone_t *time_zone = NULL;
 
 	if (ovector[18] != PCRE2_UNSET) {
 		char time_zone_id_str[ovector[19] - ovector[18] + 1];
 		strncpy(time_zone_id_str, input + ovector[18], ovector[19] - ovector[18]);
 		time_zone_id_str[ovector[19] - ovector[18]] = '\0';
 
-		temporal_time_zone_region_t *region = temporal_time_zone_region_of(time_zone_id_str);
-		time_zone = temporal_time_zone_of_region(region);
-		if (time_zone == NULL) {
-			temporal_time_zone_region_free(region);
-		}
+		result->tz_identifier = zend_string_init(time_zone_id_str, strlen(time_zone_id_str), 0);
 
 	} else {
 		char time_zone_offset_str[ovector[17] - ovector[16] + 1];
 		strncpy(time_zone_offset_str, input + ovector[16], ovector[17] - ovector[16]);
 		time_zone_offset_str[ovector[17] - ovector[16]] = '\0';
 
-		temporal_time_zone_offset_t *offset = temporal_time_zone_offset_parse_iso(time_zone_offset_str);
-		if (offset != NULL) {
-			time_zone = temporal_time_zone_of_offset(offset);
-		}
-	}
+		temporal_parse_iso_result_t *offset_result = temporal_time_zone_offset_parse_iso(time_zone_offset_str);
+		result->tz_offset_hour = offset_result->tz_offset_hour;
+		result->tz_offset_minute = offset_result->tz_offset_minute;
+		result->tz_offset_second = offset_result->tz_offset_second;
 
-	if (time_zone == NULL) {
-		temporal_local_date_time_free(local_date_time);
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
+		temporal_parse_iso_result_free(offset_result);
 	}
-
-	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_of(local_date_time, time_zone);
 
 	pcre2_match_data_free(match_data);
 	pcre2_code_free(re);
-	return zoned_date_time;
+	return result;
 }
 
 zend_string *temporal_zoned_date_time_format_iso(temporal_zoned_date_time_t *date_time) {
@@ -240,7 +181,7 @@ zend_string *temporal_zoned_date_time_format_iso(temporal_zoned_date_time_t *dat
 
 zend_string *temporal_zoned_date_time_format(temporal_zoned_date_time_t *date_time, UDateFormat *fmt) {
 	if (!temporal_formatter_is_valid_pattern(fmt, TEMPORAL_FORMATTER_FIELD_MASK_DATE | TEMPORAL_FORMATTER_FIELD_MASK_TIME | TEMPORAL_FORMATTER_FIELD_MASK_TIMEZONE)) {
-		php_temporal_throw_exception("Failed to format a Temporal value.", 0);
+		php_temporal_throw_formatting_invalid_pattern("ZonedDateTime");
 		return NULL;
 	}
 
@@ -248,7 +189,7 @@ zend_string *temporal_zoned_date_time_format(temporal_zoned_date_time_t *date_ti
 
 	zend_string *result = temporal_formatter_format(fmt, timestamp, date_time->zone->time_zone);
 	if (result == NULL) {
-		php_temporal_throw_exception("Failed to format a Temporal value.", 0);
+		php_temporal_throw_formatting_failed_to_format_value("ZonedDateTime", "internal formatter error");
 		return NULL;
 	}
 

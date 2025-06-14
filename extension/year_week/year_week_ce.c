@@ -68,11 +68,17 @@ ZEND_METHOD(Temporal_YearWeek, fromIsoString) {
 
 	const char *input_s = ZSTR_VAL(input);
 
-	temporal_year_week_t *year_week = temporal_year_week_parse_iso(input_s);
-	if (year_week == NULL) {
-		php_temporal_throw_exception("Failed to parse given input into a Temporal value.", 0);
+	temporal_parse_iso_result_t *result = temporal_year_week_parse_iso(input_s);
+	if (result == NULL) {
+		php_temporal_throw_parsing_invalid_iso_string(input_s);
 		RETURN_THROWS();
 	}
+
+	zend_long max_weeks = weeks_in_year(result->year);
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "week", result->week, 1, max_weeks)
+
+	temporal_year_week_t *year_week = temporal_year_week_of(result->year, result->week);
+	temporal_parse_iso_result_free(result);
 
 	zend_object *object = php_temporal_year_week_create_object_ex(year_week);
 	RETURN_OBJ(object);

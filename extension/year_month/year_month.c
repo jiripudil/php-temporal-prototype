@@ -33,7 +33,7 @@ temporal_year_month_t *temporal_year_month_clone(temporal_year_month_t *year_mon
 	return temporal_year_month_of(year_month->year, year_month->month);
 }
 
-temporal_year_month_t *temporal_year_month_parse_iso(const char *input) {
+temporal_parse_iso_result_t *temporal_year_month_parse_iso(const char *input) {
 	PCRE2_SPTR pattern = "^(-?[0-9]{4})-([0-9]{2})()$";
 	PCRE2_SPTR input_string = (PCRE2_SPTR) input;
 	PCRE2_SIZE input_length = strlen(input);
@@ -56,6 +56,8 @@ temporal_year_month_t *temporal_year_month_parse_iso(const char *input) {
 
 	PCRE2_SIZE *ovector = pcre2_get_ovector_pointer(match_data);
 
+	temporal_parse_iso_result_t *result = temporal_parse_iso_result_create();
+
 	if (ovector[2] == PCRE2_UNSET && ovector[4] == PCRE2_UNSET) {
 		pcre2_match_data_free(match_data);
 		pcre2_code_free(re);
@@ -65,28 +67,16 @@ temporal_year_month_t *temporal_year_month_parse_iso(const char *input) {
 	char year_str[ovector[3] - ovector[2] + 1];
 	strncpy(year_str, input + ovector[2], ovector[3] - ovector[2]);
 	year_str[ovector[3] - ovector[2]] = '\0';
-	zend_long year = strtol(year_str, NULL, 10);
-	if (year < -999999 || year > 999999) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->year = strtol(year_str, NULL, 10);
 
 	char month_str[ovector[5] - ovector[4] + 1];
 	strncpy(month_str, input + ovector[4], ovector[5] - ovector[4]);
 	month_str[ovector[5] - ovector[4]] = '\0';
-	zend_long month = strtol(month_str, NULL, 10);
-	if (month < 1 || month > 12) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
-
-	temporal_year_month_t *year_month = temporal_year_month_of(year, month);
+	result->month = strtol(month_str, NULL, 10);
 
 	pcre2_match_data_free(match_data);
 	pcre2_code_free(re);
-	return year_month;
+	return result;
 }
 
 zend_string *temporal_year_month_format_iso(temporal_year_month_t *year_month) {

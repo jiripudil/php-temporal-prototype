@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Temporal\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use Temporal\Exception\UnknownTimeZoneException;
 use Temporal\Instant;
-use Temporal\TemporalException;
 use Temporal\TimeZoneRegion;
 
 final class TimeZoneRegionTest extends TemporalTestCase
@@ -29,7 +29,7 @@ final class TimeZoneRegionTest extends TemporalTestCase
 	#[DataProvider('provideInvalidOfData')]
 	public function testInvalidOf(string $text): void
 	{
-		$this->expectException(TemporalException::class);
+		$this->expectException(UnknownTimeZoneException::class);
 		TimeZoneRegion::of($text);
 	}
 

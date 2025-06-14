@@ -97,11 +97,19 @@ ZEND_METHOD(Temporal_LocalTime, fromIsoString) {
 
 	const char *input_s = ZSTR_VAL(input);
 
-	temporal_local_time_t *local_time = temporal_local_time_parse_iso(input_s);
-	if (local_time == NULL) {
-		php_temporal_throw_exception("Failed to parse given input into a Temporal value.", 0);
+	temporal_parse_iso_result_t *result = temporal_local_time_parse_iso(input_s);
+	if (result == NULL) {
+		php_temporal_throw_parsing_invalid_iso_string(input_s);
 		RETURN_THROWS();
 	}
+
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "hour", result->hour, 0, HOURS_PER_DAY - 1)
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "minute", result->minute, 0, MINUTES_PER_HOUR - 1)
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "second", result->second, 0, SECONDS_PER_MINUTE - 1)
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "nano", result->nano, 0, NANOS_PER_SECOND - 1)
+
+	temporal_local_time_t *local_time = temporal_local_time_of(result->hour, result->minute, result->second, result->nano);
+	temporal_parse_iso_result_free(result);
 
 	zend_object *object = php_temporal_local_time_create_object_ex(local_time);
 	RETURN_OBJ(object);

@@ -112,7 +112,7 @@ ZEND_METHOD(Temporal_Period, fromIsoString) {
 
 	temporal_period_t *period = temporal_period_parse_iso(input_s);
 	if (period == NULL) {
-		php_temporal_throw_exception("Failed to parse given input into a Temporal value.", 0);
+		php_temporal_throw_parsing_invalid_iso_string(input_s);
 		RETURN_THROWS();
 	}
 

@@ -7,5 +7,14 @@
 
 namespace Temporal
 {
-	final class TemporalException extends \Exception {}
+	class TemporalException extends \Exception {}
+}
+
+namespace Temporal\Exception
+{
+	final class DateTimeConversionException extends \Temporal\TemporalException {}
+	final class FormattingException extends \Temporal\TemporalException {}
+	final class ParsingException extends \Temporal\TemporalException {}
+	final class ValueOutOfRangeException extends \Temporal\TemporalException {}
+	final class UnknownTimeZoneException extends \Temporal\TemporalException {}
 }

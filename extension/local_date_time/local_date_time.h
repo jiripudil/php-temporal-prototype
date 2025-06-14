@@ -6,6 +6,7 @@
 #include "duration/duration.h"
 #include "local_date/local_date.h"
 #include "local_time/local_time.h"
+#include "utils/parse_iso_result.h"
 
 typedef struct _temporal_local_date_time_t {
 	temporal_local_date_t *date;
@@ -23,7 +24,7 @@ int temporal_local_date_time_compare(temporal_local_date_time_t *a, temporal_loc
 temporal_local_date_time_t *temporal_local_date_time_clone(temporal_local_date_time_t *local_date_time);
 temporal_local_date_time_t *temporal_local_date_time_plus_duration(temporal_local_date_time_t *local_date_time, temporal_duration_t *duration);
 
-temporal_local_date_time_t *temporal_local_date_time_parse_iso(const char *input);
+temporal_parse_iso_result_t *temporal_local_date_time_parse_iso(const char *input);
 zend_string *temporal_local_date_time_format_iso(temporal_local_date_time_t *local_date_time);
 zend_string *temporal_local_date_time_format(temporal_local_date_time_t *local_date_time, UDateFormat *fmt);
 

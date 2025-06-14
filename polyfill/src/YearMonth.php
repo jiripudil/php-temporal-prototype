@@ -6,6 +6,8 @@ namespace Temporal;
 
 use JsonSerializable;
 use Stringable;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use function abs;
 use function preg_match;
 use function sprintf;
@@ -20,11 +22,11 @@ final class YearMonth implements JsonSerializable, Stringable
 	public static function of(int $year, int $month): self
 	{
 		if ($year < -999_999 || $year > 999_999) {
-			throw TemporalException::valueOutOfRange('year', $year, -999_999, 999_999);
+			throw ValueOutOfRangeException::of('year', $year, -999_999, 999_999);
 		}
 
 		if ($month < 1 || $month > 12) {
-			throw TemporalException::valueOutOfRange('month', $month, 1, 12);
+			throw ValueOutOfRangeException::of('month', $month, 1, 12);
 		}
 
 		return new self($year, $month);
@@ -40,7 +42,7 @@ final class YearMonth implements JsonSerializable, Stringable
 		$pattern = '/^(-?\d{4})-(\d{2})()$/';
 
 		if (preg_match($pattern, $text, $matches) !== 1) {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		[, $year, $month] = $matches;
@@ -50,8 +52,8 @@ final class YearMonth implements JsonSerializable, Stringable
 
 		try {
 			return self::of($year, $month);
-		} catch (TemporalException $e) {
-			throw TemporalException::failedToParseInput($e);
+		} catch (ValueOutOfRangeException $e) {
+			throw ParsingException::valueOutOfRange($text, $e);
 		}
 	}
 
@@ -63,7 +65,7 @@ final class YearMonth implements JsonSerializable, Stringable
 	public function withYear(int $year): self
 	{
 		if ($year < -999_999 || $year > 999_999) {
-			throw TemporalException::valueOutOfRange('year', $year, -999_999, 999_999);
+			throw ValueOutOfRangeException::of('year', $year, -999_999, 999_999);
 		}
 
 		return new self($year, $this->month);
@@ -87,7 +89,7 @@ final class YearMonth implements JsonSerializable, Stringable
 	public function withMonth(int $month): self
 	{
 		if ($month < 1 || $month > 12) {
-			throw TemporalException::valueOutOfRange('month', $month, 1, 12);
+			throw ValueOutOfRangeException::of('month', $month, 1, 12);
 		}
 
 		return new self($this->year, $month);
@@ -138,7 +140,7 @@ final class YearMonth implements JsonSerializable, Stringable
 	{
 		$daysInMonth = $this->getDaysInMonth();
 		if ($dayOfMonth < 1 || $dayOfMonth > $daysInMonth) {
-			throw TemporalException::valueOutOfRange('dayOfMonth', $dayOfMonth, 1, $daysInMonth);
+			throw ValueOutOfRangeException::of('dayOfMonth', $dayOfMonth, 1, $daysInMonth);
 		}
 
 		return LocalDate::of($this->year, $this->month, $dayOfMonth);

@@ -6,7 +6,8 @@ namespace Temporal\Tests;
 
 use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Temporal\TemporalException;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\UnknownTimeZoneException;
 use Temporal\TimeZone;
 use Temporal\TimeZoneOffset;
 use Temporal\TimeZoneRegion;
@@ -47,9 +48,7 @@ final class TimeZoneTest extends TemporalTestCase
 	#[DataProvider('provideInvalidFromIsoStringData')]
 	public function testInvalidFromIsoString(string $text): void
 	{
-		$this->expectException(TemporalException::class);
-		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
-
+		$this->expectException(ParsingException::class);
 		TimeZone::fromIsoString($text);
 	}
 

@@ -7,8 +7,9 @@ namespace Temporal\Tests;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestWith;
 use Temporal\Clock\FixedClock;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use Temporal\Instant;
-use Temporal\TemporalException;
 use Temporal\TimeZoneOffset;
 use Temporal\YearMonth;
 
@@ -25,7 +26,7 @@ final class YearMonthTest extends TemporalTestCase
 	#[TestWith([2025, 16])]
 	public function testInvalidOf(int $year, int $month): void
 	{
-		$this->expectException(TemporalException::class);
+		$this->expectException(ValueOutOfRangeException::class);
 		YearMonth::of($year, $month);
 	}
 
@@ -64,9 +65,7 @@ final class YearMonthTest extends TemporalTestCase
 	#[DataProvider('provideInvalidFromIsoStringData')]
 	public function testInvalidFromIsoString(string $text): void
 	{
-		$this->expectException(TemporalException::class);
-		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
-
+		$this->expectException(ParsingException::class);
 		YearMonth::fromIsoString($text);
 	}
 

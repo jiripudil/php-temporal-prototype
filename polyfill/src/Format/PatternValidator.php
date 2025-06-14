@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Temporal\Format;
 
+use Temporal\Exception\FormattingException;
 use Temporal\LocalDate;
 use Temporal\LocalDateTime;
 use Temporal\LocalTime;
@@ -87,11 +88,11 @@ final class PatternValidator
 			}
 
 			if ( ! array_key_exists($char, self::FIELDS)) {
-				throw TemporalException::failedToFormatValue();
+				throw FormattingException::invalidPattern($value);
 			}
 
 			if (($mask & self::FIELDS[$char]) === 0) {
-				throw TemporalException::failedToFormatValue();
+				throw FormattingException::invalidPattern($value);
 			}
 		}
 	}

@@ -24,9 +24,9 @@ temporal_time_zone_offset_t *temporal_time_zone_offset_clone(temporal_time_zone_
 	return temporal_time_zone_offset_of_total_seconds(offset->total_seconds);
 }
 
-temporal_time_zone_offset_t *temporal_time_zone_offset_parse_iso(const char *id) {
+temporal_parse_iso_result_t *temporal_time_zone_offset_parse_iso(const char *id) {
 	if (strlen(id) == 1 && (id[0] == 'Z' || id[0] == 'z')) {
-		return temporal_time_zone_offset_utc();
+		return temporal_parse_iso_result_create();
 	}
 
 	PCRE2_SPTR pattern = "^([+\\-])([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?()$";
@@ -51,49 +51,31 @@ temporal_time_zone_offset_t *temporal_time_zone_offset_parse_iso(const char *id)
 
 	PCRE2_SIZE *ovector = pcre2_get_ovector_pointer(match_data);
 
-	zend_long hours = 0;
-	zend_long minutes = 0;
-	zend_long seconds = 0;
+	temporal_parse_iso_result_t *result = temporal_parse_iso_result_create();
 
 	int sign = id[ovector[2]] == '-' ? -1 : 1;
 
 	char hours_str[ovector[5] - ovector[4] + 1];
 	strncpy(hours_str, id + ovector[4], ovector[5] - ovector[4]);
 	hours_str[ovector[5] - ovector[4]] = '\0';
-	hours = sign * strtol(hours_str, NULL, 10);
-	if (hours < -18 || hours > 18) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->tz_offset_hour = sign * strtol(hours_str, NULL, 10);
 
 	char minutes_str[ovector[7] - ovector[6] + 1];
 	strncpy(minutes_str, id + ovector[6], ovector[7] - ovector[6]);
 	minutes_str[ovector[7] - ovector[6]] = '\0';
-	minutes = sign * strtol(minutes_str, NULL, 10);
-	if (minutes < -59 || minutes > 59) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->tz_offset_minute = sign * strtol(minutes_str, NULL, 10);
 
+	result->tz_offset_second = 0;
 	if (ovector[8] != PCRE2_UNSET) {
 		char seconds_str[ovector[9] - ovector[8] + 1];
 		strncpy(seconds_str, id + ovector[8], ovector[9] - ovector[8]);
 		seconds_str[ovector[9] - ovector[8]] = '\0';
-		seconds = sign * strtol(seconds_str, NULL, 10);
-		if (seconds < -59 || seconds > 59) {
-			pcre2_match_data_free(match_data);
-			pcre2_code_free(re);
-			return NULL;
-		}
+		result->tz_offset_second = sign * strtol(seconds_str, NULL, 10);
 	}
-
-	temporal_time_zone_offset_t *offset = temporal_time_zone_offset_of(hours, minutes, seconds);
 
 	pcre2_match_data_free(match_data);
 	pcre2_code_free(re);
-	return offset;
+	return result;
 }
 
 zend_string *temporal_time_zone_offset_id(temporal_time_zone_offset_t *offset) {

@@ -6,6 +6,8 @@ namespace Temporal;
 
 use JsonSerializable;
 use Stringable;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use function min;
 use function preg_match;
 
@@ -19,12 +21,12 @@ final class MonthDay implements JsonSerializable, Stringable
 	public static function of(int $month, int $day): self
 	{
 		if ($month < 1 || $month > 12) {
-			throw TemporalException::valueOutOfRange('month', $month, 1, 12);
+			throw ValueOutOfRangeException::of('month', $month, 1, 12);
 		}
 
 		$daysInMonth = Helpers::getMaxDaysInMonth($month);
 		if ($day < 1 || $day > $daysInMonth) {
-			throw TemporalException::valueOutOfRange('day', $day, 1, $daysInMonth);
+			throw ValueOutOfRangeException::of('day', $day, 1, $daysInMonth);
 		}
 
 		return new self($month, $day);
@@ -40,7 +42,7 @@ final class MonthDay implements JsonSerializable, Stringable
 		$pattern = '/^--(\d{2})-(\d{2})()$/';
 
 		if (preg_match($pattern, $text, $matches) !== 1) {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		[, $month, $day] = $matches;
@@ -50,8 +52,8 @@ final class MonthDay implements JsonSerializable, Stringable
 
 		try {
 			return self::of($month, $day);
-		} catch (TemporalException $e) {
-			throw TemporalException::failedToParseInput($e);
+		} catch (ValueOutOfRangeException $e) {
+			throw ParsingException::valueOutOfRange($text, $e);
 		}
 	}
 
@@ -63,7 +65,7 @@ final class MonthDay implements JsonSerializable, Stringable
 	public function withMonth(int $month): self
 	{
 		if ($month < 1 || $month > 12) {
-			throw TemporalException::valueOutOfRange('month', $month, 1, 12);
+			throw ValueOutOfRangeException::of('month', $month, 1, 12);
 		}
 
 		$day = min(
@@ -84,7 +86,7 @@ final class MonthDay implements JsonSerializable, Stringable
 		$daysInMonth = Helpers::getMaxDaysInMonth($this->month);
 
 		if ($day < 1 || $day > $daysInMonth) {
-			throw TemporalException::valueOutOfRange('day', $day, 1, $daysInMonth);
+			throw ValueOutOfRangeException::of('day', $day, 1, $daysInMonth);
 		}
 
 		return new self($this->month, $day);

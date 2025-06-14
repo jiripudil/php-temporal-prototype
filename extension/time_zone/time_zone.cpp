@@ -73,29 +73,19 @@ extern "C" {
 		return temporal_time_zone_of_region(temporal_time_zone_region_clone(time_zone->region));
 	}
 
-	temporal_time_zone_t *temporal_time_zone_parse_iso(const char *input) {
+	temporal_parse_iso_result_t *temporal_time_zone_parse_iso(const char *input) {
 		if (strlen(input) == 1 && (input[0] == 'Z' || input[0] == 'z')) {
-			temporal_time_zone_offset_t *offset = temporal_time_zone_offset_utc();
-			return temporal_time_zone_of_offset(offset);
+			return temporal_parse_iso_result_create();
 		}
 
 		if (input[0] == '+' || input[0] == '-') {
-			temporal_time_zone_offset_t *offset = temporal_time_zone_offset_parse_iso(input);
-			if (offset == nullptr) {
-				return nullptr;
-			}
-
-			return temporal_time_zone_of_offset(offset);
+			return temporal_time_zone_offset_parse_iso(input);
 		}
 
-		temporal_time_zone_region_t *region = temporal_time_zone_region_of(input);
-		temporal_time_zone_t *time_zone = temporal_time_zone_of_region(region);
-		if (time_zone == nullptr) {
-			temporal_time_zone_region_free(region);
-			return nullptr;
-		}
+		temporal_parse_iso_result_t *result = temporal_parse_iso_result_create();
+		result->tz_identifier = zend_string_init(input, strlen(input), 0);
 
-		return time_zone;
+		return result;
 	}
 
 	zend_string *temporal_time_zone_get_id(temporal_time_zone_t *tz) {

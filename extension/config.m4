@@ -71,6 +71,7 @@ if test "$PHP_TEMPORAL" != "no"; then
             time_zone/time_zone_ce.c
             time_zone/time_zone_handlers.c
             time_zone/time_zone_obj.c
+            utils/parse_iso_result.c
             year_month/year_month.c
             year_month/year_month_ce.c
             year_month/year_month_handlers.c

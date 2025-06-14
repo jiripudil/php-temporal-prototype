@@ -69,11 +69,21 @@ ZEND_METHOD(Temporal_TimeZoneOffset, fromIsoString) {
 
 	const char *input_s = ZSTR_VAL(input);
 
-	temporal_time_zone_offset_t *offset = temporal_time_zone_offset_parse_iso(input_s);
-	if (offset == NULL) {
-		php_temporal_throw_exception("Failed to parse given input into a Temporal value.", 0);
+	temporal_parse_iso_result_t *result = temporal_time_zone_offset_parse_iso(input_s);
+	if (result == NULL) {
+		php_temporal_throw_parsing_invalid_iso_string(input_s);
 		RETURN_THROWS();
 	}
+
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "hours", result->tz_offset_hour, -18, 18);
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "minutes", result->tz_offset_minute, -MINUTES_PER_HOUR + 1, MINUTES_PER_HOUR - 1);
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "seconds", result->tz_offset_second, -SECONDS_PER_MINUTE + 1, SECONDS_PER_MINUTE - 1);
+
+	zend_long total_seconds = result->tz_offset_hour * SECONDS_PER_HOUR + result->tz_offset_minute * MINUTES_PER_HOUR + result->tz_offset_second;
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "totalSeconds", total_seconds, -64800, 64800);
+
+	temporal_time_zone_offset_t *offset = temporal_time_zone_offset_of(result->tz_offset_hour, result->tz_offset_minute, result->tz_offset_second);
+	temporal_parse_iso_result_free(result);
 
 	temporal_time_zone_t *time_zone = temporal_time_zone_of_offset(offset);
 	zend_object *object = php_temporal_time_zone_create_object_ex(time_zone);

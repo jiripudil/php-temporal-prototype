@@ -9,12 +9,13 @@ use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Temporal\Clock\FixedClock;
 use Temporal\Duration;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\UnknownTimeZoneException;
 use Temporal\Format\DateTimeFormatter;
 use Temporal\Format\FormatStyle;
 use Temporal\Instant;
 use Temporal\LocalDateTime;
 use Temporal\Period;
-use Temporal\TemporalException;
 use Temporal\TimeZone;
 use Temporal\TimeZoneOffset;
 use Temporal\TimeZoneRegion;
@@ -99,9 +100,7 @@ final class ZonedDateTimeTest extends TemporalTestCase
 	#[DataProvider('provideInvalidFromIsoStringData')]
 	public function testInvalidFromIsoString(string $text): void
 	{
-		$this->expectException(TemporalException::class);
-		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
-
+		$this->expectException(ParsingException::class);
 		ZonedDateTime::fromIsoString($text);
 	}
 

@@ -6,6 +6,7 @@
 #include "local_date_time/local_date_time.h"
 #include "time_zone/offset/time_zone_offset.h"
 #include "time_zone/region/time_zone_region.h"
+#include "utils/parse_iso_result.h"
 
 #define TEMPORAL_TIME_ZONE_TYPE_OFFSET 1
 #define IS_TEMPORAL_TIME_ZONE_OFFSET(tz) (tz->type == TEMPORAL_TIME_ZONE_TYPE_OFFSET)
@@ -33,7 +34,7 @@ temporal_time_zone_t *temporal_time_zone_of_region(temporal_time_zone_region_t *
 
 temporal_time_zone_t *temporal_time_zone_clone(temporal_time_zone_t *time_zone);
 
-temporal_time_zone_t *temporal_time_zone_parse_iso(const char *input);
+temporal_parse_iso_result_t *temporal_time_zone_parse_iso(const char *input);
 zend_string *temporal_time_zone_get_id(temporal_time_zone_t *tz);
 zend_long temporal_time_zone_get_offset(temporal_time_zone_t *tz, temporal_instant_t *instant);
 

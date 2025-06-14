@@ -7,12 +7,11 @@ namespace Temporal\Format;
 use IntlDateFormatter;
 use IntlDatePatternGenerator;
 use IntlTimeZone;
+use Temporal\Exception\FormattingException;
 use Temporal\LocalDate;
 use Temporal\LocalDateTime;
 use Temporal\LocalTime;
-use Temporal\TemporalException;
 use Temporal\ZonedDateTime;
-use function sprintf;
 
 final class DateTimeFormatter
 {
@@ -37,7 +36,7 @@ final class DateTimeFormatter
 	{
 		$pattern = (new IntlDatePatternGenerator($locale))->getBestPattern($localizedPattern);
 		if ($pattern === false) {
-			throw new TemporalException(sprintf('Failed to generate pattern from "%s" for locale "%s"', $localizedPattern, $locale));
+			throw FormattingException::failedToGeneratePattern($localizedPattern, $locale);
 		}
 
 		return self::ofPattern($pattern, $locale);
@@ -109,14 +108,14 @@ final class DateTimeFormatter
 
 		$pattern = $formatter->getPattern();
 		if ($pattern === false) {
-			throw TemporalException::failedToFormatValue();
+			throw FormattingException::invalidPattern($value);
 		}
 
 		PatternValidator::validatePattern($pattern, $value);
 
 		$formatted = $formatter->format($value->toDateTime());
 		if ($formatted === false) {
-			throw TemporalException::failedToFormatValue();
+			throw FormattingException::failedToFormatValue($value, $formatter->getErrorMessage());
 		}
 
 		return $formatted;

@@ -4,6 +4,7 @@
 #include <php.h>
 #include <unicode/udat.h>
 #include "duration/duration.h"
+#include "utils/parse_iso_result.h"
 
 typedef struct _temporal_local_time_t {
 	zend_long hour;
@@ -26,7 +27,7 @@ temporal_local_time_t *temporal_local_time_clone(temporal_local_time_t *local_ti
 temporal_local_time_t *temporal_local_time_plus(temporal_local_time_t *local_time, temporal_duration_t *duration);
 temporal_local_time_t *temporal_local_time_minus(temporal_local_time_t *local_time, temporal_duration_t *duration);
 
-temporal_local_time_t *temporal_local_time_parse_iso(const char *input);
+temporal_parse_iso_result_t *temporal_local_time_parse_iso(const char *input);
 zend_string *temporal_local_time_format_iso(temporal_local_time_t *local_time);
 zend_string *temporal_local_time_format(temporal_local_time_t *local_time, UDateFormat *fmt);
 

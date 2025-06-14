@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Temporal;
 
 use DateTimeZone;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use function abs;
 use function preg_match;
 
@@ -17,15 +19,15 @@ final class TimeZoneOffset extends TimeZone
 	public static function of(int $hours, int $minutes = 0, int $seconds = 0): self
 	{
 		if ($hours < -18 || $hours > 18) {
-			throw TemporalException::valueOutOfRange('hours', $hours, -18, 18);
+			throw ValueOutOfRangeException::of('hours', $hours, -18, 18);
 		}
 
 		if ($minutes < -59 || $minutes > 59) {
-			throw TemporalException::valueOutOfRange('minutes', $minutes, -59, 59);
+			throw ValueOutOfRangeException::of('minutes', $minutes, -59, 59);
 		}
 
 		if ($seconds < -59 || $seconds > 59) {
-			throw TemporalException::valueOutOfRange('seconds', $seconds, -59, 59);
+			throw ValueOutOfRangeException::of('seconds', $seconds, -59, 59);
 		}
 
 		if (
@@ -34,7 +36,7 @@ final class TimeZoneOffset extends TimeZone
 			|| ($minutes > 0 && $seconds < 0)
 			|| ($minutes < 0 && $seconds > 0)
 		) {
-			throw TemporalException::failedToParseInput();
+			throw new TemporalException('Invalid input for TimeZoneOffset: all values must have the same sign.');
 		}
 
 		$totalSeconds = $hours * Duration::SECONDS_PER_HOUR
@@ -42,7 +44,7 @@ final class TimeZoneOffset extends TimeZone
 			+ $seconds;
 
 		if ($totalSeconds < -64800 || $totalSeconds > 64800) {
-			throw TemporalException::valueOutOfRange('totalSeconds', $totalSeconds, -64800, 64800);
+			throw ValueOutOfRangeException::of('totalSeconds', $totalSeconds, -64800, 64800);
 		}
 
 		return new self($totalSeconds);
@@ -51,7 +53,7 @@ final class TimeZoneOffset extends TimeZone
 	public static function ofTotalSeconds(int $totalSeconds): self
 	{
 		if ($totalSeconds < -64800 || $totalSeconds > 64800) {
-			throw TemporalException::valueOutOfRange('totalSeconds', $totalSeconds, -64800, 64800);
+			throw ValueOutOfRangeException::of('totalSeconds', $totalSeconds, -64800, 64800);
 		}
 
 		return new self($totalSeconds);
@@ -73,7 +75,7 @@ final class TimeZoneOffset extends TimeZone
 		$pattern = '/^([+\-])(\d{2}):(\d{2})(?::(\d{2}))?()$/';
 
 		if (preg_match($pattern, $text, $matches) !== 1) {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		[, $sign, $hours, $minutes, $seconds] = $matches;
@@ -90,8 +92,8 @@ final class TimeZoneOffset extends TimeZone
 
 		try {
 			return self::of($hours, $minutes, $seconds);
-		} catch (TemporalException $e) {
-			throw TemporalException::failedToParseInput($e);
+		} catch (ValueOutOfRangeException $e) {
+			throw ParsingException::valueOutOfRange($text, $e);
 		}
 	}
 

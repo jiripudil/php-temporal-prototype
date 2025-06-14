@@ -8,12 +8,14 @@ use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestWith;
 use Temporal\Clock\FixedClock;
+use Temporal\Exception\FormattingException;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use Temporal\Format\DateTimeFormatter;
 use Temporal\Format\FormatStyle;
 use Temporal\Instant;
 use Temporal\LocalDate;
 use Temporal\Period;
-use Temporal\TemporalException;
 use Temporal\TimeZoneOffset;
 
 final class LocalDateTest extends TemporalTestCase
@@ -32,7 +34,7 @@ final class LocalDateTest extends TemporalTestCase
 	#[TestWith([2025, 2, 29])]
 	public function testInvalidOf(int $year, int $month, int $day): void
 	{
-		$this->expectException(TemporalException::class);
+		$this->expectException(ValueOutOfRangeException::class);
 		LocalDate::of($year, $month, $day);
 	}
 
@@ -52,8 +54,7 @@ final class LocalDateTest extends TemporalTestCase
 		$date = LocalDate::fromIsoString('1970-01-01');
 		self::assertLocalDate($date, 1970, 1, 1);
 
-		$this->expectException(TemporalException::class);
-		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
+		$this->expectException(ParsingException::class);
 		LocalDate::fromIsoString('1970-13-42');
 	}
 
@@ -266,9 +267,7 @@ final class LocalDateTest extends TemporalTestCase
 	#[DataProvider('provideInvalidFormatData')]
 	public function testInvalidFormat(LocalDate $date, DateTimeFormatter $formatter): void
 	{
-		$this->expectException(TemporalException::class);
-		$this->expectExceptionMessage('Failed to format a Temporal value.');
-
+		$this->expectException(FormattingException::class);
 		$date->formatWith($formatter);
 	}
 

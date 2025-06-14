@@ -6,6 +6,7 @@ namespace Temporal;
 
 use JsonSerializable;
 use Stringable;
+use Temporal\Exception\ParsingException;
 use function preg_match;
 
 final class Period implements JsonSerializable, Stringable
@@ -58,13 +59,13 @@ final class Period implements JsonSerializable, Stringable
 		$pattern = '/^([+\-]?)P(?:([+\-]?[0-9]+)Y)?(?:([+\-]?[0-9]+)M)?(?:([+\-]?[0-9]+)W)?(?:([+\-]?[0-9]+)D)?()$/i';
 
 		if (preg_match($pattern, $text, $matches) !== 1) {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		[, $sign, $years, $months, $weeks, $days] = $matches;
 
 		if ($years === '' && $months === '' && $weeks === '' && $days === '') {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		$years = (int) $years;

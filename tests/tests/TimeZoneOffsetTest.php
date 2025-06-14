@@ -7,6 +7,8 @@ namespace Temporal\Tests;
 use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestWith;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use Temporal\Instant;
 use Temporal\TemporalException;
 use Temporal\TimeZoneOffset;
@@ -58,7 +60,7 @@ final class TimeZoneOffsetTest extends TemporalTestCase
 	#[TestWith([68000])]
 	public function testInvalidOfTotalSeconds(int $totalSeconds): void
 	{
-		$this->expectException(TemporalException::class);
+		$this->expectException(ValueOutOfRangeException::class);
 		TimeZoneOffset::ofTotalSeconds($totalSeconds);
 	}
 
@@ -98,9 +100,7 @@ final class TimeZoneOffsetTest extends TemporalTestCase
 	#[DataProvider('provideInvalidFromIsoStringData')]
 	public function testInvalidFromIsoString(string $text): void
 	{
-		$this->expectException(TemporalException::class);
-		$this->expectExceptionMessage('Failed to parse given input into a Temporal value.');
-
+		$this->expectException(ParsingException::class);
 		TimeZoneOffset::fromIsoString($text);
 	}
 

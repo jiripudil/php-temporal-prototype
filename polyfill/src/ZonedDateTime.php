@@ -10,6 +10,10 @@ use DateTimeInterface;
 use DateTimeZone;
 use JsonSerializable;
 use Stringable;
+use Temporal\Exception\DateTimeConversionException;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\UnknownTimeZoneException;
+use Temporal\Exception\ValueOutOfRangeException;
 use Temporal\Format\DateTimeFormatter;
 use function intdiv;
 use function preg_match;
@@ -71,7 +75,7 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 		$pattern = '/^(-?\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,9}))?)?([Zz]|[+-]\d{2}:\d{2}(?::\d{2})?)(?:\[(.+?)])?()$/';
 
 		if (preg_match($pattern, $text, $matches) !== 1) {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		[, $year, $month, $day, $hour, $minute, $second, $nano, $offset, $timeZoneId] = $matches;
@@ -84,18 +88,23 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 		$second = (int) $second;
 		$nano = (int) str_pad($nano, 9, '0');
 
-		$dateTime = LocalDateTime::of($year, $month, $day, $hour, $minute, $second, $nano);
+		try {
+			$dateTime = LocalDateTime::of($year, $month, $day, $hour, $minute, $second, $nano);
+		} catch (ValueOutOfRangeException $e) {
+			throw ParsingException::valueOutOfRange($text, $e);
+		}
 
 		$timeZone = TimeZoneOffset::fromIsoString($offset);
+
 		if ($timeZoneId !== '') {
-			$timeZone = TimeZoneRegion::fromIsoString($timeZoneId);
+			try {
+				$timeZone = TimeZoneRegion::of($timeZoneId);
+			} catch (UnknownTimeZoneException $e) {
+				throw ParsingException::unknownTimeZone($text, $e);
+			}
 		}
 
-		try {
-			return self::of($dateTime, $timeZone);
-		} catch (TemporalException $e) {
-			throw TemporalException::failedToParseInput($e);
-		}
+		return self::of($dateTime, $timeZone);
 	}
 
 	public function getDateTime(): LocalDateTime
@@ -430,7 +439,7 @@ final class ZonedDateTime implements JsonSerializable, Stringable
 
 		$nativeDateTime = DateTimeImmutable::createFromFormat($format, $dateTime);
 		if ($nativeDateTime === false) {
-			throw TemporalException::failedToConvertToDateTime();
+			throw DateTimeConversionException::of($this);
 		}
 
 		$nativeDateTime = $nativeDateTime->setTimezone($dateTimeZone);

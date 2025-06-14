@@ -102,12 +102,45 @@ ZEND_METHOD(Temporal_ZonedDateTime, fromIsoString) {
 
 	const char *input_s = ZSTR_VAL(input);
 
-	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_parse_iso(input_s);
-	if (zoned_date_time == NULL) {
-		php_temporal_throw_exception("Failed to parse given input into a Temporal value.", 0);
+	temporal_parse_iso_result_t *result = temporal_zoned_date_time_parse_iso(input_s);
+	if (result == NULL) {
+		php_temporal_throw_parsing_invalid_iso_string(input_s);
 		RETURN_THROWS();
 	}
 
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "month", result->month, 1, 12)
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "day", result->day, 1, days_in_month(result->year, result->month))
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "hour", result->hour, 0, HOURS_PER_DAY - 1)
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "minute", result->minute, 0, MINUTES_PER_HOUR - 1)
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "second", result->second, 0, SECONDS_PER_MINUTE - 1)
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "nano", result->nano, 0, NANOS_PER_SECOND - 1)
+
+	temporal_time_zone_t *time_zone;
+	if (result->tz_identifier != NULL) {
+		temporal_time_zone_region_t *region = temporal_time_zone_region_of(ZSTR_VAL(result->tz_identifier));
+		time_zone = temporal_time_zone_of_region(region);
+		if (time_zone == NULL) {
+			php_temporal_throw_parsing_unknown_time_zone(input_s, ZSTR_VAL(result->tz_identifier));
+			temporal_parse_iso_result_free(result);
+			temporal_time_zone_region_free(region);
+			RETURN_THROWS();
+		}
+	} else {
+		TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "hours", result->tz_offset_hour, -18, 18);
+		TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "minutes", result->tz_offset_minute, -MINUTES_PER_HOUR + 1, MINUTES_PER_HOUR - 1);
+		TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "seconds", result->tz_offset_second, -SECONDS_PER_MINUTE + 1, SECONDS_PER_MINUTE - 1);
+
+		zend_long total_seconds = result->tz_offset_hour * SECONDS_PER_HOUR + result->tz_offset_minute * MINUTES_PER_HOUR + result->tz_offset_second;
+		TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "totalSeconds", total_seconds, -64800, 64800);
+
+		temporal_time_zone_offset_t *offset = temporal_time_zone_offset_of(result->tz_offset_hour, result->tz_offset_minute, result->tz_offset_second);
+		time_zone = temporal_time_zone_of_offset(offset);
+	}
+
+	temporal_local_date_time_t *local_date_time = temporal_local_date_time_of(result->year, result->month, result->day, result->hour, result->minute, result->second, result->nano);
+	temporal_parse_iso_result_free(result);
+
+	temporal_zoned_date_time_t *zoned_date_time = temporal_zoned_date_time_of(local_date_time, time_zone);
 	zend_object *object = php_temporal_zoned_date_time_create_object_ex(zoned_date_time);
 	RETURN_OBJ(object);
 }
@@ -1216,7 +1249,26 @@ ZEND_METHOD(Temporal_ZonedDateTime, __unserialize) {
 	temporal_zoned_date_time_free(THIS_TEMPORAL_ZONED_DATE_TIME_INTERNAL());
 
 	temporal_local_date_time_t *local_date_time = temporal_local_date_time_of(Z_LVAL_P(year), Z_LVAL_P(month), Z_LVAL_P(day), Z_LVAL_P(hour), Z_LVAL_P(minute), Z_LVAL_P(second), Z_LVAL_P(nano));
-	temporal_time_zone_t *time_zone = temporal_time_zone_parse_iso(Z_STRVAL_P(zone_id));
+
+	temporal_time_zone_t *time_zone;
+	temporal_parse_iso_result_t *time_zone_result = temporal_time_zone_parse_iso(Z_STRVAL_P(zone_id));
+
+	if (time_zone_result->tz_identifier != NULL) {
+		temporal_time_zone_region_t *region = temporal_time_zone_region_of(ZSTR_VAL(time_zone_result->tz_identifier));
+		time_zone = temporal_time_zone_of_region(region);
+		if (time_zone == NULL) {
+			php_temporal_throw_unknown_time_zone(ZSTR_VAL(time_zone_result->tz_identifier));
+			temporal_parse_iso_result_free(time_zone_result);
+			temporal_time_zone_region_free(region);
+			RETURN_THROWS();
+		}
+	} else {
+		temporal_time_zone_offset_t *offset = temporal_time_zone_offset_of(time_zone_result->tz_offset_hour, time_zone_result->tz_offset_minute, time_zone_result->tz_offset_second);
+		time_zone = temporal_time_zone_of_offset(offset);
+	}
+
+	temporal_parse_iso_result_free(time_zone_result);
+
 	THIS_TEMPORAL_ZONED_DATE_TIME_INTERNAL() = temporal_zoned_date_time_of(local_date_time, time_zone);
 }
 

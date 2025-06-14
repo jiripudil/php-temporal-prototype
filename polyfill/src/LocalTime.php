@@ -9,6 +9,9 @@ use DateTimeInterface;
 use DateTimeZone;
 use JsonSerializable;
 use Stringable;
+use Temporal\Exception\DateTimeConversionException;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use Temporal\Format\DateTimeFormatter;
 use function intdiv;
 use function preg_match;
@@ -29,19 +32,19 @@ final class LocalTime implements JsonSerializable, Stringable
 	public static function of(int $hour, int $minute, int $second = 0, int $nano = 0): self
 	{
 		if ($hour < 0 || $hour >= Duration::HOURS_PER_DAY) {
-			throw TemporalException::valueOutOfRange('hour', $hour, 0, Duration::HOURS_PER_DAY - 1);
+			throw ValueOutOfRangeException::of('hour', $hour, 0, Duration::HOURS_PER_DAY - 1);
 		}
 
 		if ($minute < 0 || $minute >= Duration::MINUTES_PER_HOUR) {
-			throw TemporalException::valueOutOfRange('minute', $minute, 0, Duration::MINUTES_PER_HOUR - 1);
+			throw ValueOutOfRangeException::of('minute', $minute, 0, Duration::MINUTES_PER_HOUR - 1);
 		}
 
 		if ($second < 0 || $second >= Duration::SECONDS_PER_MINUTE) {
-			throw TemporalException::valueOutOfRange('second', $second, 0, Duration::SECONDS_PER_MINUTE - 1);
+			throw ValueOutOfRangeException::of('second', $second, 0, Duration::SECONDS_PER_MINUTE - 1);
 		}
 
 		if ($nano < 0 || $nano >= Duration::NANOS_PER_SECOND) {
-			throw TemporalException::valueOutOfRange('nano', $nano, 0, Duration::NANOS_PER_SECOND - 1);
+			throw ValueOutOfRangeException::of('nano', $nano, 0, Duration::NANOS_PER_SECOND - 1);
 		}
 
 		return new self($hour, $minute, $second, $nano);
@@ -50,11 +53,11 @@ final class LocalTime implements JsonSerializable, Stringable
 	public static function ofSecondOfDay(int $secondOfDay, int $nano = 0): self
 	{
 		if ($secondOfDay < 0 || $secondOfDay >= Duration::SECONDS_PER_DAY) {
-			throw TemporalException::valueOutOfRange('secondOfDay', $secondOfDay, 0, Duration::SECONDS_PER_DAY - 1);
+			throw ValueOutOfRangeException::of('secondOfDay', $secondOfDay, 0, Duration::SECONDS_PER_DAY - 1);
 		}
 
 		if ($nano < 0 || $nano >= Duration::NANOS_PER_SECOND) {
-			throw TemporalException::valueOutOfRange('nano', $nano, 0, Duration::NANOS_PER_SECOND - 1);
+			throw ValueOutOfRangeException::of('nano', $nano, 0, Duration::NANOS_PER_SECOND - 1);
 		}
 
 		$hour = intdiv($secondOfDay, Duration::SECONDS_PER_HOUR);
@@ -74,7 +77,7 @@ final class LocalTime implements JsonSerializable, Stringable
 		$pattern = '/^(\d{2}):(\d{2})(?::(\d{2})(?:\\.(\d{1,9}))?)?()$/';
 
 		if (preg_match($pattern, $text, $matches) !== 1) {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		[, $hour, $minute, $second, $nano] = $matches;
@@ -86,8 +89,8 @@ final class LocalTime implements JsonSerializable, Stringable
 
 		try {
 			return self::of($hour, $minute, $second, $nano);
-		} catch (TemporalException $e) {
-			throw TemporalException::failedToParseInput($e);
+		} catch (ValueOutOfRangeException $e) {
+			throw ParsingException::valueOutOfRange($text, $e);
 		}
 	}
 
@@ -125,7 +128,7 @@ final class LocalTime implements JsonSerializable, Stringable
 	public function withHour(int $hour): self
 	{
 		if ($hour < 0 || $hour >= Duration::HOURS_PER_DAY) {
-			throw TemporalException::valueOutOfRange('hour', $hour, 0, Duration::HOURS_PER_DAY - 1);
+			throw ValueOutOfRangeException::of('hour', $hour, 0, Duration::HOURS_PER_DAY - 1);
 		}
 
 		return new self($hour, $this->minute, $this->second, $this->nano);
@@ -139,7 +142,7 @@ final class LocalTime implements JsonSerializable, Stringable
 	public function withMinute(int $minute): self
 	{
 		if ($minute < 0 || $minute >= Duration::MINUTES_PER_HOUR) {
-			throw TemporalException::valueOutOfRange('minute', $minute, 0, Duration::MINUTES_PER_HOUR - 1);
+			throw ValueOutOfRangeException::of('minute', $minute, 0, Duration::MINUTES_PER_HOUR - 1);
 		}
 
 		return new self($this->hour, $minute, $this->second, $this->nano);
@@ -153,7 +156,7 @@ final class LocalTime implements JsonSerializable, Stringable
 	public function withSecond(int $second): self
 	{
 		if ($second < 0 || $second >= Duration::SECONDS_PER_MINUTE) {
-			throw TemporalException::valueOutOfRange('second', $second, 0, Duration::SECONDS_PER_MINUTE - 1);
+			throw ValueOutOfRangeException::of('second', $second, 0, Duration::SECONDS_PER_MINUTE - 1);
 		}
 
 		return new self($this->hour, $this->minute, $second, $this->nano);
@@ -167,7 +170,7 @@ final class LocalTime implements JsonSerializable, Stringable
 	public function withNano(int $nano): self
 	{
 		if ($nano < 0 || $nano >= Duration::NANOS_PER_SECOND) {
-			throw TemporalException::valueOutOfRange('nano', $nano, 0, Duration::NANOS_PER_SECOND - 1);
+			throw ValueOutOfRangeException::of('nano', $nano, 0, Duration::NANOS_PER_SECOND - 1);
 		}
 
 		return new self($this->hour, $this->minute, $this->second, $nano);
@@ -312,7 +315,7 @@ final class LocalTime implements JsonSerializable, Stringable
 
 		$result = DateTimeImmutable::createFromFormat($format, $dateTime, $dateTimeZone);
 		if ($result === false) {
-			throw TemporalException::failedToConvertToDateTime();
+			throw DateTimeConversionException::of($this);
 		}
 
 		return $result;

@@ -9,6 +9,9 @@ use DateTimeInterface;
 use DateTimeZone;
 use JsonSerializable;
 use Stringable;
+use Temporal\Exception\DateTimeConversionException;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\ValueOutOfRangeException;
 use Temporal\Format\DateTimeFormatter;
 use function intdiv;
 use function preg_match;
@@ -45,7 +48,7 @@ final class LocalDateTime implements JsonSerializable, Stringable
 		$pattern = '/^(-?\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\\.(\d{1,9}))?)?()$/';
 
 		if (preg_match($pattern, $text, $matches) !== 1) {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		[, $year, $month, $day, $hour, $minute, $second, $nano] = $matches;
@@ -60,8 +63,8 @@ final class LocalDateTime implements JsonSerializable, Stringable
 
 		try {
 			return self::of($year, $month, $day, $hour, $minute, $second, $nano);
-		} catch (TemporalException $e) {
-			throw TemporalException::failedToParseInput($e);
+		} catch (ValueOutOfRangeException $e) {
+			throw ParsingException::valueOutOfRange($text, $e);
 		}
 	}
 
@@ -385,7 +388,7 @@ final class LocalDateTime implements JsonSerializable, Stringable
 
 		$result = DateTimeImmutable::createFromFormat($format, $dateTime, $dateTimeZone);
 		if ($result === false) {
-			throw TemporalException::failedToConvertToDateTime();
+			throw DateTimeConversionException::of($this);
 		}
 
 		return $result;

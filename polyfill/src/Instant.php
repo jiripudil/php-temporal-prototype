@@ -7,6 +7,7 @@ namespace Temporal;
 use JsonSerializable;
 use Stringable;
 use Temporal\Clock\SystemClock;
+use Temporal\Exception\ValueOutOfRangeException;
 use function intdiv;
 use function rtrim;
 use function str_pad;
@@ -82,7 +83,7 @@ final class Instant implements JsonSerializable, Stringable
 	public function withNano(int $nano): self
 	{
 		if ($nano < 0 || $nano > Duration::NANOS_PER_SECOND - 1) {
-			throw TemporalException::valueOutOfRange('nano', $nano, 0, Duration::NANOS_PER_SECOND - 1);
+			throw ValueOutOfRangeException::of('nano', $nano, 0, Duration::NANOS_PER_SECOND - 1);
 		}
 
 		return new self($this->epochSecond, $nano);

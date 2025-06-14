@@ -68,11 +68,18 @@ ZEND_METHOD(Temporal_MonthDay, fromIsoString) {
 
 	const char *input_s = ZSTR_VAL(input);
 
-	temporal_month_day_t *month_day = temporal_month_day_parse_iso(input_s);
-	if (month_day == NULL) {
-		php_temporal_throw_exception("Failed to parse given input into a Temporal value.", 0);
+	temporal_parse_iso_result_t *result = temporal_month_day_parse_iso(input_s);
+	if (result == NULL) {
+		php_temporal_throw_parsing_invalid_iso_string(input_s);
 		RETURN_THROWS();
 	}
+
+	zend_long max_day = max_days_in_month(result->month);
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "month", result->month, 1, 12)
+	TEMPORAL_CHECK_PARSE_ISO_VALUE_RANGE(input_s, result, "day", result->day, 1, max_day)
+
+	temporal_month_day_t *month_day = temporal_month_day_of(result->month, result->day);
+	temporal_parse_iso_result_free(result);
 
 	zend_object *object = php_temporal_month_day_create_object_ex(month_day);
 	RETURN_OBJ(object);

@@ -53,7 +53,7 @@ temporal_local_date_time_t *temporal_local_date_time_plus_duration(temporal_loca
 	return temporal_local_date_time_of_date_time(date, time);
 }
 
-temporal_local_date_time_t *temporal_local_date_time_parse_iso(const char *input) {
+temporal_parse_iso_result_t *temporal_local_date_time_parse_iso(const char *input) {
 	PCRE2_SPTR pattern = "^(-?[0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.([0-9]{1,9}))?)?()$";
 	PCRE2_SPTR input_string = (PCRE2_SPTR) input;
 	PCRE2_SIZE input_length = strlen(input);
@@ -76,90 +76,50 @@ temporal_local_date_time_t *temporal_local_date_time_parse_iso(const char *input
 
 	PCRE2_SIZE *ovector = pcre2_get_ovector_pointer(match_data);
 
+	temporal_parse_iso_result_t *result = temporal_parse_iso_result_create();
+
 	char year_str[ovector[3] - ovector[2] + 1];
 	strncpy(year_str, input + ovector[2], ovector[3] - ovector[2]);
 	year_str[ovector[3] - ovector[2]] = '\0';
-	zend_long year = strtol(year_str, NULL, 10);
-	if (year < -999999 || year > 999999) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->year = strtol(year_str, NULL, 10);
 
 	char month_str[ovector[5] - ovector[4] + 1];
 	strncpy(month_str, input + ovector[4], ovector[5] - ovector[4]);
 	month_str[ovector[5] - ovector[4]] = '\0';
-	zend_long month = strtol(month_str, NULL, 10);
-	if (month < 1 || month > 12) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->month = strtol(month_str, NULL, 10);
 
 	char day_str[ovector[7] - ovector[6] + 1];
 	strncpy(day_str, input + ovector[6], ovector[7] - ovector[6]);
 	day_str[ovector[7] - ovector[6]] = '\0';
-	zend_long day = strtol(day_str, NULL, 10);
-	zend_long max_day = days_in_month(year, month);
-	if (day < 1 || day > max_day) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->day = strtol(day_str, NULL, 10);
 
 	char hour_str[ovector[9] - ovector[8] + 1];
 	strncpy(hour_str, input + ovector[8], ovector[9] - ovector[8]);
 	hour_str[ovector[9] - ovector[8]] = '\0';
-	zend_long hour = strtol(hour_str, NULL, 10);
-	if (hour < 0 || hour > 23) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->hour = strtol(hour_str, NULL, 10);
 
 	char minute_str[ovector[11] - ovector[10] + 1];
 	strncpy(minute_str, input + ovector[10], ovector[11] - ovector[10]);
 	minute_str[ovector[11] - ovector[10]] = '\0';
-	zend_long minute = strtol(minute_str, NULL, 10);
-	if (minute < 0 || minute > 59) {
-		pcre2_match_data_free(match_data);
-		pcre2_code_free(re);
-		return NULL;
-	}
+	result->minute = strtol(minute_str, NULL, 10);
 
-	zend_long second = 0;
 	if (ovector[12] != PCRE2_UNSET) {
 		char second_str[ovector[13] - ovector[12] + 1];
 		strncpy(second_str, input + ovector[12], ovector[13] - ovector[12]);
 		second_str[ovector[13] - ovector[12]] = '\0';
-		second = strtol(second_str, NULL, 10);
-		if (second < 0 || second > 59) {
-			pcre2_match_data_free(match_data);
-			pcre2_code_free(re);
-			return NULL;
-		}
+		result->second = strtol(second_str, NULL, 10);
 	}
 
-	zend_long nano = 0;
 	if (ovector[14] != PCRE2_UNSET) {
 		char nano_str[ovector[15] - ovector[14] + 1];
 		strncpy(nano_str, input + ovector[14], ovector[15] - ovector[14]);
 		nano_str[ovector[15] - ovector[14]] = '\0';
-		nano = strtol(nano_str, NULL, 10) * (long) pow(10, 9 - (double) (ovector[15] - ovector[14]));
-		if (nano < 0 || nano > 999999999) {
-			pcre2_match_data_free(match_data);
-			pcre2_code_free(re);
-			return NULL;
-		}
+		result->nano = strtol(nano_str, NULL, 10) * (long) pow(10, 9 - (double) (ovector[15] - ovector[14]));
 	}
-
-	temporal_local_date_t *local_date = temporal_local_date_of(year, month, day);
-	temporal_local_time_t *local_time = temporal_local_time_of(hour, minute, second, nano);
-	temporal_local_date_time_t *local_date_time = temporal_local_date_time_of_date_time(local_date, local_time);
 
 	pcre2_match_data_free(match_data);
 	pcre2_code_free(re);
-	return local_date_time;
+	return result;
 }
 
 zend_string *temporal_local_date_time_format_iso(temporal_local_date_time_t *local_date_time) {
@@ -180,7 +140,7 @@ zend_string *temporal_local_date_time_format_iso(temporal_local_date_time_t *loc
 
 zend_string *temporal_local_date_time_format(temporal_local_date_time_t *local_date_time, UDateFormat *fmt) {
 	if (!temporal_formatter_is_valid_pattern(fmt, TEMPORAL_FORMATTER_FIELD_MASK_DATE | TEMPORAL_FORMATTER_FIELD_MASK_TIME)) {
-		php_temporal_throw_exception("Failed to format a Temporal value.", 0);
+		php_temporal_throw_formatting_invalid_pattern("LocalDateTime");
 		return NULL;
 	}
 
@@ -189,7 +149,7 @@ zend_string *temporal_local_date_time_format(temporal_local_date_time_t *local_d
 
 	zend_string *result = temporal_formatter_format(fmt, timestamp, NULL);
 	if (result == NULL) {
-		php_temporal_throw_exception("Failed to format a Temporal value.", 0);
+		php_temporal_throw_formatting_failed_to_format_value("LocalDateTime", "internal formatter error");
 		return NULL;
 	}
 

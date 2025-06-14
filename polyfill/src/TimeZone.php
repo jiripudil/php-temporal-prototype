@@ -7,6 +7,7 @@ namespace Temporal;
 use DateTimeZone;
 use JsonSerializable;
 use Stringable;
+use Temporal\Exception\ParsingException;
 
 abstract class TimeZone implements JsonSerializable, Stringable
 {
@@ -17,7 +18,7 @@ abstract class TimeZone implements JsonSerializable, Stringable
 		}
 
 		if ($text === '') {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($text);
 		}
 
 		if ($text[0] === '+' || $text[0] === '-') {

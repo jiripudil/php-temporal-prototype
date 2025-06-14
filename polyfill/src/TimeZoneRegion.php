@@ -7,6 +7,8 @@ namespace Temporal;
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
+use Temporal\Exception\ParsingException;
+use Temporal\Exception\UnknownTimeZoneException;
 use function sprintf;
 
 final class TimeZoneRegion extends TimeZone
@@ -18,13 +20,13 @@ final class TimeZoneRegion extends TimeZone
 	public static function of(string $id): self
 	{
 		if ($id === '' || $id === 'Z' || $id === 'z' || $id[0] === '+' || $id[0] === '-') {
-			throw new TemporalException(sprintf('Unknown time zone region "%s".', $id));
+			throw UnknownTimeZoneException::of($id);
 		}
 
 		try {
 			return new self(new DateTimeZone($id));
 		} catch (Exception) {
-			throw new TemporalException(sprintf('Unknown time zone region "%s".', $id));
+			throw UnknownTimeZoneException::of($id);
 		}
 	}
 
@@ -32,8 +34,8 @@ final class TimeZoneRegion extends TimeZone
 	{
 		try {
 			return self::of($text);
-		} catch (TemporalException $e) {
-			throw TemporalException::failedToParseInput($e);
+		} catch (UnknownTimeZoneException $e) {
+			throw ParsingException::unknownTimeZone($text, $e);
 		}
 	}
 

@@ -6,6 +6,7 @@ namespace Temporal;
 
 use JsonSerializable;
 use Stringable;
+use Temporal\Exception\ParsingException;
 use function intdiv;
 use function preg_match;
 use function rtrim;
@@ -38,12 +39,12 @@ final class Duration implements JsonSerializable, Stringable
 		$pattern = '/^([+\-]?)P(?:([+\-]?[0-9]+)D)?(?:T(?:([+\-]?[0-9]+)H)?(?:([+\-]?[0-9]+)M)?(?:([+\-]?[0-9]+)(?:\.([0-9]{1,9}))?S)?)?()$/i';
 
 		if (preg_match($pattern, $value, $matches) !== 1) {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($value);
 		}
 
 		[, $sign, $days, $hours, $minutes, $seconds, $nanos] = $matches;
 		if ($days === '' && $hours === '' && $minutes === '' && $seconds === '') {
-			throw TemporalException::failedToParseInput();
+			throw ParsingException::invalidIsoString($value);
 		}
 
 		$days = (int) $days;

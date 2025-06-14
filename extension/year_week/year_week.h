@@ -3,6 +3,7 @@
 
 #include <php.h>
 #include "local_date/local_date.h"
+#include "utils/parse_iso_result.h"
 
 typedef struct _temporal_year_week_t {
 	zend_long year;
@@ -22,7 +23,7 @@ temporal_year_week_t *temporal_year_week_clone(temporal_year_week_t *year_week);
 
 temporal_local_date_t *temporal_year_week_at_day(temporal_year_week_t *year_week, zend_long day_of_week);
 
-temporal_year_week_t *temporal_year_week_parse_iso(const char *input);
+temporal_parse_iso_result_t *temporal_year_week_parse_iso(const char *input);
 zend_string *temporal_year_week_format_iso(temporal_year_week_t *year_week);
 
 void temporal_year_week_free(temporal_year_week_t *year_week);
